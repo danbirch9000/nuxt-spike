@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js run dev
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add vuex
 
 PATH: 
   C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\hisg346\bin;C:\Program Files\Common Files\Microsoft Shared\Microsoft Online Services;C:\Program Files (x86)\Common Files\Microsoft Shared\Microsoft Online Services;C:\Program Files\ImageMagick-7.0.1-Q16;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\HashiCorp\Vagrant\bin;C:\Program Files\Git\cmd;C:\Users\hisg346\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\Amazon\AWSCLI;C:\Program Files (x86)\Yarn\bin;C:\Program Files\apache-maven-3.3.9\bin;C:\Program Files\Java\jdk1.7.0_79;C:\Program Files (x86)\Microsoft VSCode\bin;C:\Users\hisg346\AppData\Roaming\npm;C:\Users\hisg346\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\Docker Toolbox;C:\Program Files\Amazon\AWSCLI;C:\Users\hisg346\AppData\Local\Yarn\bin
@@ -8,7 +8,7 @@ Yarn version:
   1.5.1
 
 Node version: 
-  8.0.0
+  7.8.0
 
 Platform: 
   win32 x64
@@ -6439,17 +6439,11 @@ Lockfile:
       window-size "0.1.0"
 
 Trace: 
-  Error: Command failed.
-  Exit code: 1
-  Command: C:\WINDOWS\system32\cmd.exe
-  Arguments: /d /s /c nuxt
-  Directory: C:\Users\hisg346\workspace\nuxt-spike
-  Output:
-  
-      at ProcessTermError.MessageError (C:\Program Files (x86)\Yarn\lib\cli.js:186:110)
-      at new ProcessTermError (C:\Program Files (x86)\Yarn\lib\cli.js:226:113)
-      at ChildProcess.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:30281:17)
-      at emitTwo (events.js:125:13)
-      at ChildProcess.emit (events.js:213:7)
-      at maybeClose (internal/child_process.js:887:16)
-      at Process.ChildProcess._handle.onexit (internal/child_process.js:208:5)
+  Error: Found incompatible module
+      at new MessageError (C:\Program Files (x86)\Yarn\lib\cli.js:186:110)
+      at checkOne (C:\Program Files (x86)\Yarn\lib\cli.js:62444:11)
+      at Object.check (C:\Program Files (x86)\Yarn\lib\cli.js:62463:5)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:22803:73
+      at Generator.next (<anonymous>)
+      at step (C:\Program Files (x86)\Yarn\lib\cli.js:98:30)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:109:13

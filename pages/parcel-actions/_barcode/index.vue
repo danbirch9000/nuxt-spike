@@ -7,11 +7,10 @@
 </template>
 
 <script>
-export default{
+export default {
   validate(data){
     console.log(data);
     return data.params.barcode === 1;
-
   }
 }
 </script>

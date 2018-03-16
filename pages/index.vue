@@ -1,11 +1,7 @@
 <template>
   <section class="container">
     <div>
-
-      <h1 class="title">
-        nuxt-spike
-      </h1>
-
+      <h1 class="title">nuxt-spike</h1>
     </div>
   </section>
 </template>

@@ -4,17 +4,17 @@ import axios from 'axios'
 const createStore = () => {
   return new Vuex.Store({
     state: {
-      parcel: false,
+      parcelData: null,
     },
     mutations: {
-      setParcels: (state, parcel) => {
-        state.parcel = parcel.success
+      setParcelData: (state, payload) => {
+        state.parcelData = payload
       }
     },
     actions: {
-      async getParcels ({commit, store}, id) {
+      async getParcelData ({commit, store}, id) {
         let {data} = await axios.get(`http://localhost:3000/parcel.json`)
-        commit('setParcels', data)
+        commit('setParcelData', data)
       }
     }
   })

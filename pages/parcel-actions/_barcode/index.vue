@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <div>
-      <h1>parcel-actions barcode: </h1>
+      <h1>Parcel actions page with barcode: {{$route.params.barcode}}</h1>
     </div>
   </section>
 </template>
@@ -10,7 +10,7 @@
 export default {
   validate(data){
     console.log(data);
-    return data.params.barcode === 1;
+    return data.params.barcode === '1';
   }
 }
 </script>

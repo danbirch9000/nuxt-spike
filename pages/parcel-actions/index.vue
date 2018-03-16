@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <div>
-      <h1>parcel-actions {{Parcels}}</h1>
+      <h1>parcel-actions, calling API and getting this response: {{Parcels}}</h1>
     </div>
   </section>
 </template>

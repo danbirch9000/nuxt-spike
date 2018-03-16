@@ -13,7 +13,7 @@ const createStore = () => {
     },
     actions: {
       async getParcels ({commit, store}, id) {
-        let {data} = await axios.get(`http://localhost:3000/success.json`)
+        let {data} = await axios.get(`http://localhost:3000/parcel.json`)
         commit('setParcels', data)
       }
     }

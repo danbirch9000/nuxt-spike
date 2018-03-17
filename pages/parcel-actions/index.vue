@@ -2,6 +2,7 @@
   <section class="container">
     <div>
       <h1>parcel-actions, calling API and getting this response: {{Parcels}}</h1>
+      <p>test</p>
     </div>
   </section>
 </template>

@@ -1,0 +1,14 @@
+/*
+Validation
+*/
+.errors {
+  .error{
+    font-size: 1.5em;
+    color: $form-error;
+    margin: 3px 0;
+  }
+  :before {
+    content: "-";
+    position: relative;
+  }
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="64px" height="59px" viewBox="0 0 64 59" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+    <title>icons/actions/round</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icons/actions/round" stroke-width="2">
+            <path d="M48.3291821,30.8081165 L48.3291821,41.1390008 L44.1942101,41.1390008 C44.1514458,38.6596643 42.1110132,36.6633268 39.6013308,36.6633268 C37.0900753,36.6633268 35.0504043,38.6596643 35.0076563,41.1390008 L17.4790463,41.1390008 C17.4362983,38.6596643 15.3966356,36.6633268 12.8861667,36.6633268 C10.3756977,36.6633268 8.33525682,38.6596643 8.29249243,41.1390008 L2.00007949,41.1390008 L2.00007949,28.1049857 L11.9121308,24.2584694 L18.8076436,13.7885358 L48.3291821,13.7885358" id="Combined-Shape" stroke="#F5F5F5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M38.6010923,18.2422972 L62.3566308,18.2422972" id="Stroke-3" stroke="#F5F5F5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M38.6010923,22.515162 L56.7249641,22.515162" id="Stroke-6" stroke="#F5F5F5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M38.6010923,26.788815 L50.3190923,26.788815" id="Stroke-7" stroke="#F5F5F5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M17.4797308,41.2184534 C17.4797308,43.7336652 15.4233974,45.7735799 12.8861667,45.7735799 C10.3489359,45.7735799 8.29180769,43.7336652 8.29180769,41.2184534 C8.29180769,38.7024534 10.3489359,36.6633268 12.8861667,36.6633268 C15.4233974,36.6633268 17.4797308,38.7024534 17.4797308,41.2184534 Z" id="Stroke-10" stroke="#FEFEFE"></path>
+            <path d="M44.1948949,41.2184534 C44.1948949,43.7336652 42.1377667,45.7735799 39.6013308,45.7735799 C37.0633051,45.7735799 35.0069718,43.7336652 35.0069718,41.2184534 C35.0069718,38.7024534 37.0633051,36.6633268 39.6013308,36.6633268 C42.1377667,36.6633268 44.1948949,38.7024534 44.1948949,41.2184534 Z" id="Stroke-14" stroke="#FEFEFE"></path>
+        </g>
+    </g>
+</svg>

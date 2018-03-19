@@ -1,0 +1,120 @@
+{
+  "parcel": {
+    "id": 222222,
+    "version": "1.0",
+    "barcode": "2222222222222222",
+    "barcodeDisplay": "22-222-22-22222222-2",
+    "description": "Magic Box",
+    "weight": "1.825",
+    "weightInGrams": "1825",
+    "length": "125",
+    "width": "19",
+    "depth": "248",
+    "value": "1.92",
+    "valueInPence": 192,
+    "currency": "GBP",
+    "parcelType": null,
+    "deliveryMessage": null,
+    "orderNumber": "Ref2A",
+    "customerName": "James Brown",
+    "customerEmail": "aa@aa.com",
+    "customerMblPhoneNumber": "0333 000001",
+    "pin": null,
+    "smsAlertGroup": null,
+    "customerRef1": "Ref1A",
+    "customerRef2": "Ref2A",
+    "customerARLink": null,
+    "address": {
+      "line1": "Address Line 1",
+      "line2": "Address Line 2",
+      "line3": "Address Line 3",
+      "line4": "Address Line 4",
+      "line5": "Address Line 5",
+      "line6": "Address Line 6",
+      "postCode": "LS270WH"
+    },
+    "returnAddress": null,
+    "countryCode": "GB",
+    "countryCodeNumeric": "826",
+    "createdDate": "2017-01-12",
+    "despatchDate": "2017-02-05",
+    "clientName": "Debenhams Trafford Centre",
+    "clientId": "99",
+    "childClientId": null,
+    "clientARLink": null,
+    "serviceOffer1": "3DAY",
+    "serviceOffer2": "POD",
+    "serviceOffer3": null,
+    "serviceOffer4": null,
+    "parcelShopId": null,
+    "parcelShopName": null,
+    "deliveryMethod": "L&L-PNET",
+    "deliveryMethodId": "020",
+    "sortLevel1Code": "81",
+    "sortLevel1Name": "BRAD",
+    "sortLevel1Type": null,
+    "sortLevel2Code": "15",
+    "sortLevel2Name": "02",
+    "sortLevel2Type": "VAN",
+    "sortLevel3Code": null,
+    "sortLevel3Name": "05",
+    "sortLevel4Code": "8573",
+    "sortLevel4Name": "0010",
+    "sortLevel4Type": "P-ROUND",
+    "sortLevel5Code": null,
+    "sortLevel5Name": "S00770",
+    "sortLevel5Type": "SHOP-ID"
+  },
+  "prStatus": {
+    "reason": "Third Attempt Undelivered Pcl",
+    "latestAction": "on hold",
+    "holdDuration": 3,
+    "entryDate": "02/07/15 00:00"
+  },
+  "clientContactDetails": {
+    "clientId": "509",
+    "clientName": "H&M Eire Metapack",
+    "clientEmail": "email3@email.email",
+    "clientTelephone1": "01234567892",
+    "clientTelephone2": "09876543212",
+    "clientMobile": "07777123452"
+  },
+  "courier": {
+    "id": 100002,
+    "name": "Mr. Brian Griffin",
+    "email": [
+      "brian.griffin@hermes-europe.co.uk"
+    ],
+    "address": {
+      "addressLine1": "1 CAPITOL CLOSE",
+      "addressLine2": "MORLEY",
+      "postcode": "LS27 0WH"
+    },
+    "contactNumbers": [
+      {
+        "value": "07123456789",
+        "kind": null
+      }
+    ],
+    "fieldManager": {
+      "name": "Ian Freely",
+      "email": null,
+      "contact": [
+        {
+          "value": "01484100100",
+          "kind": null
+        }
+      ]
+    },
+    "regionalDeliveryManager": {
+      "name": "Donald Trump",
+      "email": null,
+      "contact": [
+        {
+          "value": "01132987654",
+          "kind": null
+        }
+      ]
+    }
+  }
+}

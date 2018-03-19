@@ -1,0 +1,36 @@
+.smart-button {
+  background-color: $primary-cta;
+  display: block;
+  color: $primary-cta-text;
+  text-align: center;
+  cursor: pointer;
+  padding: $hermes-spacer 0;
+  position: relative;
+  font-size: 1.5em;
+  font-weight: bold;
+  width: 100%;
+  border: none;
+  &:hover,&:focus {
+    background-color: $primary-cta-hover;
+  }
+  &.active,&:active {
+    background-color: $primary-cta-active;
+  }
+  .smart-button__id {
+    display: none;
+    @media (min-width: $screen-sm) {
+      display: block;
+      position: absolute;
+      top: 3px;
+      left: 6px;
+      font-size: 0.6em;
+    }
+  }
+}
+
+.selected .smart-button {
+  background-color: $wfp-green;
+  @include addTick($wfp-white);
+  background-position: bottom 5px right 8px;
+  background-repeat: no-repeat;
+}

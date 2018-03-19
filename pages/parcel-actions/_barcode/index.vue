@@ -2,7 +2,7 @@
   <section class="container">
     <div>
       <Header />
-      <h1>Parcel actions page with barcode: {{$route.params.barcode}}</h1>
+      <h1>{{$route.params.barcode}}</h1>
     </div>
   </section>
 </template>
@@ -17,6 +17,15 @@ export default {
   validate(data){
     console.log(data);
     return data.params.barcode === '1';
+  },
+  fetch ({store}) {
+    store.dispatch('getParcelData')
+  },
+  computed: {
+    Parcels () {
+      console.log(this.$store.state.parcelData);
+      return this.$store.state.parcelData
+    }
   }
 }
 </script>

@@ -1,0 +1,97 @@
+@import './mixins';
+/*## Colours */
+$wfp-blue: #005375;
+$wfp-blue-alt: #266c89;
+$wfp-blue-hermes: #0091CD;
+$wfp-green: #006700;
+$wfp-dark-grey: #333333;
+$wfp-mid-grey: #b7afc0;
+$wfp-light-grey: #d8d8d8;
+$wfp-grey: #979797;
+$wfp-white: #ffffff;
+$wfp-magnolia: #eee8d5;
+$wfp-cream: #fdf6e3;
+$wfp-red: #9d0000;
+$wfp-purple: #a12860;
+$wfp-black: #000000;
+$wfp-light-green: #e4ffe4;
+$wfp-orange: #d49207;
+
+/*## Buttons */
+$primary-cta: $wfp-purple;
+$primary-cta-hover: darken($wfp-purple, 10%);
+$primary-cta-active: lighten($primary-cta-hover, 2%);
+$primary-cta-text: $wfp-white;
+$action-back: $wfp-blue;
+$action-back-hover: darken($action-back, 10%);
+$action-cancel: $wfp-red;
+$action-cancel-hover: darken($action-cancel, 10%);
+$feature-button-text: $wfp-blue;
+
+/*## Tables */
+$table-row-active: $wfp-light-green;
+$table-row-active-border: $wfp-green;
+$table-row-bulk-change-border: $wfp-grey;
+
+/*## Messages */
+$message-error: $wfp-red;
+$message-success: $wfp-green;
+$message-warning: $wfp-orange;
+
+/*## Body Elements */
+$primary-canvas: $wfp-cream;
+$primary-well: $wfp-magnolia;
+$header-bg: $wfp-blue-hermes;
+$header-primary: $wfp-white;
+
+/*## Typography*/
+$primary-heading: $wfp-blue;
+
+/*## Forms */
+$form-element-focus: $wfp-green;
+$form-element: $wfp-grey;
+$form-element-mandatory: $wfp-red;
+$form-error: $wfp-red;
+$form-element-radio-checked: $wfp-light-green;
+
+/*## Lists */
+$list-key: $wfp-green;
+$list-value: $wfp-dark-grey;
+$list-divider: $wfp-blue;
+
+/*## Old to New */
+$old-to-new__old: $wfp-red;
+$old-to-new__new: $wfp-green;
+
+/*## Tabs */
+$tab-text-color: $wfp-white;
+$tab-bg-color: $wfp-mid-grey;
+$tab-bg-color-hover: darken($wfp-mid-grey, 4%);
+$tab-bg-color-active: $wfp-purple;
+$tab-counter-bg-color: $wfp-white;
+$tab-counter-color: $wfp-black;
+$tab-level2-bg-color-active: $wfp-blue;
+
+/*## Print toggle */
+$print-toggle-secondary: $wfp-mid-grey;
+$print-toggle-yes-active: $wfp-light-green;
+
+/*## Info Panel */
+$info-panel-head-bg: $wfp-blue;
+$info-panel-head-color: $wfp-white;
+$info-panel-bg: $primary-well;
+
+/*## Key Value */
+$key: $wfp-green;
+$value: $wfp-dark-grey;
+
+/*## Tags */
+$tag-service-offer: #45b692;
+$tag-tracking: #ec5f6f;
+$tag-parcel-type: #9f83ba;
+
+/*## Pagination */
+$pagination-color: $wfp-white;
+$pagination-bg-color: $wfp-blue;
+$pagination-bg-current-color: $wfp-green;
+$pagination-bg-inactive-color: $wfp-grey;

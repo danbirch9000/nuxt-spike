@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="64px" height="59px" viewBox="0 0 64 59" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+    <title>icons/actions/release</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icons/actions/release" stroke="#FEFEFE" stroke-width="2">
+            <g id="Page-1" transform="translate(17.000000, 14.000000)">
+                <path d="M26.1055,29.1058 L3.0005,29.1058 C1.3425,29.1058 0.0005,27.7618 0.0005,26.1058 L0.0005,3.0008 C0.0005,1.3428 1.3425,0.0008 3.0005,0.0008 L26.1055,0.0008 C27.7625,0.0008 29.1055,1.3428 29.1055,3.0008 L29.1055,26.1058 C29.1055,27.7618 27.7625,29.1058 26.1055,29.1058 Z" id="Stroke-1"></path>
+                <polyline id="Stroke-3" stroke-linecap="round" stroke-linejoin="round" points="22.084 9.2444 11.468 19.8604 7.341 15.7344"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>

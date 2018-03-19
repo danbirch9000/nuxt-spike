@@ -1,0 +1,29 @@
+.useful-links {
+
+  background-color: $primary-well;
+  padding: $hermes-spacer;
+  margin-top: $hermes-spacer;
+
+  h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.2em;
+    color: $wfp-blue;
+    font-weight: bold;
+  }
+
+  a {
+    color: $wfp-green;
+    display: block;
+    margin-top: $hermes-spacer/2;
+    &:before {
+      content: '-';
+      margin-right: $hermes-spacer/2;
+    }
+    &:hover, &:active {
+      text-decoration: none;
+      color: darken($wfp-green, 10%);
+    }
+  }
+
+}

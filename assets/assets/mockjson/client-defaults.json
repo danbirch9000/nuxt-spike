@@ -1,0 +1,34 @@
+{
+  "clientDefaultList": [
+    {
+      "clientId": 226,
+      "deliveryMethodDescription": "COU-PNET",
+      "deliveryMethodId": "004",
+      "deliveryPreferenceOrder": "1"
+    },
+    {
+      "clientId": 226,
+      "deliveryMethodDescription": "L&L-PNET",
+      "deliveryMethodId": "020",
+      "deliveryPreferenceOrder": "2"
+    },
+    {
+      "clientId": 226,
+      "deliveryMethodDescription": "BFPO",
+      "deliveryMethodId": "023",
+      "deliveryPreferenceOrder": "4"
+    },
+    {
+      "clientId": 226,
+      "deliveryMethodDescription": "Nightline",
+      "deliveryMethodId": "073",
+      "deliveryPreferenceOrder": "5"
+    }
+  ],
+  "clientAvailableCountries": [
+    {
+      "countryName": "UNITED KINGDOM",
+      "countryCode": 826
+    }
+  ]
+}

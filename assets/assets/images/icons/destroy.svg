@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="64px" height="59px" viewBox="0 0 64 59" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+    <title>icons/actions/destory</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icons/actions/destory">
+            <g id="Page-1" transform="translate(4.000000, 0.000000)">
+                <g id="Group-5" transform="translate(0.000000, 0.922494)" stroke="#FEFEFE" stroke-width="2" stroke-linecap="round">
+                    <path d="M0,0.0292145161 L56.9715,57.0974403" id="Stroke-1"></path>
+                    <path d="M56.97131,0.0292145161 L-0.00019,57.0974403" id="Stroke-3"></path>
+                </g>
+                <polygon id="Fill-6" fill="#FEFEFE" points="19.638305 16.5882306 37.304505 16.5882306 39.204505 14.6850048 17.738305 14.6850048"></polygon>
+                <polygon id="Fill-7" fill="#FEFEFE" points="43.260245 40.1778581 43.260245 18.7789387 41.360245 20.6821645 41.360245 38.2746323"></polygon>
+                <polygon id="Fill-8" fill="#FEFEFE" points="37.252255 42.3821742 19.697205 42.3821742 17.797205 44.2854 39.152255 44.2854"></polygon>
+                <polygon id="Fill-9" fill="#FEFEFE" points="13.710115 18.7991129 13.710115 40.2227742 15.610115 38.3195484 15.610115 20.7023387"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

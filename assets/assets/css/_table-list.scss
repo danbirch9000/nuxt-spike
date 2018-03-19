@@ -1,0 +1,60 @@
+.table-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  li {
+    margin: 0 0 $hermes-spacer;
+    padding: $hermes-spacer 0;
+    background-color: $primary-well;
+    border: 2px $primary-well solid;
+    overflow: hidden;
+    cursor: pointer;
+    &:focus,
+    &:hover {
+      background-color: $table-row-active;
+      outline: 0;
+      border: 2px $table-row-active solid;
+    }
+    &:active {
+      background-color: $table-row-active;
+      outline: 0;
+      border: 2px $table-row-active-border solid;
+    }
+    &.table-list-head {
+      background-color: $primary-canvas;
+      border-color: $primary-canvas;
+      padding: 0;
+      span {
+        font-size: 1.1em;
+        font-weight: bold;
+        position: relative;
+        &.sortable {
+          cursor: pointer;
+        }
+        @include noSelect();
+        &.sort{
+          @include addSort($wfp-blue);
+          background-repeat: no-repeat;
+          width: 20px;
+          height: 20px;
+          position: relative;
+          top: 4px;
+          display: inline-block;
+        }
+        &.sort-asc {
+          @include addSortDesc($wfp-blue);
+        }
+        &.sort-desc {
+          @include addSortAsc($wfp-blue);
+        }
+      }
+    }
+
+    span {
+      width: 24%;
+      display: inline-block;
+      padding-left: $hermes-spacer / 2;
+      font-size: 1.4em;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+    "accounts": [
+      {
+        "name": "ISA",
+        "value": "2000.00",
+        "id": 1,
+        "historicValuations": [
+          { "date": "2018-03-23T12:51:44+00:00", "value": "1000.00" },
+          { "date": "2018-02-23T12:51:44+00:00", "value": "1500.00" }
+        ]
+      }
+    ],
+    "targets": [
+        {
+            "name": "ISA Retirement",
+            "valuation": "20000.00",
+            "startDate": "2018-03-23T12:51:44+00:00",
+            "endDate": "2035-03-23T12:51:44+00:00",
+            "savePerMonth" : "800",
+            "interestRate" : "8",
+            "id" : 1,
+            "acccounts": [1]
+        }
+    ]
+  }

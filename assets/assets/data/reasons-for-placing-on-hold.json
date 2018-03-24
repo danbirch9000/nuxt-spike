@@ -1,9 +1,0 @@
-[
-  {"description": "Awaiting field manager", "code": "HRFM"},
-  {"description": "Awaiting Customer", "code": "HRCI"},
-  {"description": "Awaiting Client", "code": "HCLI"},
-  {"description": "Awaiting regional manager", "code": "UHRM"},
-  {"description": "Awaiting Courier", "code": "HRIC"}
-]
-
-

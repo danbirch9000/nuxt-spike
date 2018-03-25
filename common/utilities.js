@@ -6,13 +6,12 @@ module.exports = {
     return message;
   },
 
-  calculateSavings: (initialAmount, years, monthly, rate) => {
+  calculateSavings: (initialAmount, years, monthly, rate, currentYear) => {
     var finance = new Finance();
     var amount = initialAmount;
-    var currentYear = 876;
     var data = [];
     for (var index = 0; index < years; index++) {
-      var x = module.exports.getCiforYear(amount, index, monthly, rate);
+      var x = module.exports.getCiforYear(amount, index, monthly, rate, currentYear + index);
       data.push(x);
       var interest = x.value - amount;
       amount = amount + interest;
@@ -20,7 +19,7 @@ module.exports = {
     return data;
   },
 
-  getCiforYear: (amount, year, monthly, rate) => {
+  getCiforYear: (amount, year, monthly, rate, currentYear) => {
     var finance = new Finance();
     var init = amount + monthly;
     var value = 0;
@@ -28,7 +27,7 @@ module.exports = {
       value = finance.CI(rate/12, 1, init, 1);// rate, compoundings per period, principal, number of periods
       init = value + monthly;
     };
-    return { value: module.exports.roundToTwo(value), year: year + 1, interest: module.exports.roundToTwo(value - (amount + (monthly*12))) }
+    return { value: module.exports.roundToTwo(value), year: currentYear + 1, interest: module.exports.roundToTwo(value - (amount + (monthly*12))) }
   },
 
   roundToTwo: (num) => {

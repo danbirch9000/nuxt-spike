@@ -6,6 +6,7 @@ const createStore = () => {
     state: {
       parcelData: null,
       userData: null,
+      goals: []
     },
     mutations: {
       setParcelData: (state, payload) => {
@@ -13,6 +14,9 @@ const createStore = () => {
       },
       setUserData: (state, payload) => {
         state.userData = payload
+      },
+      saveGoal: (state, payload) => {
+        state.goals.push(payload);
       }
     },
     actions: {
@@ -27,6 +31,11 @@ const createStore = () => {
         .then(data => {
           vuexContext.commit("setUserData", data.data);
         });
+      },
+      saveGoal(vuexContext, context){
+        console.log(vuexContext);
+        console.log(context);
+        vuexContext.commit("saveGoal", context);
       }
     }
   })

@@ -1,1 +1,11 @@
-@import './assets/normalise';
+@import './assets/bootstrap/bootstrap';
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+label {
+    font-size: 0.8em;
+    margin-bottom: 1px;
+    font-weight: bold;
+}

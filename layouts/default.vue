@@ -1,5 +1,8 @@
 <template>
   <div>
+    <nuxt-link to="/">Home</nuxt-link>
+    <nuxt-link to="/goals">Goals</nuxt-link>
+    <nuxt-link to="/accounts">Accounts</nuxt-link>
     <nuxt/>
   </div>
 </template>

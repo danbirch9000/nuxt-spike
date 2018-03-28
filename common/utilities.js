@@ -11,7 +11,7 @@ module.exports = {
     monthly = parseFloat(monthly);
     years = parseFloat(years);
 
-    return utilities.calculateSavings(amount, years, monthly, rate, startDate);;
+    return module.exports.calculateSavings(amount, years, monthly, rate, startDate);;
   },
   calculateSavings: (initialAmount, years, monthly, rate, moment) => {
     var amount = initialAmount;

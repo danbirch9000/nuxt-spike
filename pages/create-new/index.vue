@@ -40,7 +40,7 @@
         </div>
       </div>
     </div>
-    <chart v-bind="getChartConfig()"></chart>
+    <chart v-bind="getChartConfig"></chart>
   </section>
 </template>
 
@@ -63,7 +63,7 @@ export default {
       amount: 1000,
       monthly: 250,
       years: 10,
-      startDate: null,
+      startDate: moment(),
       chartData: null,
       savingsGoal: null
     }
@@ -78,7 +78,7 @@ export default {
     getGoalsFromStore: function(){
       return this.$store.state.goals
     },
-    getChartConfig(){
+    getChartConfig: function (){
       return {
         description: this.description,
         rate: this.rate,

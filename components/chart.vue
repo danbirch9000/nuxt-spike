@@ -53,7 +53,7 @@ const chartConfig = {
   export default {
     data: function() {
       return {
-        startDate: null,
+        
         chartConfig: chartConfig,
         chartData: null,
         savingsGoal: null
@@ -75,8 +75,8 @@ const chartConfig = {
         }
       },
       calculate: function(){
-        this.startDate = moment(),
-        this.savingsGoal = utilities.getFinanceData(this.rate, this.amount, this.monthly, this.years, moment());
+ 
+        this.savingsGoal = utilities.getFinanceData(this.rate, this.amount, this.monthly, this.years, this.startDate);
         this.chartData = utilities.buildChartData(this.savingsGoal);
         this.updateChart();
       }

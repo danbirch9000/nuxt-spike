@@ -40,7 +40,7 @@
         </div>
       </div>
     </div>
-    <chart v-bind="getChartConfig"></chart>
+    <chart v-bind="getChartConfig" ref="charttest"></chart>
   </section>
 </template>
 
@@ -92,8 +92,11 @@ export default {
   methods: {
 
     calculate: function(){
+      
       this.startDate = moment(),
       this.savingsGoal = this.getFinanceData();
+      console.log(this.$refs);
+      this.$refs.charttest.updateChart();
     },
     getFinanceData: function() {
       if (this.rate == '' || this.amount == '' || this.monthly == '' || this.years == ''){

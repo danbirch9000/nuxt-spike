@@ -59,6 +59,7 @@ const chartConfig = {
         savingsGoal: null
       }
     },
+    props: ['description', 'rate', 'amount', 'monthly', 'years', 'startDate'],
     created: function () {
       this.calculate();
     },
@@ -75,27 +76,9 @@ const chartConfig = {
       },
       calculate: function(){
         this.startDate = moment(),
-        this.savingsGoal = this.getFinanceData();
-        this.chartData = this.buildChartData(this.savingsGoal);
+        this.savingsGoal = utilities.getFinanceData(this.rate, this.amount, this.monthly, this.years, moment());
+        this.chartData = utilities.buildChartData(this.savingsGoal);
         this.updateChart();
-      },
-      getFinanceData: function() {
-        if (this.rate == '' || this.amount == '' || this.monthly == '' || this.years == ''){
-          return [];
-        }
-        var monthly = parseFloat(this.monthly);
-        var amount = parseFloat(this.amount);
-        var rate = parseFloat(this.rate);
-        var years = parseFloat(this.years);
-        var savingsObject = utilities.calculateSavings(amount, years, monthly, rate, this.startDate);
-        return savingsObject;
-      },
-      buildChartData(data){
-        var chartData = [];
-        for (var i = 0; i < data.length; i++) {
-          chartData.push([data[i].utc, data[i].value]);
-        }
-        return chartData;
       }
     }
   }

@@ -40,7 +40,7 @@
         </div>
       </div>
     </div>
-    <chart config="getChartConfig()"></chart>
+    <chart v-bind="getChartConfig()"></chart>
   </section>
 </template>
 
@@ -90,18 +90,10 @@ export default {
     }
   },
   methods: {
-    updateChart(){
-      if (this.$refs.highcharts !== undefined){
-        var chart = this.$refs.highcharts.chart;
-        chart.series[0].setData(this.chartData);
-        chart.redraw();
-      }
-    },
+
     calculate: function(){
       this.startDate = moment(),
       this.savingsGoal = this.getFinanceData();
-      this.chartData = this.buildChartData(this.savingsGoal);
-      this.updateChart();
     },
     getFinanceData: function() {
       if (this.rate == '' || this.amount == '' || this.monthly == '' || this.years == ''){
@@ -116,23 +108,14 @@ export default {
     },
     saveGoal: function(){
       this.$store.dispatch('saveGoal', {
-      rate: this.rate,
-      amount: this.amount,
-      monthly: this.monthly,
-      years: this.years,
-      startDate: moment(),
-      description: this.description
-    })
-
-    this.$router.push('/goals')
-
-    },
-    buildChartData(data){
-      var chartData = [];
-      for (var i = 0; i < data.length; i++) {
-        chartData.push([data[i].utc, data[i].value]);
-      }
-      return chartData;
+        rate: this.rate,
+        amount: this.amount,
+        monthly: this.monthly,
+        years: this.years,
+        startDate: moment(),
+        description: this.description
+      });
+      this.$router.push('/goals')
     }
 
   }

@@ -5,7 +5,19 @@ module.exports = {
   writeToPage: (message) => {
     return message;
   },
+  getFinanceData: function(rate, amount, monthly, years, startDate) {
+    if (rate == '' || amount == '' || monthly == '' || years == ''){
+      return [];
+    }
 
+    rate = parseFloat(rate);
+    amount = parseFloat(amount);
+    monthly = parseFloat(monthly);
+    years = parseFloat(years);
+
+    var savingsObject = utilities.calculateSavings(amount, years, monthly, rate, startDate);
+    return savingsObject;
+  },
   calculateSavings: (initialAmount, years, monthly, rate, moment) => {
     var finance = new Finance();
     var amount = initialAmount;
@@ -27,7 +39,7 @@ module.exports = {
       value = finance.CI(rate/12, 1, init, 1);// rate, compoundings per period, principal, number of periods
       init = value + monthly;
     };
-    return { 
+    return {
       value: module.exports.roundToTwo(value),
       date: time.format('MMM YYYY'),
       utc: time.utc().valueOf(),
@@ -37,6 +49,14 @@ module.exports = {
 
   roundToTwo: (num) => {
     return Math.round(num * 100) / 100
+  },
+
+  buildChartData: (data) => {
+    var chartData = [];
+    for (var i = 0; i < data.length; i++) {
+      chartData.push([data[i].utc, data[i].value]);
+    }
+    return chartData;
   }
 
 }

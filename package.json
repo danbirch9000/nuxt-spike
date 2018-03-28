@@ -7,11 +7,11 @@
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
-    "sit": "NODE_ENV=sit nuxt",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "precommit": "npm run lint"
+    "precommit": "npm run lint",
+    "test": "jest"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.0.0",
@@ -27,11 +27,28 @@
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
+    "babel-jest": "^22.4.3",
     "babel-preset-stage-2": "^6.24.1",
     "cross-env": "^5.0.1",
     "eslint": "^4.15.0",
     "eslint-loader": "^1.7.1",
     "eslint-plugin-vue": "^4.0.0",
-    "financejs": "^4.1.0"
+    "financejs": "^4.1.0",
+    "jest": "^22.4.3",
+    "jest-vue-preprocessor": "^1.4.0",
+    "vue-test-utils": "^1.0.0-beta.11"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^vue$": "vue/dist/vue.common.js"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "vue"
+    ],
+    "transform": {
+      "^.+\\.js$": "node_modules/babel-jest",
+      ".*\\.(vue)$": "node_modules/jest-vue-preprocessor"
+    }
   }
 }

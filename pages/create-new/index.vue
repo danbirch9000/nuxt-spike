@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-    <div>
+
       <h1>Create new goal</h1>
       <div class="container">
         <div class="row">
@@ -31,15 +31,11 @@
             </form>
           </div>
           <div class="col-sm">
-            <ul id="example-1" v-if="getSavingsGoal !== null">
-              <li v-for="item in getSavingsGoal" :key="item.value">
-                &pound;{{ item.value }} - {{ item.date }} - &pound;{{ item.interest }}
-              </li>
-            </ul>
+            <tableData v-bind="getChartConfig"></tableData>
           </div>
         </div>
       </div>
-    </div>
+
     <chart v-bind="getChartConfig" ref="charttest"></chart>
   </section>
 </template>
@@ -49,12 +45,14 @@
 import utilities from '~/common/utilities.js'
 import moment from 'moment'
 import goalList from '~/components/goal-list'
+import tableData from '~/components/table-data'
 import chart from '~/components/chart'
 
 export default {
   components: {
     goalList,
-    chart
+    chart,
+    tableData
   },
   data: function() {
     return {
@@ -72,12 +70,6 @@ export default {
     getSavingsGoal: function(){
       return this.savingsGoal
     },
-    getChartData: function(){
-      return this.chartData
-    },
-    getGoalsFromStore: function(){
-      return this.$store.state.goals
-    },
     getChartConfig: function (){
       return {
         description: this.description,
@@ -92,22 +84,9 @@ export default {
   methods: {
 
     calculate: function(){
-      
       this.startDate = moment(),
-      this.savingsGoal = this.getFinanceData();
-      console.log(this.$refs);
+      this.savingsGoal = utilities.getFinanceData(this.rate, this.amount, this.monthly, this.years, this.startDate);
       this.$refs.charttest.updateChart();
-    },
-    getFinanceData: function() {
-      if (this.rate == '' || this.amount == '' || this.monthly == '' || this.years == ''){
-        return [];
-      }
-      var monthly = parseFloat(this.monthly);
-      var amount = parseFloat(this.amount);
-      var rate = parseFloat(this.rate);
-      var years = parseFloat(this.years);
-      var savingsObject = utilities.calculateSavings(amount, years, monthly, rate, this.startDate);
-      return savingsObject;
     },
     saveGoal: function(){
       this.$store.dispatch('saveGoal', {
@@ -120,7 +99,6 @@ export default {
       });
       this.$router.push('/goals')
     }
-
   }
 }
 </script>

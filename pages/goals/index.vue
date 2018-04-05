@@ -6,7 +6,7 @@
         <div class="row">
           <div class="col-md">
             <goalList />
-            <chart v-bind="getChartConfig" ref="charttest"></chart>
+            <chart v-bind="getChartConfig" ref="charttest" v-if="currentViewChartData.rate !== ''"></chart>
           </div>
           <div class="col-md">
             <nuxt-link to="/create-new">Create new goal</nuxt-link>
@@ -22,6 +22,7 @@
 import utilities from '~/common/utilities.js'
 import goalList from '~/components/goal-list'
 import chart from '~/components/chart'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -29,6 +30,9 @@ export default {
     chart
   },
   computed: {
+    ...mapGetters({
+        currentViewChartData: 'getCurrentViewChartData'
+      }),
     getChartConfig: function (){
       return {
         description: this.$store.state.goalView.description,
@@ -39,6 +43,7 @@ export default {
         startDate: this.$store.state.goalView.startDate
       }
     }
+    
   }
 }
 </script>

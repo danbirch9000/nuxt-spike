@@ -13,11 +13,13 @@ module.exports = {
 
     return module.exports.calculateSavings(amount, years, monthly, rate, startDate);;
   },
-  calculateSavings: (initialAmount, years, monthly, rate, moment) => {
+  calculateSavings: (initialAmount, years, monthly, rate, date) => {
+
+    var time = moment(date);
     var amount = initialAmount;
     var data = [];
     for (var index = 0; index < years; index++) {
-      var savingsForYear = module.exports.getCiforYear(amount, index, monthly, rate, moment.add('years', 1));
+      var savingsForYear = module.exports.getCiforYear(amount, index, monthly, rate, time.add('years', 1));
       data.push(savingsForYear);
       amount += (savingsForYear.value - amount);
     }

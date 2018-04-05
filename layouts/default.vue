@@ -15,6 +15,10 @@
       </div>
     </nav>
 
+          <nuxt-link to="/" tag="li" active-class="active" class="nav-item"><a>Home</a></nuxt-link>
+          <nuxt-link to="/goals" tag="li" active-class="active" class="nav-item"><a>Goals</a></nuxt-link>
+          <nuxt-link to="/accounts" tag="li" active-class="active" class="nav-item"><a>Accounts</a></nuxt-link>
+
     <nuxt/>
   </div>
 </template>

@@ -94,7 +94,7 @@ export default {
         amount: this.amount,
         monthly: this.monthly,
         years: this.years,
-        startDate: moment(),
+        startDate: moment().format(),
         description: this.description
       });
       this.$router.push('/goals')

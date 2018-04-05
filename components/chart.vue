@@ -1,12 +1,14 @@
 <template>
     <section>
       <highcharts :options="chartConfig" ref="highcharts"></highcharts>
+      {{currentViewChartData}}
     </section>
 </template>
 
 <script>
 import utilities from '~/common/utilities.js'
 import moment from 'moment'
+import { mapGetters } from 'vuex'
 
 const chartConfig = {
   chart: {
@@ -61,22 +63,30 @@ const chartConfig = {
     },
     props: ['description', 'rate', 'amount', 'monthly', 'years', 'startDate'],
     created: function () {
-      this.calculate();
+      // this.calculate();
     },
     computed: {
-
+      ...mapGetters({
+        currentViewChartData: 'getCurrentViewChartData'
+      })
+    },
+    watch:{
+      currentViewChartData(){
+        this.calculate();
+      }
     },
     methods: {
       updateChart(){
+        
         if (this.$refs.highcharts !== undefined){
+          console.log(this.chartData);
           var chart = this.$refs.highcharts.chart;
           chart.series[0].setData(this.chartData);
           chart.redraw();
         }
       },
       calculate: function(){
- 
-        this.savingsGoal = utilities.getFinanceData(this.rate, this.amount, this.monthly, this.years, this.startDate);
+        this.savingsGoal = utilities.getFinanceData(this.currentViewChartData.rate, this.currentViewChartData.amount, this.currentViewChartData.monthly, this.currentViewChartData.years, this.currentViewChartData.startDate);
         this.chartData = utilities.buildChartData(this.savingsGoal);
         this.updateChart();
       }

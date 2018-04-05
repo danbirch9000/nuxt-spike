@@ -6,7 +6,7 @@
             <span v-on:click="loadGoal(index)">{{item.description}}</span>
           </li>
       </ul>
-      <tableData v-bind="getTableData"></tableData>
+      <tableData v-bind="getTableData" ref="charttest"></tableData>
     </section>
 </template>
 
@@ -33,6 +33,7 @@ import tableData from '~/components/table-data'
     methods: {
       loadGoal(index) {
         this.currentGoal = this.$store.state.goals[index];
+        this.$store.commit('setCurrentGoalView', this.currentGoal);
       }
     }
   }

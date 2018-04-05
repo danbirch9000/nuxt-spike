@@ -5,7 +5,15 @@ const createStore = () => {
   return new Vuex.Store({
     state: {
       userData: null,
-      goals: []
+      goals: [],
+      goalView: {
+        description: '',
+        rate: '',
+        amount: '',
+        monthly: '',
+        years: '',
+        startDate: ''  
+      }
     },
     mutations: {
       setUserData: (state, payload) => {
@@ -13,6 +21,9 @@ const createStore = () => {
       },
       saveGoal: (state, payload) => {
         state.goals.push(payload);
+      },
+      setCurrentGoalView: (state, payload) => {
+        state.goalView = payload;
       }
     },
     actions: {
@@ -24,6 +35,17 @@ const createStore = () => {
       },
       saveGoal(vuexContext, context){
         vuexContext.commit("saveGoal", context);
+      }
+    },
+    getters: {
+      getCurrentViewChartData: (state) => {
+        return {
+          rate: state.goalView.rate,
+          amount: state.goalView.amount,
+          monthly: state.goalView.monthly,
+          years: state.goalView.years, 
+          startDate: state.goalView.startDate
+        }
       }
     }
   })

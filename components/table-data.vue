@@ -1,10 +1,29 @@
 <template>
     <section>
-      <ul id="example-1" v-if="getSavingsGoal !== null">
-        <li v-for="item in getSavingsGoal" :key="item.value">
-          &pound;{{ item.value }} - {{ item.date }} - &pound;{{ item.interest }}
-        </li>
-      </ul>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
+            <table class="table" v-if="getSavingsGoal !== null">
+              <thead>
+                <tr>
+                  <th scope="col">Value</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Interest</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="item in getSavingsGoal" :key="item.value">
+                  <td>&pound;{{ item.value }}</td>
+                  <td>{{ item.date }}</td>
+                  <td>&pound;{{ item.interest }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
     </section>
 </template>
 

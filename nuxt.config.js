@@ -70,5 +70,8 @@ module.exports = {
         })
       }
     }
+  },
+  env: {
+    fbAPIKey: 'AIzaSyD_sLyw1k_eOwnZ48UjPjgLzUpzN7sz5R8'
   }
 }

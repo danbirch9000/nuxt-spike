@@ -29,6 +29,7 @@ export default {
     goalList,
     chart
   },
+  middleware:['check-auth','auth'],
   computed: {
     ...mapGetters({
         currentViewChartData: 'getCurrentViewChartData'

@@ -14,7 +14,8 @@ const createStore = () => {
         years: '',
         startDate: ''
       },
-      token: null
+      token: null,
+      userId: null
     },
     mutations: {
       setUserData: (state, payload) => {
@@ -28,6 +29,9 @@ const createStore = () => {
       },
       setToken(state, token) {
         state.token = token;
+      },
+      setUserId(state, id){
+        state.userId = id;
       },
       clearToken(state) {
         state.token = null;
@@ -60,6 +64,13 @@ const createStore = () => {
           })
           .then(result => {
             vuexContext.commit("setToken", result.idToken);
+
+            let userInfo = result.idToken.split('.');
+
+            let userDetails = JSON.parse(atob(userInfo[1]));
+           
+
+            vuexContext.commit("setUserId", userDetails.user_id);
             localStorage.setItem("token", result.idToken);
             localStorage.setItem(
               "tokenExpiration",

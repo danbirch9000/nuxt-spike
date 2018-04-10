@@ -15,11 +15,15 @@ const createStore = () => {
         startDate: ''
       },
       token: null,
-      userId: null
+      userId: null,
+      firebase: null
     },
     mutations: {
       setUserData: (state, payload) => {
         state.userData = payload
+      },
+      setData: (state, payload) => {
+        state.firebase = payload
       },
       saveGoal: (state, payload) => {
         state.goals.push(payload);
@@ -42,6 +46,12 @@ const createStore = () => {
         return axios.get(`http://localhost:3000/assets/assets/mockjson/sample.json`)
         .then(data => {
           vuexContext.commit("setUserData", data.data);
+        });
+      },
+      getData(vuexContext, context){
+        return axios.get(`https://vuejs-83403.firebaseio.com/test.json?auth=` + vuexContext.state.token)
+        .then(data => {
+          vuexContext.commit("setData", data.data);
         });
       },
       saveGoal(vuexContext, context){
@@ -68,7 +78,7 @@ const createStore = () => {
             let userInfo = result.idToken.split('.');
 
             let userDetails = JSON.parse(atob(userInfo[1]));
-           
+
 
             vuexContext.commit("setUserId", userDetails.user_id);
             localStorage.setItem("token", result.idToken);

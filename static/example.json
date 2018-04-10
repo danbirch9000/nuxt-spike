@@ -1,0 +1,17 @@
+{
+  "users": {
+      "TrZ2ferXTgSQ9glGQlQ1BAEfGEV2": {
+          "email": "user1@gmail.com"
+      }
+  },
+  "goals": {
+      "TrZ2ferXTgSQ9glGQlQ1BAEfGEV2": {
+          "goal1": {
+
+          },
+          "goal2": {
+
+          }
+      }
+  }
+}

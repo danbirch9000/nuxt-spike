@@ -12,7 +12,7 @@
             <nuxt-link to="/create-new">Create new goal</nuxt-link>
           </div>
         </div>
-      </div> 
+      </div>
     </div>
   </section>
 </template>
@@ -44,7 +44,10 @@ export default {
         startDate: this.$store.state.goalView.startDate
       }
     }
-    
-  }
+
+  },
+  fetch ({store}) {
+    store.dispatch('getData')
+  },
 }
 </script>

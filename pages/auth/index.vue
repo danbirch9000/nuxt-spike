@@ -5,9 +5,15 @@
         <div class="row">
           <div class="col-sm">
             <form @submit.prevent="onSubmit">
-              <input type='text' v-model='email'/>
-              <input type='text' v-model='password'/>
-              <button type="submit">go</button>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email</label>
+                <input type="email" class="form-control" v-model='email' id="email" />
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Password</label>
+                <input type="password" class="form-control" v-model='password' id="password" />
+              </div>
+              <button type="submit" class="btn btn-primary">Login</button>
             </form>
           </div>
         </div>

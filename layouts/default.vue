@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Nuxt</a>
+      <a class="navbar-brand" href="#">Nuxt v0.0.1</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -11,14 +11,10 @@
           <nuxt-link to="/" tag="li" active-class="active" class="nav-item"><a>Home</a></nuxt-link>
           <nuxt-link to="/goals" tag="li" active-class="active" class="nav-item"><a>Goals</a></nuxt-link>
           <nuxt-link to="/accounts" tag="li" active-class="active" class="nav-item"><a>Accounts</a></nuxt-link>
+          <li @click="logout">Logout</li>
         </ul>
       </div>
     </nav>
-
-    <nuxt-link to="/" tag="li" active-class="active" class="nav-item"><a>Home</a></nuxt-link>
-    <nuxt-link to="/goals" tag="li" active-class="active" class="nav-item"><a>Goals</a></nuxt-link>
-    <nuxt-link to="/accounts" tag="li" active-class="active" class="nav-item"><a>Accounts</a></nuxt-link>
-    <span @click="logout()">Logout</span>
 
     <nuxt/>
 
@@ -34,6 +30,7 @@ export default {
     logout(){
       console.log('test');
       this.$store.dispatch("logout");
+      this.$router.push("/auth");
     }
   }
 }

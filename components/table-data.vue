@@ -32,14 +32,12 @@ import utilities from '~/common/utilities.js'
 import moment from 'moment'
 
   export default {
-    data: function() {
-      return { }
-    },
-    props: ['description', 'rate', 'amount', 'monthly', 'years', 'startDate'],
-
     computed: {
+      ...mapGetters({
+        currentViewChartData: 'getCurrentViewChartData'
+      }),
       getSavingsGoal (){
-        return utilities.getFinanceData(this.rate, this.amount, this.monthly, this.years, this.startDate);
+        return utilities.getFinanceData(this.currentViewChartData.rate, this.currentViewChartData.amount, this.currentViewChartData.monthly, this.currentViewChartData.years, this.currentViewChartData.startDate);
       }
     }
   }

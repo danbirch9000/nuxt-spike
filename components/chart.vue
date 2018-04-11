@@ -55,7 +55,6 @@ const chartConfig = {
   export default {
     data: function() {
       return {
-        
         chartConfig: chartConfig,
         chartData: null,
         savingsGoal: null
@@ -77,9 +76,7 @@ const chartConfig = {
     },
     methods: {
       updateChart(){
-        
         if (this.$refs.highcharts !== undefined){
-          console.log(this.chartData);
           var chart = this.$refs.highcharts.chart;
           chart.series[0].setData(this.chartData);
           chart.redraw();

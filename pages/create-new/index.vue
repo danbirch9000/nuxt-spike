@@ -66,6 +66,7 @@ export default {
       savingsGoal: null
     }
   },
+  middleware:['check-auth','auth'],
   computed:{
     getSavingsGoal: function(){
       return this.savingsGoal

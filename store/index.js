@@ -56,8 +56,6 @@ const createStore = () => {
         });
       },
       saveGoal(vuexContext, post){
-
-
         const goal = {
           ...post
         };
@@ -71,15 +69,6 @@ const createStore = () => {
             vuexContext.commit("saveGoal", context);
           })
           .catch(e => console.log(e));
-
-
-
-
-
-
-
-
-
       },
       authenticateUser(vuexContext, authData) {
         let authUrl =

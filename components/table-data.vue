@@ -30,6 +30,7 @@
 <script>
 import utilities from '~/common/utilities.js'
 import moment from 'moment'
+import { mapGetters } from 'vuex'
 
   export default {
     computed: {

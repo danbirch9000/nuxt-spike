@@ -26,12 +26,20 @@
                 <label for="years">Years</label>
                 <input v-model="years" type="text" class="form-control" id="years" aria-describedby="years">
               </div>
-              <button type="button" class="btn btn-primary" v-on:click="calculate()">Calculate</button>
-              <button type="button" class="btn btn-primary" v-on:click="saveGoal()">Save goal</button>
+              <div class="row">
+                <div class="col-sm">
+                  <button type="button" class="btn btn-primary" v-on:click="calculate()">Calculate</button>
+                </div>
+                <div class="col-sm">
+                  <button type="button" class="btn btn-primary" v-on:click="saveGoal()">Save goal</button>
+                </div>
+              </div>
+              
+              
             </form>
           </div>
           <div class="col-sm">
-            <tableData v-bind="getChartConfig"></tableData>
+            <tableData />
           </div>
         </div>
       </div>
@@ -86,8 +94,19 @@ export default {
 
     calculate: function(){
       this.startDate = moment(),
-      this.savingsGoal = utilities.getFinanceData(this.rate, this.amount, this.monthly, this.years, this.startDate);
-      this.$refs.charttest.updateChart();
+    
+      this.currentGoal = {
+        rate: this.rate,
+        amount: this.amount,
+        monthly: this.monthly,
+        years: this.years,
+        startDate: moment().format(),
+        description: this.description
+      };
+      this.$store.commit('setCurrentGoalView', this.currentGoal);
+
+      // this.savingsGoal = utilities.getFinanceData(this.rate, this.amount, this.monthly, this.years, this.startDate);
+      
     },
     saveGoal: function(){
       this.$store.dispatch('saveGoal', {

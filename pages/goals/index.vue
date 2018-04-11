@@ -14,6 +14,7 @@
         </div>
       </div>
     </div>
+    </div>
   </section>
 </template>
 
@@ -22,12 +23,14 @@
 import utilities from '~/common/utilities.js'
 import goalList from '~/components/goal-list'
 import chart from '~/components/chart'
+import tableData from '~/components/table-data'
 import { mapGetters } from 'vuex'
 
 export default {
   components: {
     goalList,
-    chart
+    chart,
+    tableData
   },
   middleware:['check-auth','auth'],
   fetch ({store}) {

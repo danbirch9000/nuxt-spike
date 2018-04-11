@@ -8,10 +8,10 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <nuxt-link to="/" tag="li" active-class="active" class="nav-item"><a>Home</a></nuxt-link>
-          <nuxt-link to="/goals" tag="li" active-class="active" class="nav-item"><a>Goals</a></nuxt-link>
-          <nuxt-link to="/accounts" tag="li" active-class="active" class="nav-item"><a>Accounts</a></nuxt-link>
-          <li @click="logout">Logout</li>
+          <nuxt-link to="/" tag="li" active-class="active" class="nav-item"><a class="nav-link">Home</a></nuxt-link>
+          <nuxt-link to="/goals" tag="li" active-class="active" class="nav-item"><a class="nav-link">Goals</a></nuxt-link>
+          <nuxt-link to="/accounts" tag="li" active-class="active" class="nav-item"><a class="nav-link">Accounts</a></nuxt-link>
+          <li @click="logout"><a class="nav-link">Logout</a></li>
         </ul>
       </div>
     </nav>
@@ -19,6 +19,7 @@
     <nuxt/>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </div>
 </template>

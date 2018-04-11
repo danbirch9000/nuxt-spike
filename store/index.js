@@ -1,5 +1,6 @@
 import Vuex from 'vuex'
 import axios from 'axios'
+import Cookie from "js-cookie";
 
 const createStore = () => {
   return new Vuex.Store({
@@ -54,8 +55,31 @@ const createStore = () => {
           vuexContext.commit("setData", data.data);
         });
       },
-      saveGoal(vuexContext, context){
-        vuexContext.commit("saveGoal", context);
+      saveGoal(vuexContext, post){
+
+
+        const goal = {
+          ...post
+        };
+        return this.$axios
+          .$post(
+            "https://vuejs-83403.firebaseio.com/goals/"+ vuexContext.state.userId +".json?auth=" +
+              vuexContext.state.token,
+            goal
+          )
+          .then(data => {
+            vuexContext.commit("saveGoal", context);
+          })
+          .catch(e => console.log(e));
+
+
+
+
+
+
+
+
+
       },
       authenticateUser(vuexContext, authData) {
         let authUrl =
@@ -86,36 +110,36 @@ const createStore = () => {
               "tokenExpiration",
               new Date().getTime() + Number.parseInt(result.expiresIn) * 1000
             );
-            // Cookie.set("jwt", result.idToken);
-            // Cookie.set(
-            //   "expirationDate",
-            //   new Date().getTime() + Number.parseInt(result.expiresIn) * 1000
-            // );
+            Cookie.set("jwt", result.idToken);
+            Cookie.set(
+              "expirationDate",
+              new Date().getTime() + Number.parseInt(result.expiresIn) * 1000
+            );
           })
           .catch(e => console.log(e));
       },
       initAuth(vuexContext, req) {
         let token;
         let expirationDate;
-        // if (req) {
-        //   if (!req.headers.cookie) {
-        //     return;
-        //   }
-        //   const jwtCookie = req.headers.cookie
-        //     .split(";")
-        //     .find(c => c.trim().startsWith("jwt="));
-        //   if (!jwtCookie) {
-        //     return;
-        //   }
-        //   token = jwtCookie.split("=")[1];
-        //   expirationDate = req.headers.cookie
-        //     .split(";")
-        //     .find(c => c.trim().startsWith("expirationDate="))
-        //     .split("=")[1];
-        // } else {
-        //   token = localStorage.getItem("token");
-        //   expirationDate = localStorage.getItem("tokenExpiration");
-        // }
+        if (req) {
+          if (!req.headers.cookie) {
+            return;
+          }
+          const jwtCookie = req.headers.cookie
+            .split(";")
+            .find(c => c.trim().startsWith("jwt="));
+          if (!jwtCookie) {
+            return;
+          }
+          token = jwtCookie.split("=")[1];
+          expirationDate = req.headers.cookie
+            .split(";")
+            .find(c => c.trim().startsWith("expirationDate="))
+            .split("=")[1];
+        } else {
+          token = localStorage.getItem("token");
+          expirationDate = localStorage.getItem("tokenExpiration");
+        }
 
         token = localStorage.getItem("token");
           expirationDate = localStorage.getItem("tokenExpiration");
@@ -125,12 +149,16 @@ const createStore = () => {
           vuexContext.dispatch("logout");
           return;
         }
+
+        let userInfo = token.split('.');
+        let userDetails = JSON.parse(atob(userInfo[1]));
+        vuexContext.commit("setUserId", userDetails.user_id);
         vuexContext.commit("setToken", token);
       },
       logout(vuexContext) {
         vuexContext.commit("clearToken");
-        // Cookie.remove("jwt");
-        // Cookie.remove("expirationDate");
+        Cookie.remove("jwt");
+        Cookie.remove("expirationDate");
         if (process.client) {
           localStorage.removeItem("token");
           localStorage.removeItem("tokenExpiration");

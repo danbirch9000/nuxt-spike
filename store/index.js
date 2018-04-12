@@ -26,6 +26,9 @@ const createStore = () => {
       setData: (state, payload) => {
         state.firebase = payload
       },
+      setUserGoals: (state, payload) => {
+        state.goals = payload
+      },
       saveGoal: (state, payload) => {
         state.goals.push(payload);
       },
@@ -53,6 +56,17 @@ const createStore = () => {
         return axios.get(`https://vuejs-83403.firebaseio.com/test.json?auth=` + vuexContext.state.token)
         .then(data => {
           vuexContext.commit("setData", data.data);
+        });
+      },
+      getUserGoals(vuexContext, context){
+        return axios.get(`https://vuejs-83403.firebaseio.com/goals/${vuexContext.state.userId}.json?auth=` + vuexContext.state.token)
+        .then(data => {
+          const goalsArray = [];
+          for (const key in data.data) {
+            goalsArray.push({ ...data.data[key], id: key });
+          }
+          vuexContext.commit("setUserGoals", goalsArray);
+          vuexContext.commit("setCurrentGoalView", goalsArray[0]);
         });
       },
       saveGoal(vuexContext, post){

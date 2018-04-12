@@ -5,15 +5,17 @@
       <div class="container">
         <div class="row">
           <div class="col-md">
+            <nuxt-link to="/create-new">Create new goal</nuxt-link>
+
             <goalList />
+            <h2>{{currentGoal.description}}</h2>
+            <p>Save £{{currentGoal.monthly}} per month for {{currentGoal.years}} years at {{currentGoal.rate}}%.
+              Starting from {{currentGoal.startDate}} with £{{currentGoal.amount}}</p>
             <chart />
             <tableData />
-          <div class="col-md">
-            <nuxt-link to="/create-new">Create new goal</nuxt-link>
           </div>
         </div>
       </div>
-    </div>
     </div>
   </section>
 </template>
@@ -25,8 +27,12 @@ import goalList from '~/components/goal-list'
 import chart from '~/components/chart'
 import tableData from '~/components/table-data'
 import { mapGetters } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
+  computed: mapState({
+    currentGoal: state => state.goalView
+  }),
   components: {
     goalList,
     chart,
@@ -34,7 +40,7 @@ export default {
   },
   middleware:['check-auth','auth'],
   fetch ({store}) {
-    store.dispatch('getData')
+    store.dispatch('getUserGoals')
   },
 }
 </script>

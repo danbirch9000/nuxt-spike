@@ -1,7 +1,6 @@
 <template>
     <section>
       <highcharts :options="chartConfig" ref="highcharts"></highcharts>
-      {{currentViewChartData}}
     </section>
 </template>
 

@@ -78,13 +78,23 @@ const chartConfig = {
         if (this.$refs.highcharts !== undefined){
           var chart = this.$refs.highcharts.chart;
           chart.series[0].setData(this.chartData);
+          console.log(chart.series);
           chart.redraw();
+          this.addNoneCompoundedData();
         }
       },
       calculate: function(){
         this.savingsGoal = utilities.getFinanceData(this.currentViewChartData.rate, this.currentViewChartData.amount, this.currentViewChartData.monthly, this.currentViewChartData.years, this.currentViewChartData.startDate);
         this.chartData = utilities.buildChartData(this.savingsGoal);
         this.updateChart();
+      },
+      addNoneCompoundedData(){
+        let data = utilities.getFinanceData(0, this.currentViewChartData.amount, this.currentViewChartData.monthly, this.currentViewChartData.years, this.currentViewChartData.startDate); 
+        let chartData = utilities.buildChartData(data);
+        var chart = this.$refs.highcharts.chart;
+        chart.addSeries({name: '0% rate', data: chartData});
+        chart.redraw();
+
       }
     }
   }

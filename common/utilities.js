@@ -3,18 +3,16 @@ const moment = require('moment')
 
 module.exports = {
   getFinanceData: function(rate, amount, monthly, years, startDate) {
-    if (rate == '' || amount == '' || monthly == '' || years == ''){
+    if (rate === '' || amount === '' || monthly === '' || years === ''){
       return [];
     }
     rate = parseFloat(rate);
     amount = parseFloat(amount);
     monthly = parseFloat(monthly);
     years = parseFloat(years);
-
     return module.exports.calculateSavings(amount, years, monthly, rate, startDate);;
   },
   calculateSavings: (initialAmount, years, monthly, rate, date) => {
-
     var time = moment(date);
     var amount = initialAmount;
     var data = [];

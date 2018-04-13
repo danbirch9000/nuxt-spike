@@ -19,8 +19,7 @@ const chartConfig = {
   xAxis: {
     type: 'datetime',
     dateTimeLabelFormats: { // don't display the dummy year
-        month: '%e. %b',
-        year: '%b'
+        year: '%Y'
     },
     title: {
         text: 'Date'
@@ -34,7 +33,7 @@ const chartConfig = {
   },
   tooltip: {
     headerFormat: '<b>{series.name}</b><br>',
-    pointFormat: '{point.x:%e. %b}: £{point.y:.2f}'
+    pointFormat: '{point.x:%b %Y}: £{point.y:.2f}'
   },
 
   plotOptions: {

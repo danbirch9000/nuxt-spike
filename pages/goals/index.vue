@@ -5,7 +5,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md">
-            <nuxt-link to="/create-new">Create new goal</nuxt-link>
+            <nuxt-link tag="button" to="/create-new" class="btn btn-primary btn-lg btn-block">Create new goal</nuxt-link>
 
             <goalList />
             <h2>{{currentGoal.description}}</h2>

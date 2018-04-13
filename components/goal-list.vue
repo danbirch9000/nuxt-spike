@@ -1,11 +1,11 @@
 <template>
     <section>
       <p>Click to view each goal</p>
-      <ul v-if="getGoalsFromStore.length > 0">
-          <li v-for="(item, index) in getGoalsFromStore" :key="item.description">
-            <span v-on:click="loadGoal(index)">{{item.description}}</span>
-          </li>
-      </ul>
+      <div v-if="getGoalsFromStore.length > 0">
+          <span v-for="(item, index) in getGoalsFromStore" :key="item.description">
+            <button @click="loadGoal(index)" type="button" class="btn btn-primary btn-sm">{{item.description}}</button>
+          </span>
+      </div>
     </section>
 </template>
 

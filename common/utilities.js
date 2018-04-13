@@ -32,8 +32,10 @@ module.exports = {
       value = finance.CI(rate/12, 1, principal, 1);// rate, compoundings per period, principal, number of periods
       principal = value + monthly;
     };
+    var roundedVal = module.exports.roundToTwo(value);
     return {
-      value: module.exports.roundToTwo(value),
+      value: roundedVal,
+      formattedvalue: module.exports.numberWithCommas(roundedVal),
       date: time.format('MMM YYYY'),
       utc: time.utc().valueOf(),
       interest: module.exports.roundToTwo(value - (amount + (monthly*12)))
@@ -50,6 +52,10 @@ module.exports = {
       chartData.push([data[i].utc, data[i].value]);
     }
     return chartData;
+  },
+
+  numberWithCommas(x){
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
 }

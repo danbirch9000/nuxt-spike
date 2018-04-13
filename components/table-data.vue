@@ -13,7 +13,7 @@
               </thead>
               <tbody>
                 <tr v-for="item in getSavingsGoal" :key="item.value">
-                  <td>&pound;{{ item.value }}</td>
+                  <td>&pound;{{ item.formattedvalue }}</td>
                   <td>{{ item.date }}</td>
                   <td>&pound;{{ item.interest }}</td>
                 </tr>
@@ -43,3 +43,10 @@ import { mapGetters } from 'vuex'
     }
   }
 </script>
+
+<style scoped>
+.table th, .table td{
+  padding: 0.25em;
+  font-size: 0.8em;
+}
+</style>

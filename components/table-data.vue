@@ -6,16 +6,20 @@
             <table class="table" v-if="getSavingsGoal !== null">
               <thead>
                 <tr>
+                  <th scope="col">&nbsp;</th>
                   <th scope="col">Value</th>
                   <th scope="col">Date</th>
                   <th scope="col">Interest</th>
+                  <th scope="col">Total Interest</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item in getSavingsGoal" :key="item.value">
+                <tr v-for="(item, index) in getSavingsGoal" :key="item.value">
+                  <td>{{index + 1}}</td>
                   <td>&pound;{{ item.formattedvalue }}</td>
                   <td>{{ item.date }}</td>
                   <td>&pound;{{ item.interest }}</td>
+                  <td>&pound;{{ item.totalInterest }}</td>
                 </tr>
               </tbody>
             </table>

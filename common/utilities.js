@@ -18,6 +18,15 @@ module.exports = {
     var data = [];
     for (var index = 0; index < years; index++) {
       var savingsForYear = module.exports.getCiforYear(amount, index, monthly, rate, time.add('years', 1));
+      
+      if (index === 0){
+        savingsForYear.totalInterest = savingsForYear.interest;
+      }else{
+        savingsForYear.totalInterest = data[index - 1].totalInterest + savingsForYear.interest;
+      }
+      
+      //savingsForYear.totalInterest = module.exports.numberWithCommas(savingsForYear.totalInterest)
+
       data.push(savingsForYear);
       amount += (savingsForYear.value - amount);
     }

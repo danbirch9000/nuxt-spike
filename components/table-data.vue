@@ -19,7 +19,7 @@
                   <td>&pound;{{ item.formattedvalue }}</td>
                   <td>{{ item.date }}</td>
                   <td>&pound;{{ item.interest }}</td>
-                  <td>&pound;{{ item.totalInterest }}</td>
+                  <td>&pound;{{ item.formattedTotalInterest }}</td>
                 </tr>
               </tbody>
             </table>

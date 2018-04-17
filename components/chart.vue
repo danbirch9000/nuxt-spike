@@ -11,7 +11,8 @@ import { mapGetters } from 'vuex'
 
 const chartConfig = {
   "chart": {
-    "type": "spline"
+    "type": "spline",
+    "backgroundColor": "#e5e5e5"
   },
   "title": {
     "text": "Your goals"

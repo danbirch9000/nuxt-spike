@@ -21,11 +21,15 @@ var UtilitiesModule = (function () {
     var data = [];
     for (var index = 0; index < years; index++) {
       var savingsForYear = this.getCiforYear(amount, index, monthly, rate, time.add('years', 1));
-
+      console.log(savingsForYear);
       if (index === 0){
         savingsForYear.totalInterest = savingsForYear.interest;
+        savingsForYear.formattedTotalInterest = this.numberWithCommas(savingsForYear.interest);
       }else{
-        savingsForYear.totalInterest = data[index - 1].totalInterest + savingsForYear.interest;
+
+        var calcInterest = data[index - 1].totalInterest + savingsForYear.interest;
+        savingsForYear.totalInterest = calcInterest;
+        savingsForYear.formattedTotalInterest = this.numberWithCommas(calcInterest);
       }
 
       //savingsForYear.totalInterest = this.numberWithCommas(savingsForYear.totalInterest)
@@ -44,13 +48,15 @@ var UtilitiesModule = (function () {
       value = finance.CI(rate/12, 1, principal, 1);// rate, compoundings per period, principal, number of periods
       principal = value + monthly;
     };
-    var roundedVal = this.roundToTwo(value);
+    var interest = value - (amount + (monthly*12));
+    
     return {
-      value: roundedVal,
-      formattedvalue: this.numberWithCommas(roundedVal),
+      value: value,
+      formattedvalue: this.numberWithCommas(value),
       date: time.format('MMM YYYY'),
       utc: time.utc().valueOf(),
-      interest: module.exports.roundToTwo(value - (amount + (monthly*12)))
+      interest: interest,
+      formattedInterest: this.numberWithCommas(interest)
     }
   };
 
@@ -67,7 +73,9 @@ var UtilitiesModule = (function () {
   };
 
   var numberWithCommas = function (x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    let value = this.roundToTwo(x);
+    value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return value;
   };
 
   return {
@@ -81,4 +89,4 @@ var UtilitiesModule = (function () {
 
 })();
 
-module.exports = UtilitiesModule();
+module.exports = UtilitiesModule;

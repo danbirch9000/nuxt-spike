@@ -21,7 +21,7 @@ var UtilitiesModule = (function () {
     var data = [];
     for (var index = 0; index < years; index++) {
       var savingsForYear = this.getCiforYear(amount, index, monthly, rate, time.add('years', 1));
-      console.log(savingsForYear);
+
       if (index === 0){
         savingsForYear.totalInterest = savingsForYear.interest;
         savingsForYear.formattedTotalInterest = this.numberWithCommas(savingsForYear.interest);

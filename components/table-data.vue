@@ -18,7 +18,7 @@
                   <td>{{index + 1}}</td>
                   <td>&pound;{{ item.formattedvalue }}</td>
                   <td>{{ item.date }}</td>
-                  <td>&pound;{{ item.interest }}</td>
+                  <td>&pound;{{ item.formattedInterest }}</td>
                   <td>&pound;{{ item.formattedTotalInterest }}</td>
                 </tr>
               </tbody>

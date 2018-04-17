@@ -1,6 +1,6 @@
 <template>
     <section>
-      <highcharts :options="chartConfig" ref="highcharts"></highcharts>
+      <highcharts :options="chartConfig" ref="chartComponent"></highcharts>
     </section>
 </template>
 
@@ -10,41 +10,50 @@ import moment from 'moment'
 import { mapGetters } from 'vuex'
 
 const chartConfig = {
-  chart: {
-    type: 'spline'
+  "chart": {
+    "type": "spline",
+    "backgroundColor": "#e5e5e5"
   },
-  title: {
-    text: 'Your goals'
+  "title": {
+    "text": "Your goals"
   },
-  xAxis: {
-    type: 'datetime',
-    dateTimeLabelFormats: { // don't display the dummy year
-        year: '%Y'
+  "xAxis": {
+    "type": "datetime",
+    "dateTimeLabelFormats": {
+      "year": "%Y"
     },
-    title: {
-        text: 'Date'
+    "title": {
+      "text": "Date"
     }
   },
-  yAxis: {
-    title: {
-        text: 'Value'
+  "yAxis": {
+    "title": {
+      "text": "Value"
     },
-    min: 0
+    "min": 0
   },
-  tooltip: {
-    headerFormat: '<b>{series.name}</b><br>',
-    pointFormat: '{point.x:%b %Y}: £{point.y:.2f}'
+  "tooltip": {
+    "headerFormat": "<b>{series.name}</b><br>",
+    "pointFormat": "{point.x:%b %Y}: £{point.y:.2f}"
   },
-
-  plotOptions: {
-    spline: {
-      marker: {
-          enabled: true
+  "plotOptions": {
+    "spline": {
+      "marker": {
+        "enabled": true
       }
     }
   },
-  series: [{ name: 'Your goal', data: [] }, { name: '0% goal', data: [] }]
-  };
+  "series": [
+    {
+      "name": "Your goal",
+      "data": []
+    },
+    {
+      "name": "0% goal",
+      "data": []
+    }
+  ]
+};
 
   export default {
     data: function() {
@@ -53,10 +62,6 @@ const chartConfig = {
         chartData: null,
         savingsGoal: null
       }
-    },
-    props: ['description', 'rate', 'amount', 'monthly', 'years', 'startDate'],
-    created: function () {
-      // this.calculate();
     },
     computed: {
       ...mapGetters({
@@ -70,10 +75,10 @@ const chartConfig = {
     },
     methods: {
       updateChart(){
-        if (this.$refs.highcharts !== undefined){
-          var chart = this.$refs.highcharts.chart;
+        if (this.$refs.chartComponent !== undefined){
+          var chart = this.$refs.chartComponent.chart;
           chart.series[0].setData(this.chartData);
-          let data = utilities.getFinanceData(0, this.currentViewChartData.amount, this.currentViewChartData.monthly, this.currentViewChartData.years, this.currentViewChartData.startDate); 
+          let data = utilities.getFinanceData(0, this.currentViewChartData.amount, this.currentViewChartData.monthly, this.currentViewChartData.years, this.currentViewChartData.startDate);
           let chartData = utilities.buildChartData(data);
           chart.series[1].setData(chartData);
           chart.redraw();

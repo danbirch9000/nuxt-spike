@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-      <h1>Login</h1>
+      <h1>{{ isLogin ? 'Login' : 'Register' }}</h1>
       <div class="container">
         <div class="row">
           <div class="col-sm">
@@ -13,10 +13,10 @@
                 <label for="exampleInputEmail1">Password</label>
                 <input type="password" class="form-control" v-model='password' id="password" />
               </div>
-              <button type="submit" class="btn btn-primary">{{ isLogin ? 'Login' : 'Sign Up' }}</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
             </form>
 
-            <button type="button" class="btn btn-primary" @click="isLogin = !isLogin">{{ isLogin ? 'Login' : 'Sign Up' }}</button>
+            <button type="button" class="btn btn-primary btn-sm" @click="isLogin = !isLogin">Switch to {{ !isLogin ? 'login' : 'register' }}</button>
 
 
           </div>

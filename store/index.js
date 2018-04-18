@@ -1,3 +1,48 @@
+/*
+import Vue from "vue";
+import Vuex from "vuex";
+import appModule from "./app";
+import userModule from "./user";
+
+Vue.use(Vuex);
+
+const store = () => {
+  return new Vuex.Store({
+    modules: {
+      userModule,
+      appModule
+    }
+  });
+};
+
+export default store;
+
+----------------
+
+import { setLocation } from "~/services/auth/auth";
+
+export default {
+  state: {
+    username: "",
+    location: ""
+  },
+  actions: {
+    SET_USER({ commit }, dispatch) {
+      const { location } = dispatch;
+      setLocation(location);
+      commit("SET_USER", dispatch);
+    }
+  },
+  mutations: {
+    SET_USER(state, { username, location }) {
+      state.username = username;
+      state.location = location;
+    }
+  }
+};
+
+
+*/
 import Vuex from 'vuex'
 import axios from 'axios'
 import Cookie from "js-cookie";

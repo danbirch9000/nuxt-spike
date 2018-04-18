@@ -13,8 +13,12 @@
                 <label for="exampleInputEmail1">Password</label>
                 <input type="password" class="form-control" v-model='password' id="password" />
               </div>
-              <button type="submit" class="btn btn-primary">Login</button>
+              <button type="submit" class="btn btn-primary">{{ isLogin ? 'Login' : 'Sign Up' }}</button>
             </form>
+
+            <button type="button" class="btn btn-primary" @click="isLogin = !isLogin">{{ isLogin ? 'Login' : 'Sign Up' }}</button>
+
+
           </div>
         </div>
       </div>

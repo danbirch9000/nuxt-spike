@@ -1,6 +1,5 @@
 <template>
     <section>
-      <p>Click to view each goal</p>
       <div v-if="getGoalsFromStore.length > 0">
           <span v-for="(item, index) in getGoalsFromStore" :key="item.description">
             <button @click="loadGoal(index)" type="button" class="btn btn-primary btn-sm">{{item.description}}</button>

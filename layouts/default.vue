@@ -11,7 +11,7 @@
           <nuxt-link to="/" tag="li" active-class="active" class="nav-item"><a class="nav-link">Home</a></nuxt-link>
           <nuxt-link to="/goals" tag="li" active-class="active" class="nav-item"><a class="nav-link">Goals</a></nuxt-link>
           <nuxt-link to="/accounts" tag="li" active-class="active" class="nav-item"><a class="nav-link">Accounts</a></nuxt-link>
-          <li @click="logout"><a class="nav-link">Logout</a></li>
+          <li @click="logout" active-class="active" class="nav-item"><a class="nav-link">Logout</a></li>
         </ul>
       </div>
     </nav>

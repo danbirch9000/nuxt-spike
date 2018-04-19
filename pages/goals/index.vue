@@ -6,13 +6,15 @@
         <div class="row">
           <div class="col-md">
             <nuxt-link tag="button" to="/create-new" class="btn btn-primary btn-lg btn-block">Create new goal</nuxt-link>
-
             <goalList />
-            <h2>{{currentGoal.description}}</h2>
-            <p>Save £{{currentGoal.monthly}} per month for {{currentGoal.years}} years at {{currentGoal.rate}}%.
+            <div v-if="currentGoal.description !== undefined">
+              <h2>{{currentGoal.description}}</h2>
+              <p>Save £{{currentGoal.monthly}} per month for {{currentGoal.years}} years at {{currentGoal.rate}}%.
               Starting from {{transformDate(currentGoal.startDate)}} with £{{currentGoal.amount}}</p>
-            <chart />
-            <tableData />
+              <chart />
+              <tableData />
+            </div>
+
           </div>
         </div>
       </div>

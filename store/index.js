@@ -88,6 +88,9 @@ const createStore = () => {
       },
       clearToken(state) {
         state.token = null;
+      },
+      setCurrentViewRate(state, payload) {
+        state.goalView.rate = payload;
       }
     },
     actions: {

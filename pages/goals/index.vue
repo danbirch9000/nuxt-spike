@@ -12,6 +12,7 @@
             <p>Save £{{currentGoal.monthly}} per month for {{currentGoal.years}} years at {{currentGoal.rate}}%.
               Starting from {{transformDate(currentGoal.startDate)}} with £{{currentGoal.amount}}</p>
             <chart />
+            <tweaker />
             <tableData />
           </div>
         </div>
@@ -24,6 +25,7 @@
 
 import utilities from '~/common/utilities.js'
 import goalList from '~/components/goal-list'
+import tweaker from '~/components/tweaker'
 import chart from '~/components/chart'
 import tableData from '~/components/table-data'
 import moment from 'moment'
@@ -42,7 +44,8 @@ export default {
   components: {
     goalList,
     chart,
-    tableData
+    tableData,
+    tweaker
   },
   middleware:['check-auth','auth'],
   fetch ({store}) {

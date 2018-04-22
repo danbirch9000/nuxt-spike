@@ -1,8 +1,7 @@
 <template>
     <section>
         <h3>Tweak values</h3>
-        <input v-model="rate" />
-        <button @click="changeRate()" class="btn btn-primary btn-sm">change rate</button>
+        <span>{{rate}}</span>
         <div id="sliderRegular" class="slider"></div>
     </section>
 </template>
@@ -18,17 +17,32 @@
     mounted: function () {
       var slider = document.getElementById('sliderRegular');
       noUiSlider.create(slider, {
-        start: 40,
+        start: 5,
+        step: 0.5,
         connect: [true,false],
         range: {
-          min: 0,
-          max: 100
+          min: 1,
+          max: 15
         }
       });
+
+      // slider.noUiSlider.on('change', function(){
+      //   this.rate = slider.noUiSlider.get();
+      // });
+
+      slider.noUiSlider.on('change',() => {
+        this.rate = slider.noUiSlider.get();
+      });
+    },
+    watch: {
+      rate: function (val) {
+        console.log(val);
+        this.changeRate(val);
+      }
     },
     methods: {
-      changeRate(){
-        this.$store.commit('setCurrentViewRate', this.rate);
+      changeRate(value){
+        this.$store.commit('setCurrentViewRate', value);
       }
     }
   }

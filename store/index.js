@@ -91,6 +91,12 @@ const createStore = () => {
       },
       setCurrentViewRate(state, payload) {
         state.goalView.rate = payload;
+      },
+      setCurrentViewMonthly(state, payload) {
+        state.goalView.monthly = payload;
+      },
+      setCurrentViewYears(state, payload) {
+        state.goalView.years = payload;
       }
     },
     actions: {

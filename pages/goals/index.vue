@@ -7,7 +7,7 @@
           <div class="col-md">
             <nuxt-link tag="button" to="/create-new" class="btn btn-primary btn-lg btn-block">Create new goal</nuxt-link>
             <goalList />
-            <div v-if="currentGoal.description !== undefined">
+            <div v-if="currentGoal !== undefined">
               <h2>{{currentGoal.description}}</h2>
               <p>Save £{{currentGoal.monthly}} per month for {{currentGoal.years}} years at {{currentGoal.rate}}%.
               Starting from {{transformDate(currentGoal.startDate)}} with £{{currentGoal.amount}}</p>

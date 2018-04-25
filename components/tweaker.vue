@@ -96,4 +96,8 @@
   height: 25px;
   top: -11px;
 }
+
+.tweaker-control{
+  margin-bottom: 10px;
+}
 </style>

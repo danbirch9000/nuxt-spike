@@ -41,5 +41,9 @@ export default {
 .navbar {
   padding: .625rem .5rem;
 }
+.navbar .navbar-toggler .navbar-toggler-icon{
+  height: 22px;
+  background-color: #FFF;
+}
 </style>
 

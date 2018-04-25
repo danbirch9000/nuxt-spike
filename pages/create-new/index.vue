@@ -44,7 +44,7 @@
         </div>
       </div>
 
-    <chart v-bind="getChartConfig" ref="charttest"></chart>
+    <chart />
   </section>
 </template>
 

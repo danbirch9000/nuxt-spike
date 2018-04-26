@@ -13,6 +13,10 @@
               Starting from {{transformDate(currentGoal.startDate)}} with £{{currentGoal.amount}}</p>
             <chart />
             <tweaker />
+
+            <button @click="deleteGoal()" class="btn btn-primary btn-sm">Delete</button>
+            <button @click="saveGoal()" class="btn btn-primary btn-sm">Save</button>
+
             <tableData />
           </div>
         </div>
@@ -40,7 +44,17 @@ export default {
   methods:{
     transformDate(date){
       return moment(date).format('MMM YYYY');
+    },
+    deleteGoal(){
+      this.$store.dispatch('deleteGoal');
+      this.$router.push({ name: 'goals' });
+    }, 
+    saveGoal(){
+
     }
+  },
+  created(){
+    this.$store.dispatch('getUserGoals');
   },
   components: {
     goalList,
@@ -48,9 +62,6 @@ export default {
     tableData,
     tweaker
   },
-  middleware:['check-auth','auth'],
-  fetch ({store}) {
-    store.dispatch('getUserGoals')
-  },
+  middleware:['check-auth','auth']
 }
 </script>

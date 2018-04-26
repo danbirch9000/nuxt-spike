@@ -97,6 +97,13 @@ const createStore = () => {
       },
       setCurrentViewYears(state, payload) {
         state.goalView.years = payload;
+      },
+      removeGoal(state, payload) {
+        for (const key in state.goals) {
+          if (state.goals[key].id === payload){
+            state.goals.splice(key,1);
+          }
+        }
       }
     },
     actions: {
@@ -122,6 +129,28 @@ const createStore = () => {
           vuexContext.commit("setUserGoals", goalsArray);
           vuexContext.commit("setCurrentGoalView", goalsArray[0]);
         });
+      },
+      deleteGoal(vuexContext){
+        return this.$axios
+          .$delete(
+            "https://vuejs-83403.firebaseio.com/goals/"+ vuexContext.state.userId + "/" + vuexContext.state.goalView.id +".json?auth=" +
+              vuexContext.state.token
+          )
+          .then(data => {
+            vuexContext.commit("removeGoal", vuexContext.state.goalView.id);
+            vuexContext.commit("setCurrentGoalView", {
+              description: '',
+              rate: '',
+              amount: '',
+              monthly: '',
+              years: '',
+              startDate: ''
+            });
+
+            
+
+          })
+          .catch(e => console.log(e));
       },
       saveGoal(vuexContext, post){
         const goal = {

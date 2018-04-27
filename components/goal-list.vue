@@ -17,12 +17,12 @@
     },
     computed: {
       getGoalsFromStore: function(){
-        return this.$store.state.goals
+        return this.$store.state.goalModule.goals
       }
     },
     methods: {
       loadGoal(index) {
-        this.currentGoal = this.$store.state.goals[index];
+        this.currentGoal = this.$store.state.goalModule.goals[index];
         this.$store.commit('SET_CURRENT_GOAL_VIEW', this.currentGoal);
       }
     }

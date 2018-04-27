@@ -50,7 +50,8 @@ export default {
   },
   actions: {
     GET_USER_GOALS(vuexContext, context){
-      return axios.get(`https://vuejs-83403.firebaseio.com/goals/${vuexContext.state.userId}.json?auth=` + vuexContext.state.token)
+      console.log(vuexContext);
+      return axios.get(`https://vuejs-83403.firebaseio.com/goals/${vuexContext.rootState.userModule.userId}.json?auth=` + vuexContext.rootState.userModule.token)
       .then(data => {
         const goalsArray = [];
         for (const key in data.data) {
@@ -63,8 +64,8 @@ export default {
     DELETE_GOAL(vuexContext){
       return this.$axios
         .$delete(
-          "https://vuejs-83403.firebaseio.com/goals/"+ vuexContext.state.userId + "/" + vuexContext.state.goalView.id +".json?auth=" +
-            vuexContext.state.token
+          "https://vuejs-83403.firebaseio.com/goals/"+ vuexContext.rootState.userModule.userId + "/" + vuexContext.state.goalView.id +".json?auth=" +
+            vuexContext.rootState.userModule.token
         )
         .then(data => {
           vuexContext.commit("REMOVE_GOAL", vuexContext.state.goalView.id);
@@ -79,12 +80,12 @@ export default {
         })
         .catch(e => console.log(e));
     },
-    UPDATE_GOAL(vuexContext, payload){
+    UPDATE_GOAL(vuexContext){
       return this.$axios
         .$patch(
-          "https://vuejs-83403.firebaseio.com/goals/"+ vuexContext.state.userId + "/" + vuexContext.state.goalView.id +".json?auth=" +
-            vuexContext.state.token,
-            payload
+          "https://vuejs-83403.firebaseio.com/goals/"+ vuexContext.rootState.userModule.userId + "/" + vuexContext.state.goalView.id +".json?auth=" +
+            vuexContext.rootState.userModule.token,
+            vuexContext.state.goalView
         )
         .then(data => {
           vuexContext.commit("UPDATE_GOAL", vuexContext.state.goalView.id);
@@ -97,8 +98,8 @@ export default {
       };
       return this.$axios
         .$post(
-          "https://vuejs-83403.firebaseio.com/goals/"+ vuexContext.state.userId +".json?auth=" +
-            vuexContext.state.token,
+          "https://vuejs-83403.firebaseio.com/goals/"+ vuexContext.rootState.userModule.userId +".json?auth=" +
+            vuexContext.rootState.userModule.token,
           goal
         )
         .then(data => {

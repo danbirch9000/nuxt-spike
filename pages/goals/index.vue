@@ -39,7 +39,7 @@ import { mapState } from "vuex";
 
 export default {
   computed: mapState({
-    currentGoal: state => state.goalView
+    currentGoal: state => state.goalModule.goalView
   }),
   methods:{
     transformDate(date){
@@ -50,7 +50,7 @@ export default {
       this.$router.push({ name: 'goals' });
     },
     saveGoal(){
-      this.$store.dispatch('SAVE_GOAL');
+      this.$store.dispatch('UPDATE_GOAL');
     }
   },
   created(){

@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import userModule from "./user";
-import goalModule from "./parcel";
+import goalModule from "./goals";
 
 Vue.use(Vuex);
 

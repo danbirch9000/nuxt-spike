@@ -65,7 +65,7 @@ const chartConfig = {
     },
     computed: {
       ...mapGetters({
-        currentViewChartData: 'getCurrentViewChartData'
+        currentViewChartData: 'GET_CHART_DATA_CURRENT_VIEW'
       })
     },
     watch:{

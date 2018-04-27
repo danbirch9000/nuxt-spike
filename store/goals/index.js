@@ -39,10 +39,17 @@ export default {
           state.goals.splice(key,1);
         }
       }
+    },
+    UPDATE_GOAL(state, payload) {
+      for (const key in state.goals) {
+        if (state.goals[key].id === payload){
+          state.goals[key] = state.goalView;
+        }
+      }
     }
   },
   actions: {
-    getUserGoals(vuexContext, context){
+    GET_USER_GOALS(vuexContext, context){
       return axios.get(`https://vuejs-83403.firebaseio.com/goals/${vuexContext.state.userId}.json?auth=` + vuexContext.state.token)
       .then(data => {
         const goalsArray = [];
@@ -53,7 +60,7 @@ export default {
         vuexContext.commit("SET_CURRENT_GOAL_VIEW", goalsArray[0]);
       });
     },
-    deleteGoal(vuexContext){
+    DELETE_GOAL(vuexContext){
       return this.$axios
         .$delete(
           "https://vuejs-83403.firebaseio.com/goals/"+ vuexContext.state.userId + "/" + vuexContext.state.goalView.id +".json?auth=" +
@@ -69,6 +76,18 @@ export default {
             years: '',
             startDate: ''
           });
+        })
+        .catch(e => console.log(e));
+    },
+    UPDATE_GOAL(vuexContext, payload){
+      return this.$axios
+        .$patch(
+          "https://vuejs-83403.firebaseio.com/goals/"+ vuexContext.state.userId + "/" + vuexContext.state.goalView.id +".json?auth=" +
+            vuexContext.state.token,
+            payload
+        )
+        .then(data => {
+          vuexContext.commit("UPDATE_GOAL", vuexContext.state.goalView.id);
         })
         .catch(e => console.log(e));
     },
@@ -89,7 +108,7 @@ export default {
     }
   },
   getters: {
-    getCurrentViewChartData: (state) => {
+    GET_CHART_DATA_CURRENT_VIEW: (state) => {
       return {
         rate: state.goalView.rate,
         amount: state.goalView.amount,

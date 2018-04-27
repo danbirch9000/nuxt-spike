@@ -46,15 +46,15 @@ export default {
       return moment(date).format('MMM YYYY');
     },
     deleteGoal(){
-      this.$store.dispatch('deleteGoal');
+      this.$store.dispatch('DELETE_GOAL');
       this.$router.push({ name: 'goals' });
-    }, 
+    },
     saveGoal(){
-
+      this.$store.dispatch('SAVE_GOAL');
     }
   },
   created(){
-    this.$store.dispatch('getUserGoals');
+    this.$store.dispatch('GET_USER_GOALS');
   },
   components: {
     goalList,

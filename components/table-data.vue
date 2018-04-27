@@ -39,7 +39,7 @@ import { mapGetters } from 'vuex'
   export default {
     computed: {
       ...mapGetters({
-        currentViewChartData: 'getCurrentViewChartData'
+        currentViewChartData: 'GET_CHART_DATA_CURRENT_VIEW'
       }),
       getSavingsGoal (){
         return utilities.getFinanceData(this.currentViewChartData.rate, this.currentViewChartData.amount, this.currentViewChartData.monthly, this.currentViewChartData.years, this.currentViewChartData.startDate);

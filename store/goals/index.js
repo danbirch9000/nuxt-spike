@@ -19,6 +19,7 @@ export default {
       state.goals = payload
     },
     ADD_GOAL: (state, payload) => {
+      console.log(payload);
       state.goals.push(payload);
     },
     SET_CURRENT_GOAL_VIEW: (state, payload) => {
@@ -103,7 +104,7 @@ export default {
           goal
         )
         .then(data => {
-          vuexContext.commit("ADD_GOAL", context);
+          vuexContext.commit("ADD_GOAL", goal);
         })
         .catch(e => console.log(e));
     }

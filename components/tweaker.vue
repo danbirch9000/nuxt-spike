@@ -27,13 +27,14 @@
         return {
             rate: null,
             monthly: null,
-            years: null
+            years: null,
+            currentView: this.$store.state.goalModule.goalView
         }
     },
     mounted: function () {
       var rateSlider = document.getElementById('tweaker-rate');
       noUiSlider.create(rateSlider, {
-        start: 5,
+        start: this.currentView.rate,
         step: 0.5,
         connect: [true, false],
         range: { min: 1, max: 15 }
@@ -44,7 +45,7 @@
 
       var monthlySlider = document.getElementById('tweaker-monthly');
       noUiSlider.create(monthlySlider, {
-        start: 500,
+        start: this.currentView.monthly,
         step: 10,
         connect: [true, false],
         range: { min: 10, max: 2000 }
@@ -55,7 +56,7 @@
 
       var yearsSlider = document.getElementById('tweaker-years');
       noUiSlider.create(yearsSlider, {
-        start: 10,
+        start: this.currentView.years,
         step: 1,
         connect: [true, false],
         range: { min: 1, max: 100 }

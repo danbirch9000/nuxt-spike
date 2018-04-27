@@ -23,7 +23,7 @@
     methods: {
       loadGoal(index) {
         this.currentGoal = this.$store.state.goals[index];
-        this.$store.commit('setCurrentGoalView', this.currentGoal);
+        this.$store.commit('SET_CURRENT_GOAL_VIEW', this.currentGoal);
       }
     }
   }

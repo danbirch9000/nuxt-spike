@@ -34,8 +34,8 @@
                   <button type="button" class="btn btn-primary" v-on:click="saveGoal()">Save goal</button>
                 </div>
               </div>
-              
-              
+
+
             </form>
           </div>
           <div class="col-sm">
@@ -94,7 +94,7 @@ export default {
 
     calculate: function(){
       this.startDate = moment(),
-    
+
       this.currentGoal = {
         rate: this.rate,
         amount: this.amount,
@@ -103,13 +103,13 @@ export default {
         startDate: moment().format(),
         description: this.description
       };
-      this.$store.commit('setCurrentGoalView', this.currentGoal);
+      this.$store.commit('SET_CURRENT_GOAL_VIEW', this.currentGoal);
 
       // this.savingsGoal = utilities.getFinanceData(this.rate, this.amount, this.monthly, this.years, this.startDate);
-      
+
     },
     saveGoal: function(){
-      this.$store.dispatch('saveGoal', {
+      this.$store.dispatch('SAVE_GOAL', {
         rate: this.rate,
         amount: this.amount,
         monthly: this.monthly,

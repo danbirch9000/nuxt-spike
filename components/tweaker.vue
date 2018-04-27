@@ -78,13 +78,13 @@
     },
     methods: {
       changeRate(value){
-        this.$store.commit('setCurrentViewRate', value);
+        this.$store.commit('SET_CURRENT_GOAL_VIEW_RATE', value);
       },
       changeMonthly(value){
-        this.$store.commit('setCurrentViewMonthly', value);
+        this.$store.commit('SET_CURRENT_GOAL_VIEW_MONTHLY', value);
       },
       changeYears(value){
-        this.$store.commit('setCurrentViewYears', value);
+        this.$store.commit('SET_CURRENT_GOAL_VIEW_YEARS', value);
       }
     }
   }

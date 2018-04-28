@@ -20,13 +20,18 @@ export default {
     UPDATE_ACCOUNT_VALUE: (state, payload) => {
       for (const key in state.accounts) {
         if (state.accounts[key].id === state.accountIdViewing){
+
           state.accounts[key].history.push(payload);
+
+          
         }
       }
     }
   },
   actions: {
     CREATE_ACCOUNT(vuexContext, payload){
+      console.log('creating account');
+      console.log(payload);
       return this.$axios
         .$post(
           "https://vuejs-83403.firebaseio.com/accounts/"+ vuexContext.rootState.userModule.userId +".json?auth=" +
@@ -34,11 +39,20 @@ export default {
             payload
         )
         .then(data => {
-          vuexContext.commit("ADD_ACCOUNT", payload);
+       
+          vuexContext.commit("ADD_ACCOUNT", { ...payload, id: data.name});
+          vuexContext.commit("SET_ACCOUNT_VIEWING", data.name);
+          
+            
+
+
         })
         .catch(e => console.log(e));
     },
     UPDATE_ACCOUNT_VALUE(vuexContext, payload){
+      console.log('UPDATE_ACCOUNT_VALUE');
+      console.log(payload);
+      console.log(vuexContext.state.accountIdViewing);
       return this.$axios
         .$post(
           "https://vuejs-83403.firebaseio.com/accounts/"+ vuexContext.rootState.userModule.userId +"/"+ vuexContext.state.accountIdViewing +"/history.json?auth=" +
@@ -46,6 +60,7 @@ export default {
             payload
         )
         .then(data => {
+          console.log(data);
           vuexContext.commit("UPDATE_ACCOUNT_VALUE", payload);
         })
         .catch(e => console.log(e));

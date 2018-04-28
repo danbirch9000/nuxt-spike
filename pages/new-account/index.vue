@@ -42,8 +42,13 @@ import moment from 'moment'
             console.log('here');
             this.$store.dispatch('CREATE_ACCOUNT', {
                 name: this.name,
-                amount: this.amount,
-                created: moment().format()
+                history: [
+                    {
+                        value: this.amount,
+                        date: moment().format()
+                    }
+                ]
+                
             });
             this.$router.push('/accounts')
         }

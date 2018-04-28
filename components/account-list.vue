@@ -1,8 +1,8 @@
 <template>
     <section>
       <div v-if="getAccounts.length > 0">
-          <span v-for="(item, index) in getAccounts" :key="item.id">
-            <button @click="loadAccount(index)" type="button" class="btn btn-primary btn-sm">{{item.name}}</button>
+          <span v-for="(item) in getAccounts" :key="item.id">
+            <button @click="loadAccount(item.id)" type="button" class="btn btn-primary btn-sm">{{item.name}}</button>
           </span>
       </div>
     </section>
@@ -21,8 +21,8 @@
       }
     },
     methods: {
-      loadAccount(index) {
-        this.currentGoal = this.$store.state.accountModule.accounts[index];
+      loadAccount(id) {
+        this.$store.commit("SET_ACCOUNT_VIEWING", id);
       }
     }
   }

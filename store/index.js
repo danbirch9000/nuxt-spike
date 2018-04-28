@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import userModule from "./user";
 import goalModule from "./goals";
+import accountModule from "./account";
 
 Vue.use(Vuex);
 
@@ -10,6 +11,7 @@ const store = () => {
     modules: {
       userModule,
       goalModule,
+      accountModule
     }
   });
 };

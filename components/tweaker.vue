@@ -21,50 +21,22 @@
 </template>
 
 <script>
-
+  var rateSlider, monthlySlider, yearsSlider;
   export default {
     data() {
         return {
             rate: null,
             monthly: null,
-            years: null,
-            currentView: this.$store.state.goalModule.goalView
+            years: null
         }
     },
+    computed: {
+      currentView() {
+        return this.$store.state.goalModule.goalView;
+      }
+    },
     mounted: function () {
-      var rateSlider = document.getElementById('tweaker-rate');
-      noUiSlider.create(rateSlider, {
-        start: this.currentView.rate,
-        step: 0.5,
-        connect: [true, false],
-        range: { min: 1, max: 15 }
-      });
-      rateSlider.noUiSlider.on('update',() => {
-        this.rate = rateSlider.noUiSlider.get();
-      });
-
-      var monthlySlider = document.getElementById('tweaker-monthly');
-      noUiSlider.create(monthlySlider, {
-        start: this.currentView.monthly,
-        step: 10,
-        connect: [true, false],
-        range: { min: 10, max: 2000 }
-      });
-      monthlySlider.noUiSlider.on('update',() => {
-        this.monthly = monthlySlider.noUiSlider.get();
-      });
-
-      var yearsSlider = document.getElementById('tweaker-years');
-      noUiSlider.create(yearsSlider, {
-        start: this.currentView.years,
-        step: 1,
-        connect: [true, false],
-        range: { min: 1, max: 100 }
-      });
-      yearsSlider.noUiSlider.on('update',() => {
-        this.years = yearsSlider.noUiSlider.get();
-      });
-
+      this.buildSliders();
     },
     watch: {
       rate: function (val) {
@@ -75,6 +47,11 @@
       },
       years: function (val) {
         this.changeYears(val);
+      },
+      currentView(){
+        rateSlider.noUiSlider.set(this.currentView.rate);
+        monthlySlider.noUiSlider.set(this.currentView.monthly);
+        yearsSlider.noUiSlider.set(this.currentView.years);
       }
     },
     methods: {
@@ -86,6 +63,41 @@
       },
       changeYears(value){
         this.$store.commit('SET_CURRENT_GOAL_VIEW_YEARS', value);
+      },
+      buildSliders(){
+        rateSlider = document.getElementById('tweaker-rate');
+        
+        noUiSlider.create(rateSlider, {
+          start: this.currentView.rate,
+          step: 0.5,
+          connect: [true, false],
+          range: { min: 1, max: 15 }
+        });
+        rateSlider.noUiSlider.on('update',() => {
+          this.rate = rateSlider.noUiSlider.get();
+        });
+
+        monthlySlider = document.getElementById('tweaker-monthly');
+        noUiSlider.create(monthlySlider, {
+          start: this.currentView.monthly,
+          step: 10,
+          connect: [true, false],
+          range: { min: 10, max: 2000 }
+        });
+        monthlySlider.noUiSlider.on('update',() => {
+          this.monthly = monthlySlider.noUiSlider.get();
+        });
+
+       yearsSlider = document.getElementById('tweaker-years');
+        noUiSlider.create(yearsSlider, {
+          start: this.currentView.years,
+          step: 1,
+          connect: [true, false],
+          range: { min: 1, max: 100 }
+        });
+        yearsSlider.noUiSlider.on('update',() => {
+          this.years = yearsSlider.noUiSlider.get();
+        });
       }
     }
   }

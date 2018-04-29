@@ -1,6 +1,7 @@
-import Vuex from 'vuex'
-import axios from 'axios'
+import Vuex from 'vuex';
+import axios from 'axios';
 import Cookie from "js-cookie";
+import moment from 'moment';
 
 export default {
   state: {
@@ -30,8 +31,12 @@ export default {
   },
   actions: {
     CREATE_ACCOUNT(vuexContext, payload){
-      console.log('creating account');
-      console.log(payload);
+
+      const postData = {
+        ...payload,
+        history: {}
+      }
+
       return this.$axios
         .$post(
           "https://vuejs-83403.firebaseio.com/accounts/"+ vuexContext.rootState.userModule.userId +".json?auth=" +
@@ -39,20 +44,12 @@ export default {
             payload
         )
         .then(data => {
-       
           vuexContext.commit("ADD_ACCOUNT", { ...payload, id: data.name});
           vuexContext.commit("SET_ACCOUNT_VIEWING", data.name);
-          
-            
-
-
         })
         .catch(e => console.log(e));
     },
     UPDATE_ACCOUNT_VALUE(vuexContext, payload){
-      console.log('UPDATE_ACCOUNT_VALUE');
-      console.log(payload);
-      console.log(vuexContext.state.accountIdViewing);
       return this.$axios
         .$post(
           "https://vuejs-83403.firebaseio.com/accounts/"+ vuexContext.rootState.userModule.userId +"/"+ vuexContext.state.accountIdViewing +"/history.json?auth=" +
@@ -60,8 +57,7 @@ export default {
             payload
         )
         .then(data => {
-          console.log(data);
-          vuexContext.commit("UPDATE_ACCOUNT_VALUE", payload);
+
         })
         .catch(e => console.log(e));
     },
@@ -86,7 +82,19 @@ export default {
     GET_ACCOUNT_VIEWING: (state) => {
       for (const key in state.accounts) {
         if (state.accounts[key].id === state.accountIdViewing){
-          return state.accounts[key]
+
+          const account = state.accounts[key];
+          const historyArray = [];
+          for (const key in account.history) {
+            historyArray.push(
+              { 
+                ...account.history[key], 
+                id: key,
+                date: moment(account.history[key].date).format('L LT')
+              });
+          }
+          account.history = historyArray;
+          return account;
         }
       }
       return null;

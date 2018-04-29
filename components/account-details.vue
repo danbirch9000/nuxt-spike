@@ -5,6 +5,11 @@
           <h2>{{currentSelectedAccount.name}}</h2>
 
 
+            <ul >
+               
+                  <li v-for="(item) in currentSelectedAccount.history" :key="item.id">&pound;{{ item.value }} - {{ item.date }}</li>
+                </ul>
+
             <form v-on:submit.prevent>
                 <div class="form-group">
                     <label for="name">Update account value</label>
@@ -40,9 +45,11 @@ import moment from 'moment'
       },
       updateValue(){
           this.$store.dispatch('UPDATE_ACCOUNT_VALUE', {
-                        value: this.value,
-                        date: moment().format()
-                    });
+                value: this.value,
+                date: moment().format()
+            }).then(data => {
+                this.$store.dispatch('GET_USER_ACCOUNTS');
+            });
       }
     }
   }

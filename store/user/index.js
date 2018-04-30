@@ -81,7 +81,7 @@ export default {
 
       if (new Date().getTime() > +expirationDate || !token) {
         console.log("No token or invalid token");
-        vuexContext.dispatch("logout");
+        vuexContext.dispatch("LOGOUT");
         return;
       }
 

@@ -39,7 +39,6 @@ import moment from 'moment'
     middleware:['check-auth','auth'],
     methods: {
         createAccount: function(){
-            console.log('here');
             this.$store.dispatch('CREATE_ACCOUNT', {
                 name: this.name,
 

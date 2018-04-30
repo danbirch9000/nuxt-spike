@@ -14,7 +14,6 @@ describe('Header.test.js', () => {
   })
 
   it('equals messages to ["Cat"]', () => {
-    console.log(vm);
     expect(vm.messages).toEqual(['Cat'])
   })
 })

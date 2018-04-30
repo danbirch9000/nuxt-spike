@@ -70,7 +70,6 @@ const chartConfig = {
     },
     watch:{
       currentViewChartData(){
-        console.log(this.currentViewChartData);
         this.calculate();
       }
     },

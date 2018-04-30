@@ -72,7 +72,6 @@ export default {
         for (const key in data) {
           accountsArray.push({ ...data[key], id: key });
         }
-        console.log(data);
         vuexContext.commit("LOAD_ALL_ACCOUNTS", accountsArray);
       })
       .catch(e => console.log(e));

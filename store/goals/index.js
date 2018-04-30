@@ -19,7 +19,6 @@ export default {
       state.goals = payload
     },
     ADD_GOAL: (state, payload) => {
-      console.log(payload);
       state.goals.push(payload);
     },
     SET_CURRENT_GOAL_VIEW: (state, payload) => {
@@ -51,7 +50,6 @@ export default {
   },
   actions: {
     GET_USER_GOALS(vuexContext, context){
-      console.log(vuexContext);
       return axios.get(`https://vuejs-83403.firebaseio.com/goals/${vuexContext.rootState.userModule.userId}.json?auth=` + vuexContext.rootState.userModule.token)
       .then(data => {
         const goalsArray = [];

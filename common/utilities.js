@@ -60,6 +60,24 @@ var UtilitiesModule = (function () {
     }
   };
 
+  var getCiForMonths = function (amount, months, monthly, rate) {
+    var finance = new Finance();
+    var principal = amount + monthly;
+    var value = 0;
+    for (var index = 0; index < months; index++) {
+      value = finance.CI(rate/12, 1, principal, 1);// rate, compoundings per period, principal, number of periods
+      principal = value + monthly;
+    };
+    var interest = value - (amount + (monthly*months));
+    
+    return {
+      value: value,
+      formattedvalue: this.numberWithCommas(value),
+      interest: interest,
+      formattedInterest: this.numberWithCommas(interest)
+    }
+  };
+
   var roundToTwo = function (num) {
     return Math.round(num * 100) / 100;
   };
@@ -84,7 +102,8 @@ var UtilitiesModule = (function () {
     getCiforYear: getCiforYear,
     roundToTwo: roundToTwo,
     buildChartData: buildChartData,
-    numberWithCommas: numberWithCommas
+    numberWithCommas: numberWithCommas,
+    getCiForMonths: getCiForMonths
   };
 
 })();

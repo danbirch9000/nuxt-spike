@@ -1,6 +1,7 @@
 import Vuex from 'vuex'
 import axios from 'axios'
 import Cookie from "js-cookie";
+import utilities from '~/common/utilities.js'
 
 export default {
   state: {

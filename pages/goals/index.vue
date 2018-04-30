@@ -13,7 +13,15 @@
               <h2>{{currentGoal.description}}</h2>
               <p>Save £{{currentGoal.monthly}} per month for {{currentGoal.years}} years at {{currentGoal.rate}}%.
               Starting from {{transformDate(currentGoal.startDate)}} with £{{currentGoal.amount}}</p>
+
+              <p>Estimated value in 2 months: &pound;{{getEstimatedSavingsForMonths(2).value}}</p>
+              <p>Actual value: &pound;--</p>
+
+
             <chart />
+
+
+            
             <tweaker />
 
             <button @click="deleteGoal()" class="btn btn-primary btn-sm">Delete</button>
@@ -29,7 +37,14 @@
 </template>
 
 <script>
+/*
+If no of months since created > 0 then work out what the estimated value should be
 
+Work out percentage difference between current value and estimated value
+
+Display
+
+*/
 import utilities from '~/common/utilities.js'
 import goalList from '~/components/goal-list'
 import tweaker from '~/components/tweaker'
@@ -53,6 +68,14 @@ export default {
     },
     saveGoal(){
       this.$store.dispatch('UPDATE_GOAL');
+    },
+    getEstimatedSavingsForMonths(months){
+      console.log(months);
+      console.log(this.currentGoal.amount);
+      console.log(this.currentGoal.monthly);
+      console.log(this.currentGoal.rate);
+      console.log();
+      return utilities.getCiForMonths(parseInt(this.currentGoal.amount), months, parseInt(this.currentGoal.monthly), parseInt(this.currentGoal.rate));
     }
   },
   created(){

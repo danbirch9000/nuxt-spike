@@ -12,11 +12,11 @@
             <div v-if="currentGoal.description !== ''">
               <h2>{{currentGoal.description}}</h2>
               <p>Save £{{currentGoal.monthly}} per month for {{currentGoal.years}} years at {{currentGoal.rate}}%.
-              Starting from {{transformDate(currentGoal.startDate)}} with £{{currentGoal.amount}}</p>
+              Starting from {{transformDate(currentGoal.startDate)}} with {{currentGoal.amount | currency}}</p>
 
 
-              <p>Estimated value in {{getMonthsGoalActive}} months: &pound;{{getEstimatedSavingsForMonths(getMonthsGoalActive()).value}}</p>
-              <p>Actual value: &pound;-- {{351.99 | toUSD}}</p>
+              <p>Estimated value in {{getMonthsGoalActive()}} months: {{getEstimatedSavingsForMonths(getMonthsGoalActive()).value | currency}}</p>
+              <p>Actual value: {{getActualValue() | currency}} - {{percentageDifference() | percentage}}</p>
 
 
             <chart />
@@ -71,15 +71,21 @@ export default {
       this.$store.dispatch('UPDATE_GOAL');
     },
     getEstimatedSavingsForMonths(months){
-      console.log(months);
-      console.log(this.currentGoal.amount);
-      console.log(this.currentGoal.monthly);
-      console.log(this.currentGoal.rate);
-      console.log();
       return utilities.getCiForMonths(parseInt(this.currentGoal.amount), months, parseInt(this.currentGoal.monthly), parseInt(this.currentGoal.rate));
     },
     getMonthsGoalActive() {
-      return moment().diff(moment(this.currentGoal.startDate), 'months', true);
+      var months = moment().diff(moment(this.currentGoal.startDate), 'months', true);
+      return Math.floor(months);
+    },
+    getActualValue() {
+      return 17500;
+    },
+    percentageDifference(){
+      var estimatedValue = this.getEstimatedSavingsForMonths(this.getMonthsGoalActive()).value;
+      var increase = this.getActualValue() - estimatedValue;
+
+      return (increase/estimatedValue)*100;
+
     }
   },
   created(){

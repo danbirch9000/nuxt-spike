@@ -14,14 +14,15 @@
               <p>Save £{{currentGoal.monthly}} per month for {{currentGoal.years}} years at {{currentGoal.rate}}%.
               Starting from {{transformDate(currentGoal.startDate)}} with £{{currentGoal.amount}}</p>
 
-              <p>Estimated value in 2 months: &pound;{{getEstimatedSavingsForMonths(2).value}}</p>
-              <p>Actual value: &pound;--</p>
+
+              <p>Estimated value in {{getMonthsGoalActive}} months: &pound;{{getEstimatedSavingsForMonths(getMonthsGoalActive()).value}}</p>
+              <p>Actual value: &pound;-- {{351.99 | toUSD}}</p>
 
 
             <chart />
 
 
-            
+
             <tweaker />
 
             <button @click="deleteGoal()" class="btn btn-primary btn-sm">Delete</button>
@@ -76,6 +77,9 @@ export default {
       console.log(this.currentGoal.rate);
       console.log();
       return utilities.getCiForMonths(parseInt(this.currentGoal.amount), months, parseInt(this.currentGoal.monthly), parseInt(this.currentGoal.rate));
+    },
+    getMonthsGoalActive() {
+      return moment().diff(moment(this.currentGoal.startDate), 'months', true);
     }
   },
   created(){

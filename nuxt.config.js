@@ -26,7 +26,7 @@ module.exports = {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons' },
       { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css' },
       { rel: 'stylesheet', href: '/assets/material-kit.min.css?v=2.0.2' }
-      
+
     ]
   },
 
@@ -45,7 +45,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
- plugins: ['~/plugins/highcharts'],
+ plugins: ['~/plugins/highcharts', '~/plugins/money.filter'],
 
   /*
   ** Nuxt.js modules

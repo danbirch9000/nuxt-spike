@@ -92,6 +92,22 @@ export default {
         })
         .catch(e => console.log(e));
     },
+    LINK_GOAL_TO_ACCOUNT(vuexContext, payload){
+      var goalData = {
+        ...vuexContext.state.goalView,
+        accounts: payload
+      };
+      return this.$axios
+        .$patch(
+          "https://vuejs-83403.firebaseio.com/goals/"+ vuexContext.rootState.userModule.userId + "/" + vuexContext.state.goalView.id +".json?auth=" +
+            vuexContext.rootState.userModule.token,
+            goalData
+        )
+        .then(data => {
+          // vuexContext.commit("UPDATE_GOAL", vuexContext.state.goalView.id);
+        })
+        .catch(e => console.log(e));
+    },
     SAVE_GOAL(vuexContext, post){
       const goal = {
         ...post

@@ -7,27 +7,16 @@
           <div class="col-md">
             <nuxt-link tag="button" to="/create-new" class="btn btn-primary btn-lg btn-block">Create new goal</nuxt-link>
             <goalList />
-
-
             <div v-if="currentGoal.description !== ''">
               <h2>{{currentGoal.description}}</h2>
               <p>Save £{{currentGoal.monthly}} per month for {{currentGoal.years}} years at {{currentGoal.rate}}%.
               Starting from {{transformDate(currentGoal.startDate)}} with {{currentGoal.amount | currency}}</p>
-
-
-              <p>Estimated value in {{getMonthsGoalActive()}} months: {{getEstimatedSavingsForMonths(getMonthsGoalActive()).value | currency}}</p>
+              <p>Estimated value after {{getMonthsGoalActive()}} months: {{getEstimatedSavingsForMonths(getMonthsGoalActive()).value | currency}}</p>
               <p>Actual value: {{getActualValue() | currency}} - {{percentageDifference() | percentage}}</p>
-
-
             <chart />
-
-
-
             <tweaker />
-
             <button @click="deleteGoal()" class="btn btn-primary btn-sm">Delete</button>
             <button @click="saveGoal()" class="btn btn-primary btn-sm">Save</button>
-
             <tableData />
           </div>
         </div>

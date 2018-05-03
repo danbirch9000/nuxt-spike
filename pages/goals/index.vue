@@ -13,6 +13,15 @@
               Starting from {{transformDate(currentGoal.startDate)}} with {{currentGoal.amount | currency}}</p>
               <p>Estimated value after {{getMonthsGoalActive()}} months: {{getEstimatedSavingsForMonths(getMonthsGoalActive()).value | currency}}</p>
               <p>Actual value: {{getActualValue() | currency}} - {{percentageDifference() | percentage}}</p>
+
+              <button v-if="accounts.length > 0" class="btn btn-primary btn-sm" @click="showAccountChooser =! showAccountChooser">Link to your accounts</button>
+
+              <accountChooser  v-if="showAccountChooser"/>
+
+
+
+
+
             <chart />
             <tweaker />
             <button @click="deleteGoal()" class="btn btn-primary btn-sm">Delete</button>
@@ -27,16 +36,10 @@
 </template>
 
 <script>
-/*
-If no of months since created > 0 then work out what the estimated value should be
 
-Work out percentage difference between current value and estimated value
-
-Display
-
-*/
 import utilities from '~/common/utilities.js'
 import goalList from '~/components/goal-list'
+import accountChooser from '~/components/account-chooser'
 import tweaker from '~/components/tweaker'
 import chart from '~/components/chart'
 import tableData from '~/components/table-data'
@@ -45,8 +48,14 @@ import { mapGetters } from 'vuex'
 import { mapState } from "vuex";
 
 export default {
+  data() {
+    return {
+      showAccountChooser: false
+    }
+  },
   computed: mapState({
-    currentGoal: state => state.goalModule.goalView
+    currentGoal: state => state.goalModule.goalView,
+    accounts: state => state.accountModule.accounts
   }),
   methods:{
     transformDate(date){
@@ -79,12 +88,14 @@ export default {
   },
   created(){
     this.$store.dispatch('GET_USER_GOALS');
+    this.$store.dispatch('GET_USER_ACCOUNTS');
   },
   components: {
     goalList,
     chart,
     tableData,
-    tweaker
+    tweaker,
+    accountChooser
   },
   middleware:['check-auth','auth']
 }

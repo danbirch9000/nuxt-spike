@@ -47,6 +47,10 @@ export default {
           state.goals[key] = state.goalView;
         }
       }
+    },
+    UPDATE_GOAL_ACCOUNTS(state, payload){
+      console.log(state);
+      console.log(payload);
     }
   },
   actions: {
@@ -104,7 +108,8 @@ export default {
             goalData
         )
         .then(data => {
-          // vuexContext.commit("UPDATE_GOAL", vuexContext.state.goalView.id);
+          vuexContext.commit("SET_CURRENT_GOAL_VIEW", vuexContext.state.goalView);
+          vuexContext.commit("UPDATE_GOAL_ACCOUNTS", payload);
         })
         .catch(e => console.log(e));
     },

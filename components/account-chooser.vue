@@ -1,15 +1,16 @@
 <template>
     <section>
        <div v-if="accounts.length > 0">
-        
+
 
           <div class="form-check" v-for="(item) in accounts" :key="item.description">
-                <label class="form-check-label" :for="item.id">
-                    <input class="form-check-input" type="checkbox" :id="item.id" :value="item.id" v-model="selectedAccounts">
-                    {{item.name}}
-                    <span class="form-check-sign"><span class="check"></span></span>
-                </label>
-            </div>
+              <label class="form-check-label" :for="item.id">
+                  <input class="form-check-input" type="checkbox" :id="item.id" :value="item.id" v-model="selectedAccounts">
+                  {{item.name}}
+                  <span class="form-check-sign"><span class="check"></span></span>
+              </label>
+          </div>
+          <button class="btn btn-primary btn-sm" @click="linkAccounts()">Save</button>
       </div>
     </section>
 </template>
@@ -30,8 +31,8 @@ import { mapGetters, mapState } from 'vuex'
     })
     },
     methods: {
-      linkAccount(){
-
+      linkAccounts(){
+        this.$store.dispatch('LINK_GOAL_TO_ACCOUNT', this.selectedAccounts);
       }
     }
   }

@@ -26,9 +26,23 @@ import { mapGetters, mapState } from 'vuex'
       }
     },
     computed: {
-   ...mapState({
-      accounts: state => state.accountModule.accounts
-    })
+    ...mapState({
+        accounts: state => state.accountModule.accounts,
+        goalView: state => state.goalModule.goalView,
+      })
+    },
+    watch:{
+      goalView(){
+        if (this.goalView.accounts === undefined){
+          this.selectedAccounts = [];
+        }else{
+          this.selectedAccounts = this.goalView.accounts;
+        }
+        
+      }
+    },
+    mounted() {
+      this.selectedAccounts = this.goalView.accounts;
     },
     methods: {
       linkAccounts(){

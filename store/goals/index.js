@@ -49,8 +49,14 @@ export default {
       }
     },
     UPDATE_GOAL_ACCOUNTS(state, payload){
-      console.log(state);
-      console.log(payload);
+      var idOfGoal = state.goalView.id;
+      for (const key in state.goals) {
+        if (state.goals[key].id === idOfGoal){
+          state.goals[key].accounts = payload;
+          state.goalView = state.goals[key];
+        }
+      }
+      
     }
   },
   actions: {

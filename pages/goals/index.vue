@@ -53,10 +53,15 @@ export default {
       showAccountChooser: false
     }
   },
-  computed: mapState({
+  computed: {
+    ...mapState({
     currentGoal: state => state.goalModule.goalView,
     accounts: state => state.accountModule.accounts
   }),
+  ...mapGetters({
+    valueOfGoal: 'GET_VALUE_OF_GOAL'
+  })
+  },
   methods:{
     transformDate(date){
       return moment(date).format('MMM YYYY');
@@ -76,7 +81,8 @@ export default {
       return Math.floor(months);
     },
     getActualValue() {
-      return 17500;
+
+      return this.valueOfGoal;
     },
     percentageDifference(){
       var estimatedValue = this.getEstimatedSavingsForMonths(this.getMonthsGoalActive()).value;

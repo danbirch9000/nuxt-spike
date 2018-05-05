@@ -21,10 +21,7 @@ export default {
     UPDATE_ACCOUNT_VALUE: (state, payload) => {
       for (const key in state.accounts) {
         if (state.accounts[key].id === state.accountIdViewing){
-
           state.accounts[key].history.push(payload);
-
-          
         }
       }
     }
@@ -98,5 +95,6 @@ export default {
       }
       return null;
     }
+    
   }
 };

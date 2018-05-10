@@ -12,7 +12,7 @@
               <p>Save £{{currentGoal.monthly}} per month for {{currentGoal.years}} years at {{currentGoal.rate}}%.
               Starting from {{transformDate(currentGoal.startDate)}} with {{currentGoal.amount | currency}}</p>
               <p>Estimated value after {{getMonthsGoalActive()}} months: {{getEstimatedSavingsForMonths(getMonthsGoalActive()).value | currency}}</p>
-              <p>Actual value: {{getActualValue() | currency}} - {{percentageDifference() | percentage}}</p>
+              <p>Actual value: {{getActualValue() | currency}} {{percentageDifference() | percentage}}</p>
 
               <button v-if="accounts.length > 0" class="btn btn-primary btn-sm" @click="showAccountChooser =! showAccountChooser">Link to your accounts</button>
 

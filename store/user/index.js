@@ -6,7 +6,8 @@ export default {
   state: {
     userData: null,
     token: null,
-    userId: null
+    userId: null,
+    error: false
   },
   mutations: {
     SET_TOKEN(state, token) {
@@ -17,6 +18,12 @@ export default {
     },
     CLEAR_TOKEN(state) {
       state.token = null;
+    },
+    SET_ERROR(state) {
+      state.error = true;
+    },
+    REMOVE_ERROR(state) {
+      state.error = false;
     }
   },
   actions: {
@@ -37,6 +44,8 @@ export default {
         })
         .then(result => {
           vuexContext.commit("SET_TOKEN", result.idToken);
+          vuexContext.commit("REMOVE_ERROR");
+          
           let userInfo = result.idToken.split('.');
           let userDetails = JSON.parse(atob(userInfo[1]));
           vuexContext.commit("SET_USER_ID", userDetails.user_id);
@@ -51,7 +60,9 @@ export default {
             new Date().getTime() + Number.parseInt(result.expiresIn) * 1000
           );
         })
-        .catch(e => console.log(e));
+        .catch(e => {
+          vuexContext.commit("SET_ERROR");
+        });
     },
     INIT_AUTH(vuexContext, req) {
       let token;

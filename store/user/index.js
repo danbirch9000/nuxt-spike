@@ -24,6 +24,9 @@ export default {
     },
     REMOVE_ERROR(state) {
       state.error = false;
+    },
+    SET_LOADING(state, payload) {
+      state.loading = payload;
     }
   },
   actions: {
@@ -36,6 +39,7 @@ export default {
           "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" +
           process.env.fbAPIKey;
       }
+      vuexContext.commit("SET_LOADING", true);
       return this.$axios
         .$post(authUrl, {
           email: authData.email,
@@ -43,9 +47,10 @@ export default {
           returnSecureToken: true
         })
         .then(result => {
+          vuexContext.commit("SET_LOADING", false);
           vuexContext.commit("SET_TOKEN", result.idToken);
           vuexContext.commit("REMOVE_ERROR");
-          
+
           let userInfo = result.idToken.split('.');
           let userDetails = JSON.parse(atob(userInfo[1]));
           vuexContext.commit("SET_USER_ID", userDetails.user_id);
@@ -61,6 +66,7 @@ export default {
           );
         })
         .catch(e => {
+          vuexContext.commit("SET_LOADING", false);
           vuexContext.commit("SET_ERROR");
         });
     },

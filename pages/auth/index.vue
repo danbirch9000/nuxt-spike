@@ -14,11 +14,10 @@
                 <input type="password" class="form-control" v-model='password' id="password" />
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
+              <p v-if="authStore.loading">Loading</p>
+              <p v-if="authStore.error">Error</p>
             </form>
-
             <button type="button" class="btn btn-primary btn-sm" @click="isLogin = !isLogin">Switch to {{ !isLogin ? 'login' : 'register' }}</button>
-
-
           </div>
         </div>
       </div>
@@ -39,7 +38,9 @@ export default {
     }
   },
   computed:{
-    
+    ...mapState({
+      authStore: state => state.userModule.state,
+    })
   },
   methods: {
       onSubmit() {

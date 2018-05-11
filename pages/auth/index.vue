@@ -15,6 +15,7 @@
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
               <p v-if="authStore.loading">Loading</p>
+              <Loader v-if="authStore.loading" />
               <p v-if="authStore.error">Error</p>
             </form>
             <button type="button" class="btn btn-primary btn-sm" @click="isLogin = !isLogin">Switch to {{ !isLogin ? 'login' : 'register' }}</button>
@@ -25,8 +26,9 @@
 </template>
 
 <script>
-
+import Loader from '~/components/loader';
 export default {
+
   components: {
 
   },
@@ -36,6 +38,9 @@ export default {
       password: '',
       isLogin: true
     }
+  },
+  components: {
+    Loader
   },
   computed:{
     ...mapState({

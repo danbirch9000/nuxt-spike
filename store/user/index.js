@@ -7,7 +7,8 @@ export default {
     userData: null,
     token: null,
     userId: null,
-    error: false
+    error: false,
+    loading: false
   },
   mutations: {
     SET_TOKEN(state, token) {

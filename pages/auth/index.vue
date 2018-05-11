@@ -14,9 +14,8 @@
                 <input type="password" class="form-control" v-model='password' id="password" />
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
-              <p v-if="authStore.loading">Loading</p>
               <Loader v-if="authStore.loading" />
-              <p v-if="authStore.error">Error</p>
+              <p v-if="authStore.error">Unable to login, username or password incorrect</p>
             </form>
             <button type="button" class="btn btn-primary btn-sm" @click="isLogin = !isLogin">Switch to {{ !isLogin ? 'login' : 'register' }}</button>
           </div>
@@ -27,11 +26,9 @@
 
 <script>
 import Loader from '~/components/loader';
+import { mapState } from 'vuex';
 export default {
 
-  components: {
-
-  },
   data() {
     return {
       email: '',
@@ -42,9 +39,9 @@ export default {
   components: {
     Loader
   },
-  computed:{
+  computed: {
     ...mapState({
-      authStore: state => state.userModule.state,
+      authStore: state => state.userModule
     })
   },
   methods: {

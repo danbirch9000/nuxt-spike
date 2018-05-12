@@ -2,13 +2,18 @@
     <section>
       <div v-if="getGoalsFromStore.length > 0">
           <span v-for="(item, index) in getGoalsFromStore" :key="item.description">
-            <button @click="loadGoal(index)" type="button" class="btn btn-primary btn-sm">{{item.description}}</button>
+            <button @click="loadGoal(index)" 
+            type="button" 
+            :class="{'active': item.description === goalView.description}"
+            class="btn btn-primary btn-sm">{{item.description}}</button>
           </span>
       </div>
     </section>
 </template>
 
 <script>
+import {mapState} from "vuex";
+
   export default {
     data () {
       return{
@@ -16,6 +21,9 @@
       }
     },
     computed: {
+      ...mapState({
+        goalView: state => state.goalModule.goalView
+      }),
       getGoalsFromStore: function(){
         return this.$store.state.goalModule.goals
       }

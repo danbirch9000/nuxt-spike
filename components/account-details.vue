@@ -49,6 +49,7 @@ import moment from 'moment'
                 date: moment().format()
             }).then(data => {
                 this.$store.dispatch('GET_USER_ACCOUNTS');
+                this.value = '';
             });
       }
     }

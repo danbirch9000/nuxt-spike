@@ -24,6 +24,9 @@ export default {
           state.accounts[key].history.push(payload);
         }
       }
+    },
+    DELETE_ACCOUNT_VALUE: (state, payload) => {
+      console.log('mutation still needs doing');
     }
   },
   actions: {
@@ -52,6 +55,17 @@ export default {
           "https://vuejs-83403.firebaseio.com/accounts/"+ vuexContext.rootState.userModule.userId +"/"+ vuexContext.state.accountIdViewing +"/history.json?auth=" +
             vuexContext.rootState.userModule.token,
             payload
+        )
+        .then(data => {
+
+        })
+        .catch(e => console.log(e));
+    },
+    DELETE_ACCOUNT_VALUE(vuexContext, payload){
+      return this.$axios
+        .$delete(
+          "https://vuejs-83403.firebaseio.com/accounts/"+ vuexContext.rootState.userModule.userId +"/"+ payload.accountId +"/history/"+ payload.recordId +".json?auth=" +
+            vuexContext.rootState.userModule.token
         )
         .then(data => {
 

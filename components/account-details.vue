@@ -3,13 +3,9 @@
       <div>
           <div v-if="currentSelectedAccount !== null">
           <h2>{{currentSelectedAccount.name}}</h2>
-
-
             <ul >
-               
-                  <li v-for="(item) in currentSelectedAccount.history" :key="item.id">&pound;{{ item.value }} - {{ item.date }}</li>
-                </ul>
-
+              <li v-for="(item) in currentSelectedAccount.history" :key="item.id">&pound;{{ item.value }} - {{ item.date }}<span @click="deleteRecord(item.id)">Delete</span></li>
+            </ul>
             <form v-on:submit.prevent>
                 <div class="form-group">
                     <label for="name">Update account value</label>
@@ -41,6 +37,19 @@ import moment from 'moment'
     },
     methods: {
       deleteAccount() {
+
+      },
+      deleteRecord(id){
+
+        var payload = {
+          accountId: this.currentSelectedAccount.id,
+          recordId: id
+        }
+
+        this.$store.dispatch('DELETE_ACCOUNT_VALUE', payload).then(data => {
+            this.$store.dispatch('GET_USER_ACCOUNTS');
+            this.value = '';
+        });
 
       },
       updateValue(){

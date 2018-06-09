@@ -1,11 +1,8 @@
-@import './assets/bootstrap/bootstrap';
-
 body {
     font-family: 'Open Sans', sans-serif;
+    padding: 0;
+    margin: 0;
 }
-
-label {
-    font-size: 0.8em;
-    margin-bottom: 1px;
-    font-weight: bold;
+section.container {
+    padding: 10px;
 }

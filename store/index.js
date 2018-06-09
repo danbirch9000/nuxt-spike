@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import userModule from "./user";
 import goalModule from "./goals";
 import accountModule from "./account";
+import appModule from "./app";
 
 Vue.use(Vuex);
 
@@ -11,7 +12,8 @@ const store = () => {
     modules: {
       userModule,
       goalModule,
-      accountModule
+      accountModule,
+      appModule
     }
   });
 };

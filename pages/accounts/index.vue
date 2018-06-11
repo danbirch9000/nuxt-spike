@@ -16,17 +16,20 @@
 </template>
 
 <script>
-  import accountList from '~/components/account-list'
-  import accountDetails from '~/components/account-details'
+import accountList from "~/components/account-list";
+import accountDetails from "~/components/account-details";
 
-  export default {
-    middleware:['check-auth','auth'],
-    components: {
-      accountList,
-      accountDetails
-    },
-    created(){
-    this.$store.dispatch('GET_USER_ACCOUNTS');
+export default {
+  middleware: ["check-auth", "auth"],
+  components: {
+    accountList,
+    accountDetails
   },
+  beforeMount() {
+    this.$store.commit("CLOSE_MENU");
+  },
+  created() {
+    this.$store.dispatch("GET_USER_ACCOUNTS");
   }
+};
 </script>

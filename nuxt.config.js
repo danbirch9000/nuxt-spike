@@ -14,19 +14,11 @@ module.exports = {
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     script: [
-      { src: 'https://code.jquery.com/jquery-3.2.1.slim.min.js', integrity: 'sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN', crossorigin: 'anonymous' },
-      { src: '/assets/js/core/popper.min.js' },
-      { src: '/assets/js/bootstrap-material-design.js' },
-      { src: '/assets/js/plugins/nouislider.min.js' },
-      { src: '/assets/js/material-kit.js?v=2.0.2' }
+      { src: '/assets/js/plugins/nouislider.min.js' }
 
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons' },
-      { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css' },
-      { rel: 'stylesheet', href: '/assets/material-kit.min.css?v=2.0.2' }
-
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
 
@@ -38,14 +30,14 @@ module.exports = {
   /*
   ** Global CSS
   */
-  // css: [
-  //   '@/assets/styles.scss'
-  // ],
+  css: [
+    '@/assets/styles.scss'
+  ],
 
   /*
   ** Plugins to load before mounting the App
   */
- plugins: ['~/plugins/highcharts', '~/plugins/money.filter'],
+  plugins: ['~/plugins/highcharts', '~/plugins/money.filter', { src: '~/plugins/ga.js', ssr: false }],
 
   /*
   ** Nuxt.js modules

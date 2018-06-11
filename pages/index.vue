@@ -15,7 +15,10 @@
 
 
 <script>
-  export default {
-    middleware:['check-auth','auth'],
+export default {
+  middleware: ["check-auth", "auth"],
+  beforeMount() {
+    this.$store.commit("CLOSE_MENU");
   }
+};
 </script>

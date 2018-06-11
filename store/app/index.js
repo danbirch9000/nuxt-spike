@@ -9,8 +9,11 @@ export default {
   },
   mutations: {
     TOGGLE_MENU: (state, payload) => {
-        state.menuOpen = !state.menuOpen;
-      },
+      state.menuOpen = !state.menuOpen;
+    },
+    CLOSE_MENU: (state, payload) => {
+      state.menuOpen = false;
+    },
   },
   actions: {
 

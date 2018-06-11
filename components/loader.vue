@@ -3,12 +3,11 @@
 </template>
 
 <script>
-  export default {
-
-  }
+export default {};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "../assets/colors";
 .lds-ring {
   display: inline-block;
   position: relative;
@@ -22,10 +21,10 @@
   width: 51px;
   height: 51px;
   margin: 6px;
-  border: 6px solid #9124a3;
+  border: 6px solid $primary;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #9124a3 transparent transparent transparent;
+  border-color: $primary transparent transparent transparent;
 }
 .lds-ring div:nth-child(1) {
   animation-delay: -0.45s;
@@ -44,5 +43,4 @@
     transform: rotate(360deg);
   }
 }
-
 </style>

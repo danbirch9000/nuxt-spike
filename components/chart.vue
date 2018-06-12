@@ -14,6 +14,9 @@ const chartConfig = {
     type: "spline",
     backgroundColor: "#f4f4f4"
   },
+  credits: {
+    enabled: false
+  },
   title: {
     text: "Your goals"
   },

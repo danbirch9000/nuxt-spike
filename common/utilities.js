@@ -5,7 +5,7 @@ const moment = require('moment')
 var UtilitiesModule = (function () {
 
   var getFinanceData = function (rate, amount, monthly, years, startDate) {
-    if (rate === '' || amount === '' || monthly === '' || years === ''){
+    if (rate === '' || amount === '' || monthly === '' || years === '') {
       return [];
     }
     rate = parseFloat(rate);
@@ -22,10 +22,10 @@ var UtilitiesModule = (function () {
     for (var index = 0; index < years; index++) {
       var savingsForYear = this.getCiforYear(amount, index, monthly, rate, time.add('years', 1));
 
-      if (index === 0){
+      if (index === 0) {
         savingsForYear.totalInterest = savingsForYear.interest;
         savingsForYear.formattedTotalInterest = this.numberWithCommas(savingsForYear.interest);
-      }else{
+      } else {
 
         var calcInterest = data[index - 1].totalInterest + savingsForYear.interest;
         savingsForYear.totalInterest = calcInterest;
@@ -45,11 +45,11 @@ var UtilitiesModule = (function () {
     var principal = amount + monthly;
     var value = 0;
     for (var index = 0; index < 12; index++) {
-      value = finance.CI(rate/12, 1, principal, 1);// rate, compoundings per period, principal, number of periods
+      value = finance.CI(rate / 12, 1, principal, 1);// rate, compoundings per period, principal, number of periods
       principal = value + monthly;
     };
-    var interest = value - (amount + (monthly*12));
-    
+    var interest = value - (amount + (monthly * 12));
+
     return {
       value: value,
       formattedvalue: this.numberWithCommas(value),
@@ -65,11 +65,11 @@ var UtilitiesModule = (function () {
     var principal = amount + monthly;
     var value = 0;
     for (var index = 0; index < months; index++) {
-      value = finance.CI(rate/12, 1, principal, 1);// rate, compoundings per period, principal, number of periods
+      value = finance.CI(rate / 12, 1, principal, 1);// rate, compoundings per period, principal, number of periods
       principal = value + monthly;
     };
-    var interest = value - (amount + (monthly*months));
-    
+    var interest = value - (amount + (monthly * months));
+
     return {
       value: value,
       formattedvalue: this.numberWithCommas(value),

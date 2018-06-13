@@ -8,5 +8,5 @@ Vue.filter('currency', function (value) {
 
 Vue.filter('percentage', function (value) {
   value = Math.round(value * 100) / 100
-  return `${value}%`;
+  return `${value} % `;
 });

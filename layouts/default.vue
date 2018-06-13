@@ -41,7 +41,7 @@ export default {
 };
 </script>
 
-<style style lang="scss" scoped>
+<style lang="scss" scoped>
 @import "../assets/colors";
 @import "../assets/mixins";
 
@@ -122,7 +122,10 @@ a.navbar-brand {
   display: inline-block;
   @media (min-width: 700px) {
     float: left;
-    width: 225px;
+    width: 195px;
+    top: 7px;
+    position: relative;
+    left: 8px;
   }
   img {
     width: 100%;

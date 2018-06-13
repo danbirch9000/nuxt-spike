@@ -3,18 +3,19 @@
       <div>
           <div v-if="currentSelectedAccount !== null">
           <h2>{{currentSelectedAccount.name}}</h2>
-            <ul >
-              <li v-for="(item) in currentSelectedAccount.history" :key="item.id">&pound;{{ item.value }} - {{ item.date }}<span @click="deleteRecord(item.id)">Delete</span></li>
-            </ul>
+            
             <form v-on:submit.prevent>
                 <div class="form-group">
-                    <label for="name">Update account value</label>
-                    <input v-model="value" type="text" class="form-control" id="value"
+                    <label for="name">new account value:</label>
+                    <input v-model="value" type="number" class="form-control large-input" id="value"
                     aria-describedby="value" placeholder="e.g. £2000">
                 </div>
                 <button class="btn btn-primary" @click="updateValue()">Update</button>
             </form>
-          <button class="btn btn-primary" @click="deleteAccount()">Delete</button>
+            <ul >
+              <li v-for="(item) in currentSelectedAccount.history" :key="item.id">&pound;{{ item.value }} - {{ item.date }} <button @click="deleteRecord(item.id)">Delete</button></li>
+            </ul>
+          <button class="btn btn-primary" @click="deleteAccount()">Delete Account</button>
       </div>
       </div>
     </section>
@@ -62,3 +63,10 @@ export default {
   }
 };
 </script>
+
+<style style lang="scss" scoped>
+.large-input {
+  font-size: 35px;
+  text-align: center;
+}
+</style>

@@ -1,0 +1,22 @@
+.form-group {
+  margin: 10px 0;
+  label {
+      display: block;
+      margin-bottom: 6px;
+      text-transform: lowercase;
+      margin-top: 15px;
+  }
+  input {
+      padding: 11px 6px;
+      display: block;
+      border: 1px #ccc solid;
+      font-size: 15px;
+      width: 100%;
+  }
+}
+select {
+  width: 100%;
+  padding: 11px 6px;
+  font-size: 15px;
+  border: 1px #ccc solid;
+}

@@ -9,7 +9,7 @@
             <form v-on:submit.prevent>
                 <div class="form-group">
                     <label for="name">Update account value</label>
-                    <input v-model="value" type="text" class="form-control" id="value" 
+                    <input v-model="value" type="text" class="form-control" id="value"
                     aria-describedby="value" placeholder="e.g. £2000">
                 </div>
                 <button class="btn btn-primary" @click="updateValue()">Update</button>
@@ -21,46 +21,44 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import moment from 'moment'
+import { mapGetters } from "vuex";
+import moment from "moment";
 
-  export default {
-    data () {
-      return{
-          value: ''
-      }
+export default {
+  data() {
+    return {
+      value: ""
+    };
+  },
+  computed: {
+    ...mapGetters({
+      currentSelectedAccount: "GET_ACCOUNT_VIEWING"
+    })
+  },
+  methods: {
+    deleteAccount() {},
+    deleteRecord(id) {
+      var payload = {
+        accountId: this.currentSelectedAccount.id,
+        recordId: id
+      };
+
+      this.$store.dispatch("DELETE_ACCOUNT_VALUE", payload).then(data => {
+        this.$store.dispatch("GET_USER_ACCOUNTS");
+        this.value = "";
+      });
     },
-    computed: {
-      ...mapGetters({
-        currentSelectedAccount: 'GET_ACCOUNT_VIEWING'
-      })
-    },
-    methods: {
-      deleteAccount() {
-
-      },
-      deleteRecord(id){
-
-        var payload = {
-          accountId: this.currentSelectedAccount.id,
-          recordId: id
-        }
-
-        this.$store.dispatch('DELETE_ACCOUNT_VALUE', payload).then(data => {
-            this.$store.dispatch('GET_USER_ACCOUNTS');
-            this.value = '';
+    updateValue() {
+      this.$store
+        .dispatch("UPDATE_ACCOUNT_VALUE", {
+          value: this.value,
+          date: moment().format()
+        })
+        .then(data => {
+          this.$store.dispatch("GET_USER_ACCOUNTS");
+          this.value = "";
         });
-
-      },
-      updateValue(){
-          this.$store.dispatch('UPDATE_ACCOUNT_VALUE', {
-                value: this.value,
-                date: moment().format()
-            }).then(data => {
-                this.$store.dispatch('GET_USER_ACCOUNTS');
-                this.value = '';
-            });
-      }
     }
   }
+};
 </script>

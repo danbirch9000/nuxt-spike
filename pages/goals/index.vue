@@ -17,7 +17,7 @@
               <accountChooser  v-if="showAccountChooser"/>
 
             <chart />
-            <tweaker />
+
             <button @click="deleteGoal()" class="btn btn-primary btn-sm">Delete goal</button>
             <button @click="saveGoal()" class="btn btn-primary btn-sm">Save goal</button>
             <tableData />

@@ -37,7 +37,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['~/plugins/highcharts', '~/plugins/money.filter', { src: '~/plugins/ga.js', ssr: false }],
+  plugins: ['~/plugins/highcharts', '~/plugins/dialog', '~/plugins/money.filter', { src: '~/plugins/ga.js', ssr: false }],
 
   /*
   ** Nuxt.js modules

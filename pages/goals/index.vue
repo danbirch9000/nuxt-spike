@@ -14,6 +14,7 @@
               <p>Estimated value after {{getMonthsGoalActive()}} months: {{getEstimatedSavingsForMonths(getMonthsGoalActive()).value | currency}}</p>
               <p>Actual value: {{getActualValue() | currency}} {{percentageDifference() | percentage}}</p>
               <button v-if="accounts.length > 0" class="btn btn-primary btn-sm" @click="showAccountChooser =! showAccountChooser">Link to your accounts</button>
+              <button @click="test">Test</button>
               <accountChooser  v-if="showAccountChooser"/>
 
             <chart />
@@ -59,6 +60,23 @@ export default {
     this.$store.commit("CLOSE_MENU");
   },
   methods: {
+    /*
+            this.$store.commit("OPEN_OFF_CANVAS", {
+          component: AddressSelect,
+          title: "Please choose an address"
+        });
+
+        */
+    test() {
+      this.$dialog
+        .confirm("Please confirm to continue")
+        .then(function() {
+          console.log("Clicked on proceed");
+        })
+        .catch(function() {
+          console.log("Clicked on cancel");
+        });
+    },
     transformDate(date) {
       return moment(date).format("MMM YYYY");
     },

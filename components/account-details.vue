@@ -8,7 +8,7 @@
                 <div class="form-group">
                     <label for="name">new account value:</label>
                     <input v-model="value" type="number" class="form-control large-input" id="value"
-                    aria-describedby="value" placeholder="e.g. £2000">
+                    aria-describedby="value" placeholder="e.g. £2000" autocomplete="off" step=".01">
                 </div>
                 <button class="btn btn-primary" @click="updateValue()">Update</button>
             </form>
@@ -39,15 +39,23 @@ export default {
   methods: {
     deleteAccount() {},
     deleteRecord(id) {
-      var payload = {
-        accountId: this.currentSelectedAccount.id,
-        recordId: id
-      };
+      var base = this;
+      this.$dialog
+        .confirm("Delete this entry?")
+        .then(function() {
+          var payload = {
+            accountId: base.currentSelectedAccount.id,
+            recordId: id
+          };
 
-      this.$store.dispatch("DELETE_ACCOUNT_VALUE", payload).then(data => {
-        this.$store.dispatch("GET_USER_ACCOUNTS");
-        this.value = "";
-      });
+          base.$store.dispatch("DELETE_ACCOUNT_VALUE", payload).then(data => {
+            base.$store.dispatch("GET_USER_ACCOUNTS");
+            base.value = "";
+          });
+        })
+        .catch(function(e) {
+          console.log(e);
+        });
     },
     updateValue() {
       this.$store
@@ -65,6 +73,8 @@ export default {
 </script>
 
 <style style lang="scss" scoped>
+@import "../assets/colors";
+@import "../assets/mixins";
 .large-input {
   font-size: 35px;
   text-align: center;

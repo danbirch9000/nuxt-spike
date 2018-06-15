@@ -1,22 +1,15 @@
 import Vuex from 'vuex'
 import axios from 'axios'
-import Cookie from "js-cookie";
-import utilities from '~/common/utilities.js'
+import { urls } from "~/config/constants";
 
-const getValueOfAccount = function(id, userAccounts){
-  
+const getValueOfAccount = function (id, userAccounts) {
   for (const key in userAccounts) {
-
-    if (userAccounts[key].id === id){
-      
-        const valueArray = [];
-        for (const x in userAccounts[key].history) {
-          valueArray.push({ ...userAccounts[key].history[x] });
-        }
-
-
-        return parseFloat(valueArray[valueArray.length-1].value);
-      
+    if (userAccounts[key].id === id) {
+      const valueArray = [];
+      for (const x in userAccounts[key].history) {
+        valueArray.push({ ...userAccounts[key].history[x] });
+      }
+      return parseFloat(valueArray[valueArray.length - 1].value);
     }
   }
   return 0;
@@ -55,46 +48,46 @@ export default {
     },
     REMOVE_GOAL(state, payload) {
       for (const key in state.goals) {
-        if (state.goals[key].id === payload){
-          state.goals.splice(key,1);
+        if (state.goals[key].id === payload) {
+          state.goals.splice(key, 1);
         }
       }
     },
     UPDATE_GOAL(state, payload) {
       for (const key in state.goals) {
-        if (state.goals[key].id === payload){
+        if (state.goals[key].id === payload) {
           state.goals[key] = state.goalView;
         }
       }
     },
-    UPDATE_GOAL_ACCOUNTS(state, payload){
+    UPDATE_GOAL_ACCOUNTS(state, payload) {
       var idOfGoal = state.goalView.id;
       for (const key in state.goals) {
-        if (state.goals[key].id === idOfGoal){
+        if (state.goals[key].id === idOfGoal) {
           state.goals[key].accounts = payload;
           state.goalView = state.goals[key];
         }
       }
-      
+
     }
   },
   actions: {
-    GET_USER_GOALS(vuexContext, context){
-      return axios.get(`https://vuejs-83403.firebaseio.com/goals/${vuexContext.rootState.userModule.userId}.json?auth=` + vuexContext.rootState.userModule.token)
-      .then(data => {
-        const goalsArray = [];
-        for (const key in data.data) {
-          goalsArray.push({ ...data.data[key], id: key });
-        }
-        vuexContext.commit("SET_USER_GOALS", goalsArray);
-        vuexContext.commit("SET_CURRENT_GOAL_VIEW", goalsArray[0]);
-      });
+    GET_USER_GOALS(vuexContext, context) {
+      return axios.get(`${urls.apiBaseUrl}/goals/${vuexContext.rootState.userModule.userId}.json?auth=` + vuexContext.rootState.userModule.token)
+        .then(data => {
+          const goalsArray = [];
+          for (const key in data.data) {
+            goalsArray.push({ ...data.data[key], id: key });
+          }
+          vuexContext.commit("SET_USER_GOALS", goalsArray);
+          vuexContext.commit("SET_CURRENT_GOAL_VIEW", goalsArray[0]);
+        });
     },
-    DELETE_GOAL(vuexContext){
+    DELETE_GOAL(vuexContext) {
       return this.$axios
         .$delete(
-          "https://vuejs-83403.firebaseio.com/goals/"+ vuexContext.rootState.userModule.userId + "/" + vuexContext.state.goalView.id +".json?auth=" +
-            vuexContext.rootState.userModule.token
+          urls.apiBaseUrl + "/goals/" + vuexContext.rootState.userModule.userId + "/" + vuexContext.state.goalView.id + ".json?auth=" +
+          vuexContext.rootState.userModule.token
         )
         .then(data => {
           vuexContext.commit("REMOVE_GOAL", vuexContext.state.goalView.id);
@@ -109,28 +102,28 @@ export default {
         })
         .catch(e => console.log(e));
     },
-    UPDATE_GOAL(vuexContext){
+    UPDATE_GOAL(vuexContext) {
       return this.$axios
         .$patch(
-          "https://vuejs-83403.firebaseio.com/goals/"+ vuexContext.rootState.userModule.userId + "/" + vuexContext.state.goalView.id +".json?auth=" +
-            vuexContext.rootState.userModule.token,
-            vuexContext.state.goalView
+          urls.apiBaseUrl + "/goals/" + vuexContext.rootState.userModule.userId + "/" + vuexContext.state.goalView.id + ".json?auth=" +
+          vuexContext.rootState.userModule.token,
+          vuexContext.state.goalView
         )
         .then(data => {
           vuexContext.commit("UPDATE_GOAL", vuexContext.state.goalView.id);
         })
         .catch(e => console.log(e));
     },
-    LINK_GOAL_TO_ACCOUNT(vuexContext, payload){
+    LINK_GOAL_TO_ACCOUNT(vuexContext, payload) {
       var goalData = {
         ...vuexContext.state.goalView,
         accounts: payload
       };
       return this.$axios
         .$patch(
-          "https://vuejs-83403.firebaseio.com/goals/"+ vuexContext.rootState.userModule.userId + "/" + vuexContext.state.goalView.id +".json?auth=" +
-            vuexContext.rootState.userModule.token,
-            goalData
+          urls.apiBaseUrl + "/goals/" + vuexContext.rootState.userModule.userId + "/" + vuexContext.state.goalView.id + ".json?auth=" +
+          vuexContext.rootState.userModule.token,
+          goalData
         )
         .then(data => {
           vuexContext.commit("SET_CURRENT_GOAL_VIEW", vuexContext.state.goalView);
@@ -138,14 +131,14 @@ export default {
         })
         .catch(e => console.log(e));
     },
-    SAVE_GOAL(vuexContext, post){
+    SAVE_GOAL(vuexContext, post) {
       const goal = {
         ...post
       };
       return this.$axios
         .$post(
-          "https://vuejs-83403.firebaseio.com/goals/"+ vuexContext.rootState.userModule.userId +".json?auth=" +
-            vuexContext.rootState.userModule.token,
+          urls.apiBaseUrl + "/goals/" + vuexContext.rootState.userModule.userId + ".json?auth=" +
+          vuexContext.rootState.userModule.token,
           goal
         )
         .then(data => {
@@ -165,21 +158,12 @@ export default {
       }
     },
     GET_VALUE_OF_GOAL: (state, getters, rootState) => {
-
-      console.log('GET_VALUE_OF_GOAL');
-
       var accountIds = state.goalView.accounts;
       var userAccounts = rootState.accountModule.accounts;
-
       let value = 0;
       for (const key in state.goalView.accounts) {
         value += getValueOfAccount(state.goalView.accounts[key], userAccounts);
       }
-
-
-      
-
-      
       return value;
     }
   }

@@ -7,7 +7,6 @@
               <thead>
                 <tr>
                   <th scope="col">&nbsp;</th>
-                  
                   <th scope="col">Date</th>
                   <th scope="col">Interest</th>
                   <th scope="col">Total Interest</th>
@@ -17,7 +16,6 @@
               <tbody>
                 <tr v-for="(item, index) in getSavingsGoal" :key="item.value">
                   <td>{{index + 1}}</td>
-                  
                   <td>{{ item.date }}</td>
                   <td>{{ item.interest  | currency}}</td>
                   <td>{{ item.totalInterest  | currency}}</td>
@@ -25,12 +23,9 @@
                 </tr>
               </tbody>
             </table>
-
           </div>
         </div>
       </div>
-
-
     </section>
 </template>
 

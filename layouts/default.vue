@@ -3,7 +3,7 @@
     <nav>
       <a class="navbar-brand" href="/"><img src="/assets/images/saveswiftlogo.png" /></a>
       <a class="burger-menu" @click="toggleMenu()"></a>
-      <div :class="{'active': menuState}" class="menu">
+      <div :class="{'active': menuState}" class="menu" v-if="isLoggedIn()">
         <ul>
           <nuxt-link to="/" tag="li" active-class="active"><a>Home</a></nuxt-link>
           <nuxt-link to="/goals" tag="li" active-class="active"><a>Goals</a></nuxt-link>
@@ -32,10 +32,12 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch("LOGOUT");
-      this.$router.push("/auth");
     },
     toggleMenu() {
       this.$store.commit("TOGGLE_MENU");
+    },
+    isLoggedIn() {
+      return this.$store.getters.IS_AUTHENTICATED;
     }
   }
 };

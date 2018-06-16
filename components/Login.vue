@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <section>
       <h1>{{ isLogin ? 'Login' : 'Register' }}</h1>
       <div class="container">
         <div class="row">

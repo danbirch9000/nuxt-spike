@@ -1,5 +1,5 @@
-import Vuex from 'vuex'
-import axios from 'axios'
+import Vuex from "vuex";
+import axios from "axios";
 import Cookie from "js-cookie";
 
 export default {
@@ -14,7 +14,7 @@ export default {
     SET_TOKEN(state, token) {
       state.token = token;
     },
-    SET_USER_ID(state, id){
+    SET_USER_ID(state, id) {
       state.userId = id;
     },
     CLEAR_TOKEN(state) {
@@ -52,7 +52,7 @@ export default {
           vuexContext.commit("SET_TOKEN", result.idToken);
           vuexContext.commit("REMOVE_ERROR");
 
-          let userInfo = result.idToken.split('.');
+          let userInfo = result.idToken.split(".");
           let userDetails = JSON.parse(atob(userInfo[1]));
           vuexContext.commit("SET_USER_ID", userDetails.user_id);
           localStorage.setItem("token", result.idToken);
@@ -95,7 +95,7 @@ export default {
       }
 
       token = localStorage.getItem("token");
-        expirationDate = localStorage.getItem("tokenExpiration");
+      expirationDate = localStorage.getItem("tokenExpiration");
 
       if (new Date().getTime() > +expirationDate || !token) {
         console.log("No token or invalid token");
@@ -103,10 +103,12 @@ export default {
         return;
       }
 
-      let userInfo = token.split('.');
+      let userInfo = token.split(".");
       let userDetails = JSON.parse(atob(userInfo[1]));
       vuexContext.commit("SET_USER_ID", userDetails.user_id);
       vuexContext.commit("SET_TOKEN", token);
+      // this.router.push("/goals");
+      console.log("redirect users to goals");
     },
     LOGOUT(vuexContext) {
       vuexContext.commit("CLEAR_TOKEN");
@@ -116,6 +118,7 @@ export default {
         localStorage.removeItem("token");
         localStorage.removeItem("tokenExpiration");
       }
+      this.$router.push("/");
     }
   },
   getters: {

@@ -1,8 +1,9 @@
-import Vuex from 'vuex'
-import axios from 'axios'
+import Vuex from "vuex";
+import axios from "axios";
 import { urls } from "~/config/constants";
+import utilities from "~/common/utilities.js";
 
-const getValueOfAccount = function (id, userAccounts) {
+const getValueOfAccount = function(id, userAccounts) {
   for (const key in userAccounts) {
     if (userAccounts[key].id === id) {
       const valueArray = [];
@@ -13,23 +14,23 @@ const getValueOfAccount = function (id, userAccounts) {
     }
   }
   return 0;
-}
+};
 
 export default {
   state: {
     goals: [],
     goalView: {
-      description: '',
-      rate: '',
-      amount: '',
-      monthly: '',
-      years: '',
-      startDate: ''
+      description: "",
+      rate: "",
+      amount: "",
+      monthly: "",
+      years: "",
+      startDate: ""
     }
   },
   mutations: {
     SET_USER_GOALS: (state, payload) => {
-      state.goals = payload
+      state.goals = payload;
     },
     ADD_GOAL: (state, payload) => {
       state.goals.push(payload);
@@ -68,12 +69,16 @@ export default {
           state.goalView = state.goals[key];
         }
       }
-
     }
   },
   actions: {
     GET_USER_GOALS(vuexContext, context) {
-      return axios.get(`${urls.apiBaseUrl}/goals/${vuexContext.rootState.userModule.userId}.json?auth=` + vuexContext.rootState.userModule.token)
+      return axios
+        .get(
+          `${urls.apiBaseUrl}/goals/${
+            vuexContext.rootState.userModule.userId
+          }.json?auth=` + vuexContext.rootState.userModule.token
+        )
         .then(data => {
           const goalsArray = [];
           for (const key in data.data) {
@@ -86,18 +91,23 @@ export default {
     DELETE_GOAL(vuexContext) {
       return this.$axios
         .$delete(
-          urls.apiBaseUrl + "/goals/" + vuexContext.rootState.userModule.userId + "/" + vuexContext.state.goalView.id + ".json?auth=" +
-          vuexContext.rootState.userModule.token
+          urls.apiBaseUrl +
+            "/goals/" +
+            vuexContext.rootState.userModule.userId +
+            "/" +
+            vuexContext.state.goalView.id +
+            ".json?auth=" +
+            vuexContext.rootState.userModule.token
         )
         .then(data => {
           vuexContext.commit("REMOVE_GOAL", vuexContext.state.goalView.id);
           vuexContext.commit("SET_CURRENT_GOAL_VIEW", {
-            description: '',
-            rate: '',
-            amount: '',
-            monthly: '',
-            years: '',
-            startDate: ''
+            description: "",
+            rate: "",
+            amount: "",
+            monthly: "",
+            years: "",
+            startDate: ""
           });
         })
         .catch(e => console.log(e));
@@ -105,8 +115,13 @@ export default {
     UPDATE_GOAL(vuexContext) {
       return this.$axios
         .$patch(
-          urls.apiBaseUrl + "/goals/" + vuexContext.rootState.userModule.userId + "/" + vuexContext.state.goalView.id + ".json?auth=" +
-          vuexContext.rootState.userModule.token,
+          urls.apiBaseUrl +
+            "/goals/" +
+            vuexContext.rootState.userModule.userId +
+            "/" +
+            vuexContext.state.goalView.id +
+            ".json?auth=" +
+            vuexContext.rootState.userModule.token,
           vuexContext.state.goalView
         )
         .then(data => {
@@ -121,12 +136,20 @@ export default {
       };
       return this.$axios
         .$patch(
-          urls.apiBaseUrl + "/goals/" + vuexContext.rootState.userModule.userId + "/" + vuexContext.state.goalView.id + ".json?auth=" +
-          vuexContext.rootState.userModule.token,
+          urls.apiBaseUrl +
+            "/goals/" +
+            vuexContext.rootState.userModule.userId +
+            "/" +
+            vuexContext.state.goalView.id +
+            ".json?auth=" +
+            vuexContext.rootState.userModule.token,
           goalData
         )
         .then(data => {
-          vuexContext.commit("SET_CURRENT_GOAL_VIEW", vuexContext.state.goalView);
+          vuexContext.commit(
+            "SET_CURRENT_GOAL_VIEW",
+            vuexContext.state.goalView
+          );
           vuexContext.commit("UPDATE_GOAL_ACCOUNTS", payload);
         })
         .catch(e => console.log(e));
@@ -137,8 +160,11 @@ export default {
       };
       return this.$axios
         .$post(
-          urls.apiBaseUrl + "/goals/" + vuexContext.rootState.userModule.userId + ".json?auth=" +
-          vuexContext.rootState.userModule.token,
+          urls.apiBaseUrl +
+            "/goals/" +
+            vuexContext.rootState.userModule.userId +
+            ".json?auth=" +
+            vuexContext.rootState.userModule.token,
           goal
         )
         .then(data => {
@@ -148,14 +174,14 @@ export default {
     }
   },
   getters: {
-    GET_CHART_DATA_CURRENT_VIEW: (state) => {
+    GET_CHART_DATA_CURRENT_VIEW: state => {
       return {
         rate: state.goalView.rate,
         amount: state.goalView.amount,
         monthly: state.goalView.monthly,
         years: state.goalView.years,
         startDate: state.goalView.startDate
-      }
+      };
     },
     GET_VALUE_OF_GOAL: (state, getters, rootState) => {
       var accountIds = state.goalView.accounts;
@@ -165,6 +191,18 @@ export default {
         value += getValueOfAccount(state.goalView.accounts[key], userAccounts);
       }
       return value;
+    },
+    GET_GOAL_TARGET: (state, getters, rootState) => {
+      let target = utilities.getFinanceData(
+        state.goalView.rate,
+        state.goalView.amount,
+        state.goalView.monthly,
+        state.goalView.years,
+        state.goalView.startDate
+      );
+
+      let goalTarget = target[target.length - 1];
+      return goalTarget.value;
     }
   }
 };

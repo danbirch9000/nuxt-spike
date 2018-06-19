@@ -2,10 +2,9 @@
   <div class='body-container' :class="{'menu-active': menuState}">
     <nav>
       <a class="navbar-brand" href="/"><img src="/assets/images/saveswiftlogo.png" /></a>
-      <a class="burger-menu" @click="toggleMenu()"></a>
+      <a class="burger-menu" @click="toggleMenu()" v-if="isLoggedIn()"></a>
       <div :class="{'active': menuState}" class="menu" v-if="isLoggedIn()">
         <ul>
-          <nuxt-link to="/" tag="li" active-class="active"><a>Home</a></nuxt-link>
           <nuxt-link to="/goals" tag="li" active-class="active"><a>Goals</a></nuxt-link>
           <nuxt-link to="/accounts" tag="li" active-class="active"><a>Accounts</a></nuxt-link>
           <li @click="logout" active-class="active"><a>Logout</a></li>
@@ -59,11 +58,7 @@ export default {
     }
   }
 }
-a {
-  font-size: 14px;
-  text-decoration: none;
-  color: #292929;
-}
+
 nav {
   text-align: center;
   position: relative;
@@ -105,7 +100,13 @@ div.menu {
     text-align: left;
     li {
       border-bottom: 1px #e5e5e5 solid;
-      padding: 14px 10px;
+      a {
+        font-size: 14px;
+        text-decoration: none;
+        color: #292929;
+        padding: 14px 10px;
+        display: block;
+      }
       cursor: pointer;
       &:hover {
         background-color: darken(#f4f4f4, 5%);

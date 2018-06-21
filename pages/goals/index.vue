@@ -13,19 +13,15 @@
               Starting from {{transformDate(currentGoal.startDate)}} with {{currentGoal.amount | currency}}</p>
               <p>Estimated value after {{getMonthsGoalActive()}} months: {{getEstimatedSavingsForMonths(getMonthsGoalActive()).value | currency}}</p>
               <p>Actual value: {{getActualValue() | currency}} {{percentageDifference() | percentage}}</p>
-              
               <p>Goal target: {{goalTarget | currency}}</p>
               <button v-if="accounts.length > 0" class="btn btn-primary btn-sm" @click="showAccountChooser =! showAccountChooser">Link to your accounts</button>
               <accountChooser  v-if="showAccountChooser"/>
-              
-            <chart />
-
-            <button @click="deleteGoal()" class="btn btn-primary btn-sm">Delete goal</button>
-            
-            <tableData />
+              <chart />
+              <button @click="deleteGoal()" class="btn btn-primary btn-sm">Delete goal</button>
+              <tableData />
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
   </section>
@@ -39,8 +35,7 @@ import tweaker from "~/components/tweaker";
 import chart from "~/components/chart";
 import tableData from "~/components/table-data";
 import moment from "moment";
-import { mapGetters } from "vuex";
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   data() {

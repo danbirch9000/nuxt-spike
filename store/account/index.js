@@ -2,6 +2,7 @@ import Vuex from 'vuex';
 import axios from 'axios';
 import Cookie from "js-cookie";
 import moment from 'moment';
+import { urls } from "~/config/constants";
 
 export default {
   state: {
@@ -20,7 +21,7 @@ export default {
     },
     UPDATE_ACCOUNT_VALUE: (state, payload) => {
       for (const key in state.accounts) {
-        if (state.accounts[key].id === state.accountIdViewing){
+        if (state.accounts[key].id === state.accountIdViewing) {
           state.accounts[key].history.push(payload);
         }
       }
@@ -30,7 +31,7 @@ export default {
     }
   },
   actions: {
-    CREATE_ACCOUNT(vuexContext, payload){
+    CREATE_ACCOUNT(vuexContext, payload) {
 
       const postData = {
         ...payload,
@@ -39,66 +40,66 @@ export default {
 
       return this.$axios
         .$post(
-          "https://vuejs-83403.firebaseio.com/accounts/"+ vuexContext.rootState.userModule.userId +".json?auth=" +
-            vuexContext.rootState.userModule.token,
-            payload
+          urls.apiBaseUrl + "/accounts/" + vuexContext.rootState.userModule.userId + ".json?auth=" +
+          vuexContext.rootState.userModule.token,
+          payload
         )
         .then(data => {
-          vuexContext.commit("ADD_ACCOUNT", { ...payload, id: data.name});
+          vuexContext.commit("ADD_ACCOUNT", { ...payload, id: data.name });
           vuexContext.commit("SET_ACCOUNT_VIEWING", data.name);
         })
         .catch(e => console.log(e));
     },
-    UPDATE_ACCOUNT_VALUE(vuexContext, payload){
+    UPDATE_ACCOUNT_VALUE(vuexContext, payload) {
       return this.$axios
         .$post(
-          "https://vuejs-83403.firebaseio.com/accounts/"+ vuexContext.rootState.userModule.userId +"/"+ vuexContext.state.accountIdViewing +"/history.json?auth=" +
-            vuexContext.rootState.userModule.token,
-            payload
+          urls.apiBaseUrl + "/accounts/" + vuexContext.rootState.userModule.userId + "/" + vuexContext.state.accountIdViewing + "/history.json?auth=" +
+          vuexContext.rootState.userModule.token,
+          payload
         )
         .then(data => {
 
         })
         .catch(e => console.log(e));
     },
-    DELETE_ACCOUNT_VALUE(vuexContext, payload){
+    DELETE_ACCOUNT_VALUE(vuexContext, payload) {
       return this.$axios
         .$delete(
-          "https://vuejs-83403.firebaseio.com/accounts/"+ vuexContext.rootState.userModule.userId +"/"+ payload.accountId +"/history/"+ payload.recordId +".json?auth=" +
-            vuexContext.rootState.userModule.token
+          urls.apiBaseUrl + "/accounts/" + vuexContext.rootState.userModule.userId + "/" + payload.accountId + "/history/" + payload.recordId + ".json?auth=" +
+          vuexContext.rootState.userModule.token
         )
         .then(data => {
 
         })
         .catch(e => console.log(e));
     },
-    GET_USER_ACCOUNTS(vuexContext){
-    return this.$axios
-      .$get(
-        "https://vuejs-83403.firebaseio.com/accounts/"+ vuexContext.rootState.userModule.userId +".json?auth=" +
+    GET_USER_ACCOUNTS(vuexContext) {
+      return this.$axios
+        .$get(
+          urls.apiBaseUrl + "/accounts/" + vuexContext.rootState.userModule.userId + ".json?auth=" +
           vuexContext.rootState.userModule.token
-      )
-      .then(data => {
-        const accountsArray = [];
-        for (const key in data) {
-          accountsArray.push({ ...data[key], id: key });
-        }
-        vuexContext.commit("LOAD_ALL_ACCOUNTS", accountsArray);
-      })
-      .catch(e => console.log(e));
-  }
+        )
+        .then(data => {
+          const accountsArray = [];
+          for (const key in data) {
+            accountsArray.push({ ...data[key], id: key });
+          }
+          vuexContext.commit("LOAD_ALL_ACCOUNTS", accountsArray);
+        })
+        .catch(e => console.log(e));
+    }
   },
   getters: {
     GET_ACCOUNT_VIEWING: (state) => {
       for (const key in state.accounts) {
-        if (state.accounts[key].id === state.accountIdViewing){
+        if (state.accounts[key].id === state.accountIdViewing) {
 
           const account = state.accounts[key];
           const historyArray = [];
           for (const key in account.history) {
             historyArray.push(
-              { 
-                ...account.history[key], 
+              {
+                ...account.history[key],
                 id: key,
                 date: moment(account.history[key].date).format('L LT')
               });
@@ -109,6 +110,6 @@ export default {
       }
       return null;
     }
-    
+
   }
 };

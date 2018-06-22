@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section v-if="chartShown">
       <highcharts :options="chartConfig" ref="chartComponent"></highcharts>
     </section>
 </template>
@@ -63,7 +63,8 @@ export default {
     return {
       chartConfig: chartConfig,
       chartData: null,
-      savingsGoal: null
+      savingsGoal: null,
+      chartShown: false
     };
   },
   computed: {
@@ -73,15 +74,20 @@ export default {
   },
   watch: {
     currentViewChartData() {
-      this.calculate();
+      console.log("chart data changed");
+      this.chartShown = true;
     }
   },
   mounted() {
     this.calculate();
   },
+  updated() {
+    console.log("page updated");
+    this.calculate();
+  },
   methods: {
     updateChart() {
-      if (this.$refs.chartComponent !== undefined) {
+      if (this.chartShown) {
         var chart = this.$refs.chartComponent.chart;
         chart.series[0].setData(this.chartData);
         let data = utilities.getFinanceData(

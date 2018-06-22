@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <section>
     <form>
         <div class="form-group" v-if="canSave">
             <label for="goal-description">Goal description</label>
@@ -24,8 +24,10 @@
             <button type="button" class="btn btn-primary" v-on:click="calculate()">Calculate</button>
             <button type="button" class="btn btn-primary" v-if="canSave" v-on:click="saveGoal()">Save goal</button>
     </form>
-    <tableData />
-    <chart />    
+
+      <tableData />
+      <chart />    
+
   </section>
 </template>
 
@@ -35,6 +37,7 @@ import moment from "moment";
 import goalList from "~/components/goal-list";
 import tableData from "~/components/table-data";
 import chart from "~/components/chart";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -62,6 +65,9 @@ export default {
   },
   middleware: ["check-auth", "auth"],
   computed: {
+    ...mapGetters({
+      currentViewChartData: "GET_CHART_DATA_CURRENT_VIEW"
+    }),
     getSavingsGoal: function() {
       return this.savingsGoal;
     },
@@ -87,9 +93,8 @@ export default {
           startDate: moment().format(),
           description: this.description
         });
-      if (this.canSave) {
-        this.$store.commit("SET_CURRENT_GOAL_VIEW", this.currentGoal);
-      }
+
+      this.$store.commit("SET_CURRENT_GOAL_VIEW", this.currentGoal);
 
       // this.savingsGoal = utilities.getFinanceData(this.rate, this.amount, this.monthly, this.years, this.startDate);
     },

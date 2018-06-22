@@ -1,10 +1,12 @@
 <template>
   <section class="container">
-    <div>
+    <div class="grid-container">
       <Login />
-
-      <h1>Calculator</h1>
+      <div>
+      <h1>Savings Calculator</h1>
+      <P>Use our savings calculator to see how compound interest can boost your savings over time.</P>
       <Calculator/>
+      </div>
     </div>
   </section>
 </template>
@@ -21,3 +23,16 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "../assets/colors";
+@import "../assets/mixins";
+
+@media (min-width: 700px) {
+  .grid-container {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 25% 75%;
+  }
+}
+</style>

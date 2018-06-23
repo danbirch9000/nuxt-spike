@@ -49,11 +49,13 @@ const chartConfig = {
   series: [
     {
       name: "Your goal",
-      data: []
+      data: [],
+      color: "#fe4641"
     },
     {
       name: "0% goal",
-      data: []
+      data: [],
+      color: "#191d21"
     }
   ]
 };

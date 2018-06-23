@@ -1,50 +1,48 @@
-const pkg = require('./package')
+const pkg = require("./package");
 
 module.exports = {
-  mode: 'spa',
+  mode: "spa",
 
   /*
   ** Headers of the page
   */
   head: {
-    title: pkg.name,
+    title: "saveswift - keep track of your savings goals",
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
+      { charset: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { hid: "description", name: "description", content: pkg.description }
     ],
-    script: [
-      { src: '/assets/js/plugins/nouislider.min.js' }
-
-    ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    script: [{ src: "/assets/js/plugins/nouislider.min.js" }],
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
   },
 
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#3B8070' },
+  loading: { color: "#3B8070" },
 
   /*
   ** Global CSS
   */
-  css: [
-    '@/assets/styles.scss'
-  ],
+  css: ["@/assets/styles.scss"],
 
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['~/plugins/highcharts', '~/plugins/dialog', '~/plugins/money.filter', { src: '~/plugins/ga.js', ssr: false }],
+  plugins: [
+    "~/plugins/highcharts",
+    "~/plugins/dialog",
+    "~/plugins/money.filter",
+    { src: "~/plugins/ga.js", ssr: false }
+  ],
 
   /*
   ** Nuxt.js modules
   */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
-    '@nuxtjs/axios'
+    "@nuxtjs/axios"
   ],
 
   /*
@@ -65,15 +63,15 @@ module.exports = {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({
-          enforce: 'pre',
+          enforce: "pre",
           test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
+          loader: "eslint-loader",
           exclude: /(node_modules)/
-        })
+        });
       }
     }
   },
   env: {
-    fbAPIKey: 'AIzaSyD_sLyw1k_eOwnZ48UjPjgLzUpzN7sz5R8'
+    fbAPIKey: "AIzaSyD_sLyw1k_eOwnZ48UjPjgLzUpzN7sz5R8"
   }
-}
+};

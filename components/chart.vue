@@ -69,27 +69,33 @@ export default {
   },
   computed: {
     ...mapGetters({
-      currentViewChartData: "GET_CHART_DATA_CURRENT_VIEW"
+      currentViewChartData: "GET_CHART_DATA_CURRENT_VIEW",
+      masterChartData: "GET_CHART_DATA"
     })
   },
   watch: {
-    currentViewChartData() {
-      console.log("chart data changed");
-      this.chartShown = true;
+    masterChartData() {
+      console.log("wacth");
+      this.updateChart();
+      this.chartShown = this.masterChartData.length > 0;
     }
   },
   mounted() {
-    this.calculate();
+    console.log("mounted");
+    this.updateChart();
+    console.log(this.masterChartData);
+    this.chartShown = this.masterChartData.length > 0;
+    this.$forceUpdate();
   },
   updated() {
-    console.log("page updated");
-    this.calculate();
+    console.log("updated");
+    this.updateChart();
   },
   methods: {
     updateChart() {
-      if (this.chartShown) {
+      if (this.$refs.chartComponent !== undefined) {
         var chart = this.$refs.chartComponent.chart;
-        chart.series[0].setData(this.chartData);
+        chart.series[0].setData(this.masterChartData);
         let data = utilities.getFinanceData(
           0,
           this.currentViewChartData.amount,
@@ -101,17 +107,6 @@ export default {
         chart.series[1].setData(chartData);
         chart.redraw();
       }
-    },
-    calculate: function() {
-      this.savingsGoal = utilities.getFinanceData(
-        this.currentViewChartData.rate,
-        this.currentViewChartData.amount,
-        this.currentViewChartData.monthly,
-        this.currentViewChartData.years,
-        this.currentViewChartData.startDate
-      );
-      this.chartData = utilities.buildChartData(this.savingsGoal);
-      this.updateChart();
     }
   }
 };

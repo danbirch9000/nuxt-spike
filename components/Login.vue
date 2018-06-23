@@ -13,7 +13,7 @@
                 <label for="exampleInputEmail1">Password</label>
                 <input type="password" class="form-control" v-model='password' id="password" />
               </div>
-              <button type="submit" class="">Submit</button>
+              <button type="submit" class="cta">Submit</button>
               <Loader v-if="authStore.loading" />
               <p v-if="authStore.error">Unable to login, username or password incorrect</p>
             </form>

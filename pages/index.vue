@@ -31,7 +31,7 @@ export default {
 @media (min-width: 700px) {
   .grid-container {
     display: grid;
-    grid-gap: 10px;
+    grid-gap: 30px;
     grid-template-columns: 25% 75%;
   }
 }

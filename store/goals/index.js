@@ -203,6 +203,19 @@ export default {
 
       let goalTarget = target[target.length - 1];
       return goalTarget.value;
+    },
+    GET_CHART_DATA: (state, getters, rootState) => {
+      let data = utilities.getFinanceData(
+        state.goalView.rate,
+        state.goalView.amount,
+        state.goalView.monthly,
+        state.goalView.years,
+        state.goalView.startDate
+      );
+
+      let chartData = utilities.buildChartData(data);
+
+      return chartData;
     }
   }
 };

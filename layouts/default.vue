@@ -113,7 +113,7 @@ div.menu {
       }
       @media (min-width: 700px) {
         float: left;
-        padding: 25px 10px;
+        padding: 12px 10px;
         border: none;
       }
     }

@@ -14,7 +14,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(item, index) in getSavingsGoal" :key="item.value">
+                <tr v-for="(item, index) in getSavingsGoal" :key="item.value" v-if="showRow(index)">
                   <td>{{index + 1}}</td>
                   <td>{{ item.date }}</td>
                   <td>{{ item.interest  | currency}}</td>
@@ -23,6 +23,7 @@
                 </tr>
               </tbody>
             </table>
+            <button @click="showAllRows = !showAllRows">Show all rows</button>
           </div>
         </div>
       </div>
@@ -35,6 +36,11 @@ import moment from "moment";
 import { mapGetters } from "vuex";
 
 export default {
+  data() {
+    return {
+      showAllRows: false
+    };
+  },
   computed: {
     ...mapGetters({
       currentViewChartData: "GET_CHART_DATA_CURRENT_VIEW"
@@ -47,6 +53,20 @@ export default {
         this.currentViewChartData.years,
         this.currentViewChartData.startDate
       );
+    }
+  },
+  methods: {
+    showRow(index) {
+      if (this.showAllRows) {
+        return true;
+      } else if (
+        index === 0 ||
+        index === 1 ||
+        index === this.getSavingsGoal.length - 1
+      ) {
+        return true;
+      }
+      return false;
     }
   }
 };

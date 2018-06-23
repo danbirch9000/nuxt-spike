@@ -14,7 +14,8 @@
               <p>Estimated value after {{getMonthsGoalActive()}} months: {{getEstimatedSavingsForMonths(getMonthsGoalActive()).value | currency}}</p>
               <p>Actual value: {{getActualValue() | currency}} {{percentageDifference() | percentage}}</p>
               <p>Goal target: {{goalTarget | currency}}</p>
-              <button v-if="accounts.length > 0" class="btn btn-primary btn-sm" @click="showAccountChooser =! showAccountChooser">Link to your accounts</button>
+              <button v-if="accounts.length > 0" class="btn btn-primary btn-sm" 
+                @click="showAccountChooser =! showAccountChooser">Manage linked accounts</button>
               <accountChooser  v-if="showAccountChooser"/>
               <chart />
               <button @click="deleteGoal()" class="btn btn-primary btn-sm">Delete goal</button>

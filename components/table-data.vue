@@ -23,7 +23,7 @@
                 </tr>
               </tbody>
             </table>
-            <button @click="showAllRows = !showAllRows">Show all rows</button>
+            <button @click="showAllRows = !showAllRows" v-if="currentViewChartData.rate !== ''">Show all rows</button>
           </div>
         </div>
       </div>

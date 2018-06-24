@@ -7,13 +7,18 @@
           <div class="col-md">
             <nuxt-link tag="button" to="/create-new" class="btn btn-primary btn-lg btn-block">Create new goal</nuxt-link>
             <goalList />
+
             <div v-if="currentGoal.description !== ''">
+              <div class="goal-detail">
               <h2>{{currentGoal.description}}</h2>
-              <p>Save £{{currentGoal.monthly}} per month for {{currentGoal.years}} years at {{currentGoal.rate}}%.
-              Starting from {{transformDate(currentGoal.startDate)}} with {{currentGoal.amount | currency}}</p>
-              <p>Estimated value after {{getMonthsGoalActive()}} months: {{getEstimatedSavingsForMonths(getMonthsGoalActive()).value | currency}}</p>
-              <p>Actual value: {{getActualValue() | currency}} {{percentageDifference() | percentage}}</p>
-              <p>Goal target: {{goalTarget | currency}}</p>
+              <div><span class="standout-lg">{{goalTarget.value | currency}}</span> by {{goalTarget.date}}</div>
+              <div>Start <span class="standout">{{transformDate(currentGoal.startDate)}}</span> with <span class="standout">{{currentGoal.amount | currency}}</span>, save <span class="standout">{{currentGoal.monthly | currency}}</span> per month for 
+              <span class="standout">{{currentGoal.years | year}}</span> years at <span class="standout">{{currentGoal.rate}}%</span></div>
+              
+              <div>Estimated value today after {{getMonthsGoalActive()}} months: <span class="standout-lg">{{getEstimatedSavingsForMonths(getMonthsGoalActive()).value | currency}}</span></div>
+              <div>Actual value: <span class="standout-lg">{{getActualValue() | currency}}</span> {{percentageDifference() | percentage}}</div>
+              </div>
+
               <button v-if="accounts.length > 0" class="btn btn-primary btn-sm" 
                 @click="showAccountChooser =! showAccountChooser">Manage linked accounts</button>
               <accountChooser  v-if="showAccountChooser"/>

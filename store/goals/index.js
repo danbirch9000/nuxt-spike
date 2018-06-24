@@ -202,7 +202,7 @@ export default {
       );
 
       let goalTarget = target[target.length - 1];
-      return goalTarget.value;
+      return goalTarget;
     },
     GET_CHART_DATA: (state, getters, rootState) => {
       let data = utilities.getFinanceData(

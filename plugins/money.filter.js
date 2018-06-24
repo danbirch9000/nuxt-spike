@@ -14,3 +14,7 @@ Vue.filter("percentage", function(value) {
   value = Math.round(value * 100) / 100;
   return `${value} % `;
 });
+
+Vue.filter("year", function(value) {
+  return ~~value;
+});

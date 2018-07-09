@@ -77,20 +77,16 @@ export default {
   },
   watch: {
     masterChartData() {
-      console.log("wacth");
       this.updateChart();
       this.chartShown = this.masterChartData.length > 0;
     }
   },
   mounted() {
-    console.log("mounted");
     this.updateChart();
-    console.log(this.masterChartData);
     this.chartShown = this.masterChartData.length > 0;
     this.$forceUpdate();
   },
   updated() {
-    console.log("updated");
     this.updateChart();
   },
   methods: {

@@ -22,6 +22,7 @@
               <button v-if="accounts.length > 0" class="btn btn-primary btn-sm" 
                 @click="showAccountChooser =! showAccountChooser">Manage linked accounts</button>
               <accountChooser  v-if="showAccountChooser"/>
+              <ChartCompact :compactChartData="compact" />
               <chart />
               <button @click="deleteGoal()" class="btn btn-primary btn-sm">Delete goal</button>
               <tableData />
@@ -38,6 +39,7 @@ import utilities from "~/common/utilities.js";
 import goalList from "~/components/goal-list";
 import accountChooser from "~/components/account-chooser";
 import tweaker from "~/components/tweaker";
+import ChartCompact from "~/components/ChartCompact";
 import chart from "~/components/chart";
 import tableData from "~/components/table-data";
 import moment from "moment";
@@ -46,7 +48,33 @@ import { mapGetters, mapState } from "vuex";
 export default {
   data() {
     return {
-      showAccountChooser: false
+      showAccountChooser: false,
+      compact: {
+        line1: [
+          [1523514786000, 10400],
+          [1555050786000, 20000],
+          [1586673186000, 29600],
+          [1618209186000, 39200],
+          [1649745186000, 48800],
+          [1681281186000, 58400],
+          [1712903586000, 68000],
+          [1744439586000, 77600],
+          [1775975586000, 87200],
+          [1807511586000, 96800]
+        ],
+        line2: [
+          [1523514786000, 10829.73],
+          [1555050786000, 21584.51],
+          [1586673186000, 33116.77],
+          [1618209186000, 45482.69],
+          [1649745186000, 58742.55],
+          [1681281186000, 72960.96],
+          [1712903586000, 88207.22],
+          [1744439586000, 104555.62],
+          [1775975586000, 122085.86],
+          [1807511586000, 140883.34]
+        ]
+      }
     };
   },
   computed: {
@@ -56,8 +84,18 @@ export default {
     }),
     ...mapGetters({
       valueOfGoal: "GET_VALUE_OF_GOAL",
-      goalTarget: "GET_GOAL_TARGET"
+      goalTarget: "GET_GOAL_TARGET",
+      accountViewing: "GET_ACCOUNT_VIEWING",
+      historic: "GET_HISTORIC_DATA_FOR_ACCOUNT"
     })
+  },
+  watch: {
+    historic() {
+      console.log("historic", this.historic);
+    },
+    valueOfGoal() {
+      console.log("valueOfGoal", this.valueOfGoal);
+    }
   },
   beforeMount() {
     this.$store.commit("CLOSE_MENU");
@@ -127,7 +165,8 @@ export default {
     chart,
     tableData,
     tweaker,
-    accountChooser
+    accountChooser,
+    ChartCompact
   },
   middleware: ["check-auth", "auth"]
 };

@@ -10,6 +10,8 @@ const getValueOfAccount = function(id, userAccounts) {
       for (const x in userAccounts[key].history) {
         valueArray.push({ ...userAccounts[key].history[x] });
       }
+      console.log("valueArray", valueArray);
+      console.log("valueArrayVal", valueArray[valueArray.length - 1].value);
       return parseFloat(valueArray[valueArray.length - 1].value);
     }
   }

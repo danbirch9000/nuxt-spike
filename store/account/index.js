@@ -40,10 +40,10 @@ export default {
       return this.$axios
         .$post(
           urls.apiBaseUrl +
-          "/accounts/" +
-          vuexContext.rootState.userModule.userId +
-          ".json?auth=" +
-          vuexContext.rootState.userModule.token,
+            "/accounts/" +
+            vuexContext.rootState.userModule.userId +
+            ".json?auth=" +
+            vuexContext.rootState.userModule.token,
           payload
         )
         .then(data => {
@@ -56,41 +56,41 @@ export default {
       return this.$axios
         .$post(
           urls.apiBaseUrl +
-          "/accounts/" +
-          vuexContext.rootState.userModule.userId +
-          "/" +
-          vuexContext.state.accountIdViewing +
-          "/history.json?auth=" +
-          vuexContext.rootState.userModule.token,
+            "/accounts/" +
+            vuexContext.rootState.userModule.userId +
+            "/" +
+            vuexContext.state.accountIdViewing +
+            "/history.json?auth=" +
+            vuexContext.rootState.userModule.token,
           payload
         )
-        .then(data => { })
+        .then(data => {})
         .catch(e => console.log(e));
     },
     DELETE_ACCOUNT_VALUE(vuexContext, payload) {
       return this.$axios
         .$delete(
           urls.apiBaseUrl +
-          "/accounts/" +
-          vuexContext.rootState.userModule.userId +
-          "/" +
-          payload.accountId +
-          "/history/" +
-          payload.recordId +
-          ".json?auth=" +
-          vuexContext.rootState.userModule.token
+            "/accounts/" +
+            vuexContext.rootState.userModule.userId +
+            "/" +
+            payload.accountId +
+            "/history/" +
+            payload.recordId +
+            ".json?auth=" +
+            vuexContext.rootState.userModule.token
         )
-        .then(data => { })
+        .then(data => {})
         .catch(e => console.log(e));
     },
     GET_USER_ACCOUNTS(vuexContext) {
       return this.$axios
         .$get(
           urls.apiBaseUrl +
-          "/accounts/" +
-          vuexContext.rootState.userModule.userId +
-          ".json?auth=" +
-          vuexContext.rootState.userModule.token
+            "/accounts/" +
+            vuexContext.rootState.userModule.userId +
+            ".json?auth=" +
+            vuexContext.rootState.userModule.token
         )
         .then(data => {
           const accountsArray = [];
@@ -122,12 +122,12 @@ export default {
       return null;
     },
     GET_HISTORIC_DATA_FOR_ACCOUNT: (state, getters, rootState) => {
-      var accountsInGoal = Object.create(rootState.goalModule.goalView.accounts);
-      var userAccounts = Object.create(state.accounts);
+      var accountsInGoal = Object.create(rootState.goalModule.goalView);
+      var userAccounts = Object.create(state);
       let historicData = [];
-      for (const key1 in accountsInGoal) {
+      for (const key1 in accountsInGoal.accounts) {
         for (const key in userAccounts) {
-          if (userAccounts[key].id === accountsInGoal[key1]) {
+          if (userAccounts[key].id === accountsInGoal.accounts[key1]) {
             const account = userAccounts[key];
             const historyArray = [];
             for (const key2 in account.history) {

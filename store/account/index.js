@@ -40,10 +40,10 @@ export default {
       return this.$axios
         .$post(
           urls.apiBaseUrl +
-            "/accounts/" +
-            vuexContext.rootState.userModule.userId +
-            ".json?auth=" +
-            vuexContext.rootState.userModule.token,
+          "/accounts/" +
+          vuexContext.rootState.userModule.userId +
+          ".json?auth=" +
+          vuexContext.rootState.userModule.token,
           payload
         )
         .then(data => {
@@ -56,41 +56,41 @@ export default {
       return this.$axios
         .$post(
           urls.apiBaseUrl +
-            "/accounts/" +
-            vuexContext.rootState.userModule.userId +
-            "/" +
-            vuexContext.state.accountIdViewing +
-            "/history.json?auth=" +
-            vuexContext.rootState.userModule.token,
+          "/accounts/" +
+          vuexContext.rootState.userModule.userId +
+          "/" +
+          vuexContext.state.accountIdViewing +
+          "/history.json?auth=" +
+          vuexContext.rootState.userModule.token,
           payload
         )
-        .then(data => {})
+        .then(data => { })
         .catch(e => console.log(e));
     },
     DELETE_ACCOUNT_VALUE(vuexContext, payload) {
       return this.$axios
         .$delete(
           urls.apiBaseUrl +
-            "/accounts/" +
-            vuexContext.rootState.userModule.userId +
-            "/" +
-            payload.accountId +
-            "/history/" +
-            payload.recordId +
-            ".json?auth=" +
-            vuexContext.rootState.userModule.token
+          "/accounts/" +
+          vuexContext.rootState.userModule.userId +
+          "/" +
+          payload.accountId +
+          "/history/" +
+          payload.recordId +
+          ".json?auth=" +
+          vuexContext.rootState.userModule.token
         )
-        .then(data => {})
+        .then(data => { })
         .catch(e => console.log(e));
     },
     GET_USER_ACCOUNTS(vuexContext) {
       return this.$axios
         .$get(
           urls.apiBaseUrl +
-            "/accounts/" +
-            vuexContext.rootState.userModule.userId +
-            ".json?auth=" +
-            vuexContext.rootState.userModule.token
+          "/accounts/" +
+          vuexContext.rootState.userModule.userId +
+          ".json?auth=" +
+          vuexContext.rootState.userModule.token
         )
         .then(data => {
           const accountsArray = [];
@@ -122,31 +122,28 @@ export default {
       return null;
     },
     GET_HISTORIC_DATA_FOR_ACCOUNT: (state, getters, rootState) => {
-      // var accountsInGoalB = rootState.goalModule.goalView.accounts;
-      // var userAccounts = state.accounts;
-      // let value = [];
-      // for (const key in accountsInGoalB) {
-      //   var accountId = accountsInGoalB[key];
-
-      //   for (const key in userAccounts) {
-      //     if (userAccounts[key].id === accountId) {
-      //       const accountB = userAccounts[key];
-      //       const historyArrayB = [];
-      //       for (const key in accountB.history) {
-      //         historyArrayB.push([
-      //           moment(accountB.history[key].date)
-      //             .utc()
-      //             .valueOf(),
-      //           parseFloat(accountB.history[key].value)
-      //         ]);
-      //       }
-      //       accountB.history = historyArrayB;
-      //       value.push(accountB);
-      //     }
-      //   }
-      // }
-      const value = 0;
-      return value;
+      var accountsInGoal = Object.create(rootState.goalModule.goalView.accounts);
+      var userAccounts = Object.create(state.accounts);
+      let historicData = [];
+      for (const key1 in accountsInGoal) {
+        for (const key in userAccounts) {
+          if (userAccounts[key].id === accountsInGoal[key1]) {
+            const account = userAccounts[key];
+            const historyArray = [];
+            for (const key2 in account.history) {
+              historyArray.push([
+                moment(account.history[key2].date)
+                  .utc()
+                  .valueOf(),
+                parseFloat(account.history[key2].value)
+              ]);
+            }
+            account.history = historyArray;
+            historicData.push(account);
+          }
+        }
+      }
+      return historicData;
     }
   }
 };

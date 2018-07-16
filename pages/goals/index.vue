@@ -77,6 +77,16 @@ export default {
       }
     };
   },
+  watch: {
+    pageReady() {
+      if (this.pageReady) {
+        console.log("historic data.", this.getHistoricData());
+      }
+    },
+    currentGoal() {
+      console.log(this.currentGoal);
+    }
+  },
   computed: {
     ...mapState({
       currentGoal: state => state.goalModule.goalView,
@@ -85,22 +95,44 @@ export default {
     ...mapGetters({
       valueOfGoal: "GET_VALUE_OF_GOAL",
       goalTarget: "GET_GOAL_TARGET",
-      accountViewing: "GET_ACCOUNT_VIEWING",
-      historic: "GET_HISTORIC_DATA_FOR_ACCOUNT"
-    })
-  },
-  watch: {
-    historic() {
-      console.log("historic", this.historic);
-    },
-    valueOfGoal() {
-      console.log("valueOfGoal", this.valueOfGoal);
+      accountViewing: "GET_ACCOUNT_VIEWING"
+    }),
+    pageReady() {
+      return (
+        this.accounts.length > 0 && this.currentGoal.accounts !== undefined
+      );
     }
   },
   beforeMount() {
     this.$store.commit("CLOSE_MENU");
   },
+  mounted() {},
   methods: {
+    getHistoricData() {
+      var accountsInGoal = JSON.parse(JSON.stringify(this.currentGoal));
+      var userAccounts = JSON.parse(JSON.stringify(this.accounts));
+      let historicData = [];
+      for (const i in accountsInGoal.accounts) {
+        for (const j in userAccounts) {
+          if (userAccounts[j].id === accountsInGoal.accounts[i]) {
+            const account = userAccounts[j];
+            const historyArray = [];
+            for (const k in account.history) {
+              historyArray.push([
+                moment(account.history[k].date)
+                  .utc()
+                  .valueOf(),
+                parseFloat(account.history[k].value)
+              ]);
+            }
+            account.history = historyArray;
+            historicData.push(account);
+          }
+        }
+      }
+
+      return historicData[0].history;
+    },
     /*
             this.$store.commit("OPEN_OFF_CANVAS", {
           component: AddressSelect,

@@ -120,30 +120,6 @@ export default {
         }
       }
       return null;
-    },
-    GET_HISTORIC_DATA_FOR_ACCOUNT: (state, getters, rootState) => {
-      var accountsInGoal = Object.create(rootState.goalModule.goalView);
-      var userAccounts = Object.create(state);
-      let historicData = [];
-      for (const key1 in accountsInGoal.accounts) {
-        for (const key in userAccounts) {
-          if (userAccounts[key].id === accountsInGoal.accounts[key1]) {
-            const account = userAccounts[key];
-            const historyArray = [];
-            for (const key2 in account.history) {
-              historyArray.push([
-                moment(account.history[key2].date)
-                  .utc()
-                  .valueOf(),
-                parseFloat(account.history[key2].value)
-              ]);
-            }
-            account.history = historyArray;
-            historicData.push(account);
-          }
-        }
-      }
-      return historicData;
     }
   }
 };

@@ -1,7 +1,7 @@
 <template>
   <div :class="{'menu-active': menuState}" class="body-container">
     <nav>
-      <a class="navbar-brand" href="/">
+      <a :href="homepageUrl" class="navbar-brand">
         <img src="/assets/images/saveswiftlogo.png">
       </a>
       <a v-if="isLoggedIn()" class="burger-menu" @click="toggleMenu()" />
@@ -28,7 +28,10 @@ export default {
   computed: {
     ...mapState({
       menuState: state => state.appModule.menuOpen
-    })
+    }),
+    homepageUrl() {
+      return this.isLoggedIn() ? "/goals" : "/";
+    }
   },
   methods: {
     logout() {

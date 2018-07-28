@@ -1,7 +1,7 @@
 <template>
   <section>
     <div v-if="getGoalsFromStore.length > 0">
-      <select v-model="selectedGoal" @change="selectGoal()">
+      <select v-model="selected">
         <option v-for="(item, index) in getGoalsFromStore" :value="index" :key="item.description">{{ item.description }}</option>
       </select>
     </div>
@@ -15,7 +15,7 @@ export default {
   data() {
     return {
       currentGoal: null,
-      selectedGoal: null
+      selected: 0
     };
   },
   computed: {
@@ -26,13 +26,20 @@ export default {
       return this.$store.state.goalModule.goals;
     }
   },
+  watch: {
+    selected() {
+      console.log("selected", this.selected);
+      this.selectGoal();
+    }
+  },
   methods: {
     loadGoal(index) {
+      console.log(index);
       this.currentGoal = this.$store.state.goalModule.goals[index];
       this.$store.commit("SET_CURRENT_GOAL_VIEW", this.currentGoal);
     },
     selectGoal() {
-      this.loadGoal(this.selectedGoal);
+      this.loadGoal(this.selected);
     }
   }
 };

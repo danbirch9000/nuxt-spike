@@ -1,14 +1,11 @@
 <template>
-    <section>
-      <div v-if="getGoalsFromStore.length > 0">
-   
-
-          <select v-model="selectedGoal" @change="selectGoal()">
-            <option v-for="(item, index) in getGoalsFromStore" :value="index" :key="item.description">{{item.description}}</option>
-          </select>
-
-      </div>
-    </section>
+  <section>
+    <div v-if="getGoalsFromStore.length > 0">
+      <select v-model="selectedGoal" @change="selectGoal()">
+        <option v-for="(item, index) in getGoalsFromStore" :value="index" :key="item.description">{{ item.description }}</option>
+      </select>
+    </div>
+  </section>
 </template>
 
 <script>

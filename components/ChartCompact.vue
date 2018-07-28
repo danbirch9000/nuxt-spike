@@ -1,17 +1,12 @@
 <template>
-    <section>
-      <div class="chart-compact">
-        <highcharts :options="chartConfig" ref="chartComponent"></highcharts>
-      </div>
-      
-    </section>
+  <section>
+    <div class="chart-compact">
+      <highcharts ref="chartComponent" :options="chartConfig" />
+    </div>
+  </section>
 </template>
 
 <script>
-import utilities from "~/common/utilities.js";
-import moment from "moment";
-import { mapGetters } from "vuex";
-
 const chartConfig = {
   chart: {
     type: "spline",
@@ -82,6 +77,12 @@ const chartConfig = {
 };
 
 export default {
+  props: {
+    compactChartData: {
+      type: Object,
+      default: null
+    }
+  },
   data: function() {
     return {
       chartConfig: chartConfig,
@@ -89,12 +90,6 @@ export default {
       savingsGoal: null,
       chartShown: true
     };
-  },
-  props: {
-    compactChartData: {
-      type: Object,
-      default: null
-    }
   },
   mounted() {
     var chart = this.$refs.chartComponent.chart;

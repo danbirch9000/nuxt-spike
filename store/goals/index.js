@@ -1,4 +1,3 @@
-import Vuex from "vuex";
 import axios from "axios";
 import { urls } from "~/config/constants";
 import utilities from "~/common/utilities.js";
@@ -72,7 +71,7 @@ export default {
     }
   },
   actions: {
-    GET_USER_GOALS(vuexContext, context) {
+    GET_USER_GOALS(vuexContext) {
       return axios
         .get(
           `${urls.apiBaseUrl}/goals/${
@@ -99,7 +98,7 @@ export default {
             ".json?auth=" +
             vuexContext.rootState.userModule.token
         )
-        .then(data => {
+        .then(() => {
           vuexContext.commit("REMOVE_GOAL", vuexContext.state.goalView.id);
           vuexContext.commit("SET_CURRENT_GOAL_VIEW", {
             description: "",
@@ -124,7 +123,7 @@ export default {
             vuexContext.rootState.userModule.token,
           vuexContext.state.goalView
         )
-        .then(data => {
+        .then(() => {
           vuexContext.commit("UPDATE_GOAL", vuexContext.state.goalView.id);
         })
         .catch(e => console.log(e));
@@ -145,7 +144,7 @@ export default {
             vuexContext.rootState.userModule.token,
           goalData
         )
-        .then(data => {
+        .then(() => {
           vuexContext.commit(
             "SET_CURRENT_GOAL_VIEW",
             vuexContext.state.goalView
@@ -167,7 +166,7 @@ export default {
             vuexContext.rootState.userModule.token,
           goal
         )
-        .then(data => {
+        .then(() => {
           vuexContext.commit("ADD_GOAL", goal);
         })
         .catch(e => console.log(e));
@@ -184,7 +183,6 @@ export default {
       };
     },
     GET_VALUE_OF_GOAL: (state, getters, rootState) => {
-      var accountIds = state.goalView.accounts;
       var userAccounts = rootState.accountModule.accounts;
       let value = 0;
       for (const key in state.goalView.accounts) {
@@ -192,7 +190,7 @@ export default {
       }
       return value;
     },
-    GET_GOAL_TARGET: (state, getters, rootState) => {
+    GET_GOAL_TARGET: state => {
       let target = utilities.getFinanceData(
         state.goalView.rate,
         state.goalView.amount,
@@ -204,7 +202,7 @@ export default {
       let goalTarget = target[target.length - 1];
       return goalTarget;
     },
-    GET_CHART_DATA: (state, getters, rootState) => {
+    GET_CHART_DATA: state => {
       let data = utilities.getFinanceData(
         state.goalView.rate,
         state.goalView.amount,

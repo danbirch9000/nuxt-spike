@@ -1,6 +1,3 @@
-import Vuex from "vuex";
-import axios from "axios";
-import Cookie from "js-cookie";
 import moment from "moment";
 import { urls } from "~/config/constants";
 
@@ -26,17 +23,12 @@ export default {
         }
       }
     },
-    DELETE_ACCOUNT_VALUE: (state, payload) => {
+    DELETE_ACCOUNT_VALUE: () => {
       console.log("mutation still needs doing");
     }
   },
   actions: {
     CREATE_ACCOUNT(vuexContext, payload) {
-      const postData = {
-        ...payload,
-        history: {}
-      };
-
       return this.$axios
         .$post(
           urls.apiBaseUrl +
@@ -64,7 +56,9 @@ export default {
             vuexContext.rootState.userModule.token,
           payload
         )
-        .then(data => {})
+        .then(data => {
+          console.log(data);
+        })
         .catch(e => console.log(e));
     },
     DELETE_ACCOUNT_VALUE(vuexContext, payload) {
@@ -80,7 +74,9 @@ export default {
             ".json?auth=" +
             vuexContext.rootState.userModule.token
         )
-        .then(data => {})
+        .then(data => {
+          console.log(data);
+        })
         .catch(e => console.log(e));
     },
     GET_USER_ACCOUNTS(vuexContext) {

@@ -1,11 +1,11 @@
 <template>
-    <section>
-      <div v-if="getAccounts.length > 0">
-          <select v-model="id" @change="loadAccount()">
-            <option v-for="(item) in getAccounts" :value="item.id" :key="item.id">{{item.name}}</option>
-          </select>
-      </div>
-    </section>
+  <section>
+    <div v-if="getAccounts.length > 0">
+      <select v-model="id" @change="loadAccount()">
+        <option v-for="(item) in getAccounts" :value="item.id" :key="item.id">{{ item.name }}</option>
+      </select>
+    </div>
+  </section>
 </template>
 
 <script>

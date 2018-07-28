@@ -1,8 +1,3 @@
-import Vuex from 'vuex';
-import axios from 'axios';
-import Cookie from "js-cookie";
-import moment from 'moment';
-
 export default {
   state: {
     menuOpen: false
@@ -15,10 +10,10 @@ export default {
     closableMessage: null
   },
   mutations: {
-    TOGGLE_MENU: (state, payload) => {
+    TOGGLE_MENU: state => {
       state.menuOpen = !state.menuOpen;
     },
-    CLOSE_MENU: (state, payload) => {
+    CLOSE_MENU: state => {
       state.menuOpen = false;
     },
     OPEN_OFF_CANVAS(
@@ -35,9 +30,7 @@ export default {
     },
     CLOSE_OFF_CANVAS(state) {
       state.offCanvas.show = false;
-    },
+    }
   },
-  actions: {
-
-  }
+  actions: {}
 };

@@ -7,24 +7,22 @@
           <div class="col-md">
             <nuxt-link tag="button" to="/create-new" class="btn btn-primary btn-lg btn-block">Create new goal</nuxt-link>
             <goalList />
-
             <div v-if="currentGoal.description !== ''">
               <div class="goal-detail">
-              <h2>{{currentGoal.description}}</h2>
-              <div><span class="standout-lg">{{goalTarget.value | currency}}</span> by {{goalTarget.date}}</div>
-              <div>Start <span class="standout">{{transformDate(currentGoal.startDate)}}</span> with <span class="standout">{{currentGoal.amount | currency}}</span>, save <span class="standout">{{currentGoal.monthly | currency}}</span> per month for 
-              <span class="standout">{{currentGoal.years | year}}</span> years at <span class="standout">{{currentGoal.rate}}%</span></div>
-              
-              <div>Estimated value today after {{getMonthsGoalActive()}} months: <span class="standout-lg">{{getEstimatedSavingsForMonths(getMonthsGoalActive()).value | currency}}</span></div>
-              <div>Actual value: <span class="standout-lg">{{getActualValue() | currency}}</span> {{percentageDifference() | percentage}}</div>
+                <h2>{{ currentGoal.description }}</h2>
+                <div><span class="standout-lg">{{ goalTarget.value | currency }}</span> by {{ goalTarget.date }}</div>
+                <div>Start <span class="standout">{{ transformDate(currentGoal.startDate) }}</span> with <span class="standout">{{ currentGoal.amount | currency }}</span>, save <span class="standout">{{ currentGoal.monthly | currency }}</span> per month for
+                <span class="standout">{{ currentGoal.years | year }}</span> years at <span class="standout">{{ currentGoal.rate }}%</span></div>
+
+                <div>Estimated value today after {{ getMonthsGoalActive() }} months: <span class="standout-lg">{{ getEstimatedSavingsForMonths(getMonthsGoalActive()).value | currency }}</span></div>
+                <div>Actual value: <span class="standout-lg">{{ getActualValue() | currency }}</span> {{ percentageDifference() | percentage }}</div>
               </div>
 
-              <button v-if="accounts.length > 0" class="btn btn-primary btn-sm" 
-                @click="showAccountChooser =! showAccountChooser">Manage linked accounts</button>
-              <accountChooser  v-if="showAccountChooser"/>
-              <ChartCompact :compactChartData="compact" />
+              <button v-if="accounts.length > 0" class="btn btn-primary btn-sm" @click="showAccountChooser =! showAccountChooser">Manage linked accounts</button>
+              <accountChooser v-if="showAccountChooser"/>
+              <ChartCompact :compact-chart-data="compact" />
               <chart />
-              <button @click="deleteGoal()" class="btn btn-primary btn-sm">Delete goal</button>
+              <button class="btn btn-primary btn-sm" @click="deleteGoal()">Delete goal</button>
               <tableData />
             </div>
           </div>
@@ -46,6 +44,14 @@ import moment from "moment";
 import { mapGetters, mapState } from "vuex";
 
 export default {
+  components: {
+    goalList,
+    chart,
+    tableData,
+    tweaker,
+    accountChooser,
+    ChartCompact
+  },
   data() {
     return {
       showAccountChooser: false,
@@ -77,16 +83,6 @@ export default {
       }
     };
   },
-  watch: {
-    pageReady() {
-      if (this.pageReady) {
-        console.log("historic data.", this.getHistoricData());
-      }
-    },
-    currentGoal() {
-      console.log(this.currentGoal);
-    }
-  },
   computed: {
     ...mapState({
       currentGoal: state => state.goalModule.goalView,
@@ -103,10 +99,24 @@ export default {
       );
     }
   },
+  watch: {
+    pageReady() {
+      if (this.pageReady) {
+        console.log("historic data.", this.getHistoricData());
+      }
+    },
+    currentGoal() {
+      console.log(this.currentGoal);
+    }
+  },
   beforeMount() {
     this.$store.commit("CLOSE_MENU");
   },
   mounted() {},
+  created() {
+    this.$store.dispatch("GET_USER_GOALS");
+    this.$store.dispatch("GET_USER_ACCOUNTS");
+  },
   methods: {
     getHistoricData() {
       var accountsInGoal = JSON.parse(JSON.stringify(this.currentGoal));
@@ -184,21 +194,9 @@ export default {
         this.getMonthsGoalActive()
       ).value;
       var increase = this.getActualValue() - estimatedValue;
-
-      return increase / estimatedValue * 100;
+      var x = increase / estimatedValue;
+      return x * 100;
     }
-  },
-  created() {
-    this.$store.dispatch("GET_USER_GOALS");
-    this.$store.dispatch("GET_USER_ACCOUNTS");
-  },
-  components: {
-    goalList,
-    chart,
-    tableData,
-    tweaker,
-    accountChooser,
-    ChartCompact
   },
   middleware: ["check-auth", "auth"]
 };

@@ -1,17 +1,16 @@
 <template>
   <section class="container">
-      <h1>Accounts</h1>
+    <h1>Accounts</h1>
 
-      <div class="container">
-        <div class="row">
-          <div class="col-md">
-            <nuxt-link tag="button" to="/new-account" class="btn btn-primary btn-lg btn-block">Create new account</nuxt-link>
-            <accountList />
-            <accountDetails />
-          </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md">
+          <nuxt-link tag="button" to="/new-account" class="btn btn-primary btn-lg btn-block">Create new account</nuxt-link>
+          <accountList />
+          <accountDetails />
         </div>
       </div>
-
+    </div>
   </section>
 </template>
 

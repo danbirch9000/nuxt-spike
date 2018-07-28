@@ -1,5 +1,3 @@
-import Vuex from "vuex";
-import axios from "axios";
 import Cookie from "js-cookie";
 
 export default {
@@ -66,7 +64,7 @@ export default {
             new Date().getTime() + Number.parseInt(result.expiresIn) * 1000
           );
         })
-        .catch(e => {
+        .catch(() => {
           vuexContext.commit("SET_LOADING", false);
           vuexContext.commit("SET_ERROR");
         });

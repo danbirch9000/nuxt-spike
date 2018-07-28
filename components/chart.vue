@@ -1,12 +1,11 @@
 <template>
-    <section v-if="chartShown">
-      <highcharts :options="chartConfig" ref="chartComponent"></highcharts>
-    </section>
+  <section v-if="chartShown">
+    <highcharts ref="chartComponent" :options="chartConfig" />
+  </section>
 </template>
 
 <script>
 import utilities from "~/common/utilities.js";
-import moment from "moment";
 import { mapGetters } from "vuex";
 
 const chartConfig = {

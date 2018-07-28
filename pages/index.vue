@@ -3,9 +3,9 @@
     <div class="grid-container">
       <Login />
       <div>
-      <h1>Savings Calculator</h1>
-      <P>Use our savings calculator to see how compound interest can boost your savings over time.</P>
-      <Calculator/>
+        <h1>Savings Calculator</h1>
+        <P>Use our savings calculator to see how compound interest can boost your savings over time.</P>
+        <Calculator/>
       </div>
     </div>
   </section>

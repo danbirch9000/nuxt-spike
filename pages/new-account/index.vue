@@ -1,26 +1,23 @@
 <template>
   <section class="container">
-      <h1>Accounts</h1>
-      <div class="container">
-        <div class="row">
-          <div class="col-md">
-            <form v-on:submit.prevent>
-                <div class="form-group">
-                    <label for="name">Account name</label>
-                    <input v-model="name" type="text" class="form-control" id="name"
-                    aria-describedby="name" placeholder="e.g. HL SIPP">
-                </div>
-                <div class="form-group">
-                    <label for="name">Account amount</label>
-                    <input v-model="amount" type="text" class="form-control" id="amount"
-                    aria-describedby="amount" placeholder="e.g. £2000">
-                </div>
-                <button @click="createAccount()" class="btn btn-primary">Save</button>
-            </form>
-          </div>
+    <h1>Accounts</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-md">
+          <form @:submit.prevent>
+            <div class="form-group">
+              <label for="name">Account name</label>
+              <input id="name" v-model="name" type="text" class="form-control" aria-describedby="name" placeholder="e.g. HL SIPP">
+            </div>
+            <div class="form-group">
+              <label for="name">Account amount</label>
+              <input id="amount" v-model="amount" type="text" class="form-control" aria-describedby="amount" placeholder="e.g. £2000">
+            </div>
+            <button class="btn btn-primary" @click="createAccount()">Save</button>
+          </form>
         </div>
       </div>
-
+    </div>
   </section>
 </template>
 
@@ -41,7 +38,7 @@ export default {
         .dispatch("CREATE_ACCOUNT", {
           name: this.name
         })
-        .then(data => {
+        .then(() => {
           this.$store.dispatch("UPDATE_ACCOUNT_VALUE", {
             value: this.amount,
             date: moment().format()

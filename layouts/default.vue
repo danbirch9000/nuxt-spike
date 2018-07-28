@@ -1,13 +1,15 @@
 <template>
-  <div class='body-container' :class="{'menu-active': menuState}">
+  <div :class="{'menu-active': menuState}" class="body-container">
     <nav>
-      <a class="navbar-brand" href="/"><img src="/assets/images/saveswiftlogo.png" /></a>
-      <a class="burger-menu" @click="toggleMenu()" v-if="isLoggedIn()"></a>
-      <div :class="{'active': menuState}" class="menu" v-if="isLoggedIn()">
+      <a class="navbar-brand" href="/">
+        <img src="/assets/images/saveswiftlogo.png">
+      </a>
+      <a v-if="isLoggedIn()" class="burger-menu" @click="toggleMenu()" />
+      <div v-if="isLoggedIn()" :class="{'active': menuState}" class="menu">
         <ul>
           <nuxt-link to="/goals" tag="li" active-class="active"><a>Goals</a></nuxt-link>
           <nuxt-link to="/accounts" tag="li" active-class="active"><a>Accounts</a></nuxt-link>
-          <li @click="logout" active-class="active"><a>Logout</a></li>
+          <li active-class="active" @click="logout"><a>Logout</a></li>
         </ul>
       </div>
     </nav>
@@ -151,4 +153,3 @@ a.burger-menu {
   }
 }
 </style>
-

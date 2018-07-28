@@ -1,24 +1,22 @@
 <template>
-    <section>
-      <div>
-          <div v-if="currentSelectedAccount !== null">
-          <h2>{{currentSelectedAccount.name}}</h2>
-            
-            <form v-on:submit.prevent>
-                <div class="form-group">
-                    <label for="name">new account value:</label>
-                    <input v-model="value" type="number" class="form-control large-input" id="value"
-                    aria-describedby="value" placeholder="e.g. £2000" autocomplete="off" step=".01">
-                </div>
-                <button class="btn btn-primary" @click="updateValue()">Update</button>
-            </form>
-            <ul >
-              <li v-for="(item) in currentSelectedAccount.history" :key="item.id">&pound;{{ item.value }} - {{ item.date }} <button @click="deleteRecord(item.id)">Delete</button></li>
-            </ul>
-          <button class="btn btn-primary" @click="deleteAccount()">Delete Account</button>
+  <section>
+    <div>
+      <div v-if="currentSelectedAccount !== null">
+        <h2>{{ currentSelectedAccount.name }}</h2>
+        <form @:submit.prevent>
+          <div class="form-group">
+            <label for="name">new account value:</label>
+            <input id="value" v-model="value" type="number" class="form-control large-input" aria-describedby="value" placeholder="e.g. £2000" autocomplete="off" step=".01">
+          </div>
+          <button class="btn btn-primary" @click="updateValue()">Update</button>
+        </form>
+        <ul >
+          <li v-for="(item) in currentSelectedAccount.history" :key="item.id">&pound;{{ item.value }} - {{ item.date }} <button @click="deleteRecord(item.id)">Delete</button></li>
+        </ul>
+        <button class="btn btn-primary" @click="deleteAccount()">Delete Account</button>
       </div>
-      </div>
-    </section>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -48,7 +46,7 @@ export default {
             recordId: id
           };
 
-          base.$store.dispatch("DELETE_ACCOUNT_VALUE", payload).then(data => {
+          base.$store.dispatch("DELETE_ACCOUNT_VALUE", payload).then(() => {
             base.$store.dispatch("GET_USER_ACCOUNTS");
             base.value = "";
           });
@@ -63,7 +61,7 @@ export default {
           value: this.value,
           date: moment().format()
         })
-        .then(data => {
+        .then(() => {
           this.$store.dispatch("GET_USER_ACCOUNTS");
           this.value = "";
         });

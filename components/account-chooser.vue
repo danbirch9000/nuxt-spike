@@ -5,7 +5,7 @@
         <label :for="item.id" class="form-check-label">
           <input :id="item.id" :value="item.id" v-model="selectedAccounts" class="form-check-input" type="checkbox">
           {{ item.name }}
-          <span class="form-check-sign"><span class="check" />></span>
+          <span class="form-check-sign"><span class="check" /></span>
         </label>
       </div>
       <button class="btn btn-primary btn-sm" @click="linkAccounts()">Save</button>

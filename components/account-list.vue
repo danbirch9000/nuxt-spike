@@ -1,7 +1,7 @@
 <template>
   <section>
     <div v-if="getAccounts.length > 0">
-      <select v-model="id" @change="loadAccount()">
+      <select v-model="id">
         <option v-for="(item) in getAccounts" :value="item.id" :key="item.id">{{ item.name }}</option>
       </select>
     </div>
@@ -19,6 +19,14 @@ export default {
   computed: {
     getAccounts: function() {
       return this.$store.state.accountModule.accounts;
+    }
+  },
+  watch: {
+    id() {
+      this.loadAccount();
+    },
+    getAccounts() {
+      this.id = this.getAccounts[0].id;
     }
   },
   methods: {

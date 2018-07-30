@@ -28,7 +28,6 @@ export default {
   },
   watch: {
     selected() {
-      console.log("selected", this.selected);
       this.selectGoal();
     }
   },

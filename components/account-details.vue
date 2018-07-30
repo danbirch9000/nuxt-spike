@@ -3,7 +3,7 @@
     <div>
       <div v-if="currentSelectedAccount !== null">
         <h2>{{ currentSelectedAccount.name }}</h2>
-        <form @:submit.prevent>
+        <form @submit.prevent>
           <div class="form-group">
             <label for="name">new account value:</label>
             <input id="value" v-model="value" type="number" class="form-control large-input" aria-describedby="value" placeholder="e.g. £2000" autocomplete="off" step=".01">

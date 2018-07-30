@@ -20,7 +20,7 @@
 
               <button v-if="accounts.length > 0" class="btn btn-primary btn-sm" @click="showAccountChooser =! showAccountChooser">Manage linked accounts</button>
               <accountChooser v-if="showAccountChooser"/>
-              <ChartCompact :compact-chart-data="compact" />
+              <!-- <ChartCompact :compact-chart-data="compact" /> -->
               <chart />
               <button class="btn btn-primary btn-sm" @click="deleteGoal()">Delete goal</button>
               <tableData />

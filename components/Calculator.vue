@@ -23,8 +23,11 @@
           <input id="years" v-model="years" type="text" class="form-control" aria-describedby="years">
         </div>
       </div>
-      <button type="button" class="btn btn-primary" @click="calculate()">Calculate</button>
-      <button v-if="canSave" type="button" class="btn btn-primary" @:click="saveGoal()">Save goal</button>
+      <div class="form-actions">
+        <button type="button" class="btn btn-primary" @click="calculate()">Calculate</button>
+        <button v-if="canSave" type="button" class="btn btn-primary" @:click="saveGoal()">Save goal</button>
+      </div>
+
     </form>
     <tableData />
     <chart />
@@ -109,9 +112,18 @@ export default {
 <style lang="scss" scoped>
 @media (min-width: 768px) {
   .form-elements {
-    display: grid;
-    grid-gap: 8px;
-    grid-template-columns: repeat(5, 1fr);
+    display: flex;
+    .form-group {
+      flex-grow: 1;
+      justify-content: space-around;
+      margin: 5px;
+      &:first-child {
+        margin-left: 0;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
 }
 </style>

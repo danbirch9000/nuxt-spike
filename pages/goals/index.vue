@@ -104,15 +104,11 @@ export default {
       if (this.pageReady) {
         console.log("historic data.", this.getHistoricData());
       }
-    },
-    currentGoal() {
-      console.log(this.currentGoal);
     }
   },
   beforeMount() {
     this.$store.commit("CLOSE_MENU");
   },
-  mounted() {},
   created() {
     this.$store.dispatch("GET_USER_GOALS");
     this.$store.dispatch("GET_USER_ACCOUNTS");
@@ -164,8 +160,16 @@ export default {
       return moment(date).format("MMM YYYY");
     },
     deleteGoal() {
-      this.$store.dispatch("DELETE_GOAL");
-      this.$router.push({ name: "goals" });
+      var base = this;
+      this.$dialog
+        .confirm("Delete this goal?")
+        .then(function() {
+          base.$store.dispatch("DELETE_GOAL");
+          base.$router.push({ name: "goals" });
+        })
+        .catch(function(e) {
+          console.log(e);
+        });
     },
     saveGoal() {
       this.$store.dispatch("UPDATE_GOAL");

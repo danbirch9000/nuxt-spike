@@ -11,15 +11,23 @@ import { mapGetters } from "vuex";
 const chartConfig = {
   chart: {
     type: "spline",
-    backgroundColor: "#f4f4f4"
+    backgroundColor: "#ffffff",
+    renderTo: "container"
   },
   credits: {
     enabled: false
   },
+  legend: {
+    enabled: false
+  },
   title: {
-    text: "Your goals"
+    text: ""
   },
   xAxis: {
+    lineWidth: 0,
+    gridLineWidth: 0,
+    minorGridLineWidth: 0,
+    lineColor: "transparent",
     type: "datetime",
     dateTimeLabelFormats: {
       year: "%Y"
@@ -29,6 +37,10 @@ const chartConfig = {
     }
   },
   yAxis: {
+    lineWidth: 0,
+    gridLineWidth: 0,
+    minorGridLineWidth: 0,
+    lineColor: "transparent",
     title: {
       text: "Value"
     },
@@ -41,7 +53,7 @@ const chartConfig = {
   plotOptions: {
     spline: {
       marker: {
-        enabled: true
+        enabled: false
       }
     }
   },
@@ -49,7 +61,7 @@ const chartConfig = {
     {
       name: "Your goal",
       data: [],
-      color: "#fe4641"
+      color: "#22cfef"
     },
     {
       name: "0% goal",
@@ -108,3 +120,13 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+section {
+  background-color: #fff;
+  border: 1px #22cfef solid;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+}
+</style>

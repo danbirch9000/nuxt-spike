@@ -1,27 +1,29 @@
 <template>
   <section>
     <form>
-      <div v-if="canSave" class="form-group">
-        <label for="goal-description">Goal description</label>
-        <input id="goal-description" v-model="description" type="text" class="form-control" aria-describedby="goalDescription" placeholder="e.g. Pension fund">
+      <div class="form-elements">
+        <div v-if="canSave" class="form-group">
+          <label for="goal-description">Goal description</label>
+          <input id="goal-description" v-model="description" type="text" class="form-control" aria-describedby="goalDescription" placeholder="e.g. Pension fund">
+        </div>
+        <div class="form-group">
+          <label for="interest-rate">Interest rate</label>
+          <input id="interest-rate" v-model="rate" type="text" class="form-control" aria-describedby="interestRate">
+        </div>
+        <div class="form-group">
+          <label for="inital-amount">Initial amount</label>
+          <input id="inital-amount" v-model="amount" type="text" class="form-control" aria-describedby="initialAmount">
+        </div>
+        <div class="form-group">
+          <label for="monthly-deposits">Monthly deposits</label>
+          <input id="monthly-deposits" v-model="monthly" type="text" class="form-control" aria-describedby="monthlyDeposits">
+        </div>
+        <div class="form-group">
+          <label for="years">Years</label>
+          <input id="years" v-model="years" type="text" class="form-control" aria-describedby="years">
+        </div>
       </div>
-      <div class="form-group">
-        <label for="interest-rate">Interest rate</label>
-        <input id="interest-rate" v-model="rate" type="text" class="form-control" aria-describedby="interestRate">
-      </div>
-      <div class="form-group">
-        <label for="inital-amount">Initial amount</label>
-        <input id="inital-amount" v-model="amount" type="text" class="form-control" aria-describedby="initialAmount">
-      </div>
-      <div class="form-group">
-        <label for="monthly-deposits">Monthly deposits</label>
-        <input id="monthly-deposits" v-model="monthly" type="text" class="form-control" aria-describedby="monthlyDeposits">
-      </div>
-      <div class="form-group">
-        <label for="years">Years</label>
-        <input id="years" v-model="years" type="text" class="form-control" aria-describedby="years">
-      </div>
-      <button type="button" class="btn btn-primary" @:click="calculate()">Calculate</button>
+      <button type="button" class="btn btn-primary" @click="calculate()">Calculate</button>
       <button v-if="canSave" type="button" class="btn btn-primary" @:click="saveGoal()">Save goal</button>
     </form>
     <tableData />
@@ -57,8 +59,7 @@ export default {
       monthly: 250,
       years: 10,
       startDate: moment(),
-      chartData: null,
-      savingsGoal: null
+      chartData: null
     };
   },
   middleware: ["check-auth", "auth"],
@@ -66,10 +67,8 @@ export default {
     ...mapGetters({
       currentViewChartData: "GET_CHART_DATA_CURRENT_VIEW"
     }),
-    getSavingsGoal: function() {
-      return this.savingsGoal;
-    },
-    getChartConfig: function() {
+
+    getChartConfig() {
       return {
         description: this.description,
         rate: this.rate,
@@ -81,22 +80,18 @@ export default {
     }
   },
   methods: {
-    calculate: function() {
-      (this.startDate = moment()),
-        (this.currentGoal = {
-          rate: this.rate,
-          amount: this.amount,
-          monthly: this.monthly,
-          years: this.years,
-          startDate: moment().format(),
-          description: this.description
-        });
-
+    calculate() {
+      this.currentGoal = {
+        rate: this.rate,
+        amount: this.amount,
+        monthly: this.monthly,
+        years: this.years,
+        startDate: moment().format(),
+        description: this.description
+      };
       this.$store.commit("SET_CURRENT_GOAL_VIEW", this.currentGoal);
-
-      // this.savingsGoal = utilities.getFinanceData(this.rate, this.amount, this.monthly, this.years, this.startDate);
     },
-    saveGoal: function() {
+    saveGoal() {
       this.$store.dispatch("SAVE_GOAL", {
         rate: this.rate,
         amount: this.amount,
@@ -110,3 +105,13 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@media (min-width: 768px) {
+  .form-elements {
+    display: grid;
+    grid-gap: 8px;
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+</style>

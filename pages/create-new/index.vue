@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <h1>Create new goal</h1>
-    <Calculator can-save="true" />
+    <Calculator :can-save="true" />
   </section>
 </template>
 

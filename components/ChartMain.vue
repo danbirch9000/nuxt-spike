@@ -77,6 +77,7 @@ export default {
   },
   watch: {
     mainChartData() {
+      console.log(JSON.stringify(this.mainChartData));
       chartConfig.series = [];
       this.mainChartData.forEach(element => {
         chartConfig.series.push({

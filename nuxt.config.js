@@ -34,6 +34,7 @@ module.exports = {
     "~/plugins/highcharts",
     "~/plugins/dialog",
     "~/plugins/money.filter",
+    "~/plugins/filters",
     { src: "~/plugins/ga.js", ssr: false }
   ],
 

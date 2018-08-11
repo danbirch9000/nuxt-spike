@@ -113,6 +113,7 @@ export default {
           this.currentViewChartData.startDate
         );
         let chartData = utilities.buildChartData(data);
+
         chart.series[1].setData(chartData);
         chart.redraw();
       }

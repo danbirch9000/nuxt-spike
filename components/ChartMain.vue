@@ -10,7 +10,8 @@
 let chartConfig = {
   chart: {
     type: "spline",
-    backgroundColor: "#ffffff"
+    backgroundColor: "#ffffff",
+    zoomType: "x"
   },
   credits: {
     enabled: false
@@ -77,7 +78,7 @@ export default {
   },
   watch: {
     mainChartData() {
-      console.log(JSON.stringify(this.mainChartData));
+      // console.log(JSON.stringify(this.mainChartData));
       chartConfig.series = [];
       this.mainChartData.forEach(element => {
         chartConfig.series.push({
@@ -86,10 +87,18 @@ export default {
           color: "#22cfef"
         });
       });
+      this.$refs.chartComponent.chart.redraw();
     }
   }
 };
 </script>
 <style lang="scss" scoped>
 @import "../assets/colors";
+section {
+  background-color: #fff;
+  border: 1px #22cfef solid;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+}
 </style>

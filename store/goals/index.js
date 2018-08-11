@@ -19,6 +19,7 @@ export default {
   state: {
     goals: [],
     goalView: {
+      accounts: [],
       description: "",
       rate: "",
       amount: "",

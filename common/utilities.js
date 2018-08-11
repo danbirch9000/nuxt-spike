@@ -104,6 +104,49 @@ var UtilitiesModule = (function() {
     return value;
   };
 
+  var addAccounts = function(payload) {
+    let total = { name: "Combined savings", account: [] };
+
+    payload.forEach((acc, i) => {
+      acc.account.forEach((data, j) => {
+        let diff = 0;
+        if (j > 0) {
+          diff = data[1] - acc.account[j - 1][1];
+        }
+        let temp = {
+          date: data[0],
+          value: data[1],
+          index: i,
+          diff: diff
+        };
+        total.account.push(temp);
+      });
+    });
+
+    total.account.sort((a, b) => parseFloat(a.date) - parseFloat(b.date));
+    let usedAccounts = [];
+    total.account.forEach((data, i) => {
+      if (i === 0) {
+        data.total = data.value;
+      } else {
+        if (!usedAccounts.some(val => val === data.index)) {
+          data.total = total.account[i - 1].total + data.value;
+        } else {
+          data.total = total.account[i - 1].total + data.diff;
+        }
+      }
+      usedAccounts.push(data.index);
+    });
+
+    total.chart = [];
+    total.account.forEach(data => {
+      let temp = [data.date, Number(data.total.toFixed(2))];
+      total.chart.push(temp);
+    });
+
+    return total;
+  };
+
   return {
     getFinanceData: getFinanceData,
     calculateSavings: calculateSavings,
@@ -111,7 +154,8 @@ var UtilitiesModule = (function() {
     roundToTwo: roundToTwo,
     buildChartData: buildChartData,
     numberWithCommas: numberWithCommas,
-    getCiForMonths: getCiForMonths
+    getCiForMonths: getCiForMonths,
+    addAccounts
   };
 })();
 

@@ -1,12 +1,18 @@
 <template>
   <section class="container">
     <div>
-      <h1>Goals</h1>
+      <div class="toolbar">
+        <h1>Goals</h1>
+        <nuxt-link tag="button" to="/create-new" class="btn btn-primary btn-lg btn-block">Create new goal</nuxt-link>
+      </div>
+
+
+      <goalList />
+
       <div class="container">
         <div class="row">
           <div class="col-md">
-            <nuxt-link tag="button" to="/create-new" class="btn btn-primary btn-lg btn-block">Create new goal</nuxt-link>
-            <goalList />
+
             <div v-if="goalView.description !== ''">
               <div class="goal-detail">
                 <h2>{{ goalView.description }}</h2>
@@ -189,3 +195,16 @@ export default {
   middleware: ["check-auth", "auth"]
 };
 </script>
+<style style lang="scss" scoped>
+@import "../../assets/colors";
+@import "../../assets/mixins";
+.toolbar {
+  display: flex;
+}
+h1 {
+  flex: 8;
+}
+button {
+  flex: 1;
+}
+</style>

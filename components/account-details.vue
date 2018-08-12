@@ -2,7 +2,6 @@
   <section>
     <div>
       <div v-if="currentSelectedAccount !== null">
-        <h2>{{ currentSelectedAccount.name }}</h2>
         <form @submit.prevent>
           <div class="form-group">
             <label for="name">new account value:</label>
@@ -10,7 +9,7 @@
           </div>
           <button class="btn btn-primary" @click="updateValue()">Update</button>
         </form>
-        <ul >
+        <ul class="account-management">
           <li v-for="(item) in currentSelectedAccount.history" :key="item.id">&pound;{{ item.value }} - {{ item.date }} <button @click="deleteRecord(item.id)">Delete</button></li>
         </ul>
         <button class="btn btn-primary" @click="deleteAccount()">Delete Account</button>
@@ -76,5 +75,10 @@ export default {
 .large-input {
   font-size: 35px;
   text-align: center;
+}
+.account-management {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 </style>

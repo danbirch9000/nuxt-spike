@@ -1,15 +1,15 @@
 <template>
   <section class="container">
     <h1>Accounts</h1>
-
-    <div class="container">
-      <div class="row">
-        <div class="col-md">
-          <ChartMain :main-chart-data="accountChartData" />
-          <nuxt-link tag="button" to="/new-account" class="btn btn-primary btn-lg btn-block">Create new account</nuxt-link>
-          <accountList />
-          <accountDetails />
-        </div>
+    <nuxt-link tag="button" to="/new-account" class="btn btn-primary btn-lg btn-block">Create new account</nuxt-link>
+    <accountList />
+    <h2 v-if="currentSelectedAccount">{{ currentSelectedAccount.name }}</h2>
+    <div class="account-grid">
+      <div>
+        <ChartMain :main-chart-data="accountChartData" />
+      </div>
+      <div>
+        <accountDetails />
       </div>
     </div>
   </section>
@@ -19,7 +19,7 @@
 import accountList from "~/components/account-list";
 import accountDetails from "~/components/account-details";
 import ChartMain from "~/components/ChartMain";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import moment from "moment";
 import utilities from "~/common/utilities.js";
 
@@ -39,6 +39,9 @@ export default {
     ...mapState({
       accounts: state => state.accountModule.accounts,
       accountIdViewing: state => state.accountModule.accountIdViewing
+    }),
+    ...mapGetters({
+      currentSelectedAccount: "GET_ACCOUNT_VIEWING"
     })
   },
   watch: {
@@ -87,3 +90,12 @@ export default {
   }
 };
 </script>
+<style style lang="scss" scoped>
+@import "../../assets/colors";
+@import "../../assets/mixins";
+.account-grid {
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: repeat(2, 1fr);
+}
+</style>

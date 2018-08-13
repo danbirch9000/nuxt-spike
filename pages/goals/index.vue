@@ -1,37 +1,33 @@
 <template>
   <section class="container">
-    <div>
-      <div class="toolbar">
-        <h1>Goals</h1>
+    <h1>Goals</h1>
+    <div class="goal-layout">
+      <div class="toolbar panel">
+        <goalList />
         <nuxt-link tag="button" to="/create-new" class="btn btn-primary btn-lg btn-block">Create new goal</nuxt-link>
+        <button v-if="accounts.length > 0" class="btn btn-primary btn-sm" @click="showAccountChooser =! showAccountChooser">Manage linked accounts</button>
+        <accountChooser v-if="showAccountChooser"/>
+        <button class="btn btn-primary btn-sm" @click="deleteGoal()">Delete goal</button>
       </div>
+      <div v-if="goalView.description !== ''">
 
-
-      <goalList />
-
-      <div class="container">
-        <div class="row">
-          <div class="col-md">
-
-            <div v-if="goalView.description !== ''">
-              <div class="goal-detail">
-                <h2>{{ goalView.description }}</h2>
-                <div><span class="standout-lg">{{ goalTarget.value | currency }}</span> by {{ goalTarget.date }}</div>
-                <div>Start <span class="standout">{{ goalView.startDate | monthAndYear }}</span> with <span class="standout">{{ goalView.amount | currency }}</span>, save <span class="standout">{{ goalView.monthly | currency }}</span> per month for
-                <span class="standout">{{ goalView.years | year }}</span> years at <span class="standout">{{ goalView.rate }}%</span></div>
-                <div>Estimated value today after {{ getMonthsGoalActive() }} months: <span class="standout-lg">{{ getEstimatedSavingsForMonths(getMonthsGoalActive()).value | currency }}</span></div>
-                <div>Actual value: <span class="standout-lg">{{ getActualValue() | currency }}</span> {{ percentageDifference() | percentage }}</div>
-              </div>
-              <ChartMain :main-chart-data="goalChartData" />
-              <button v-if="accounts.length > 0" class="btn btn-primary btn-sm" @click="showAccountChooser =! showAccountChooser">Manage linked accounts</button>
-              <accountChooser v-if="showAccountChooser"/>
-              <button class="btn btn-primary btn-sm" @click="deleteGoal()">Delete goal</button>
-              <tableData />
-            </div>
+        <div class="panel">
+          <div class="goal-detail">
+            <h2>{{ goalView.description }}</h2>
+            <div><span class="standout-lg">{{ goalTarget.value | currency }}</span> by {{ goalTarget.date }}</div>
+            <div>Start <span class="standout">{{ goalView.startDate | monthAndYear }}</span> with <span class="standout">{{ goalView.amount | currency }}</span>, save <span class="standout">{{ goalView.monthly | currency }}</span> per month for
+            <span class="standout">{{ goalView.years | year }}</span> years at <span class="standout">{{ goalView.rate }}%</span></div>
+            <div>Estimated value today after {{ getMonthsGoalActive() }} months: <span class="standout-lg">{{ getEstimatedSavingsForMonths(getMonthsGoalActive()).value | currency }}</span></div>
+            <div>Actual value: <span class="standout-lg">{{ getActualValue() | currency }}</span> {{ percentageDifference() | percentage }}</div>
           </div>
+          <ChartMain :main-chart-data="goalChartData" />
+        </div>
+        <div class="panel">
+          <tableData />
         </div>
       </div>
     </div>
+
   </section>
 </template>
 
@@ -198,13 +194,4 @@ export default {
 <style style lang="scss" scoped>
 @import "../../assets/colors";
 @import "../../assets/mixins";
-.toolbar {
-  display: flex;
-}
-h1 {
-  flex: 8;
-}
-button {
-  flex: 1;
-}
 </style>

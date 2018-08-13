@@ -118,7 +118,7 @@ div.menu {
       }
       @media (min-width: 700px) {
         float: left;
-        padding: 12px 10px;
+        padding: 10px;
         border: none;
       }
     }

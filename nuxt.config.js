@@ -14,7 +14,14 @@ module.exports = {
       { hid: "description", name: "description", content: pkg.description }
     ],
     script: [{ src: "/assets/js/plugins/nouislider.min.js" }],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    link: [
+      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      {
+        rel: "stylesheet",
+        href:
+          "https://fonts.googleapis.com/css?family=Open+Sans:400,700|Roboto:400,500,700"
+      }
+    ]
   },
 
   /*

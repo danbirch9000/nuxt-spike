@@ -1,16 +1,21 @@
 <template>
   <section class="container">
     <h1>Accounts</h1>
-    <nuxt-link tag="button" to="/new-account" class="btn btn-primary btn-lg btn-block">Create new account</nuxt-link>
-    <accountList />
-    <h2 v-if="currentSelectedAccount">{{ currentSelectedAccount.name }}</h2>
-    <div class="account-grid">
-      <div>
-        <ChartMain :main-chart-data="accountChartData" />
+    <div class="goal-layout">
+      <div class="panel">
+        <accountList />
+        <nuxt-link tag="button" to="/new-account" class="btn btn-primary btn-lg btn-block">Create new account</nuxt-link>
       </div>
       <div>
-        <accountDetails />
+        <div class="panel">
+          <h2 v-if="currentSelectedAccount">{{ currentSelectedAccount.name }}</h2>
+          <ChartMain :main-chart-data="accountChartData" />
+        </div>
+        <div class="panel">
+          <accountDetails />
+        </div>
       </div>
+
     </div>
   </section>
 </template>

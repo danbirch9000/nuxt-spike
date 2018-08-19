@@ -1,5 +1,6 @@
 <template>
   <section>
+    <Message v-if="!formValid && userClickedSaved" type="error">Please complete all fields</Message>
     <form>
       <div class="form-elements">
         <div v-if="canSave" class="form-group">
@@ -25,7 +26,7 @@
       </div>
       <div class="form-actions">
         <button type="button" class="btn btn-primary" @click="calculate()">Calculate</button>
-        <button v-if="canSave" type="button" class="btn btn-primary" @:click="saveGoal()">Save goal</button>
+        <button v-if="canSave" type="button" class="btn btn-primary" @click="saveGoal()">Save goal</button>
       </div>
 
     </form>
@@ -39,6 +40,7 @@
 import moment from "moment";
 import goalList from "~/components/goal-list";
 import tableData from "~/components/table-data";
+import Message from "~/components/Message";
 import chart from "~/components/chart";
 import { mapGetters } from "vuex";
 
@@ -46,7 +48,8 @@ export default {
   components: {
     goalList,
     chart,
-    tableData
+    tableData,
+    Message
   },
   props: {
     canSave: {
@@ -62,7 +65,8 @@ export default {
       monthly: 250,
       years: 10,
       startDate: moment(),
-      chartData: null
+      chartData: null,
+      userClickedSaved: false
     };
   },
   middleware: ["check-auth", "auth"],
@@ -70,7 +74,15 @@ export default {
     ...mapGetters({
       currentViewChartData: "GET_CHART_DATA_CURRENT_VIEW"
     }),
-
+    watchData() {
+      return {
+        description: this.description,
+        rate: this.rate,
+        amount: this.amount,
+        monthly: this.monthly,
+        years: this.years
+      };
+    },
     getChartConfig() {
       return {
         description: this.description,
@@ -80,6 +92,23 @@ export default {
         years: this.years,
         startDate: this.startDate
       };
+    },
+    formValid() {
+      return (
+        this.description !== "" &&
+        this.rate !== "" &&
+        this.amount !== "" &&
+        this.monthly !== "" &&
+        this.years !== ""
+      );
+    }
+  },
+  watch: {
+    handler: {
+      watchData() {
+        this.userClickedSaved = false;
+      },
+      deep: true
     }
   },
   methods: {
@@ -95,15 +124,18 @@ export default {
       this.$store.commit("SET_CURRENT_GOAL_VIEW", this.currentGoal);
     },
     saveGoal() {
-      this.$store.dispatch("SAVE_GOAL", {
-        rate: this.rate,
-        amount: this.amount,
-        monthly: this.monthly,
-        years: this.years,
-        startDate: moment().format(),
-        description: this.description
-      });
-      this.$router.push("/goals");
+      this.userClickedSaved = true;
+      if (this.formValid) {
+        this.$store.dispatch("SAVE_GOAL", {
+          rate: this.rate,
+          amount: this.amount,
+          monthly: this.monthly,
+          years: this.years,
+          startDate: moment().format(),
+          description: this.description
+        });
+        this.$router.push("/goals");
+      }
     }
   }
 };

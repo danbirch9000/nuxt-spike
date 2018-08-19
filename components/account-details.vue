@@ -10,7 +10,7 @@
           <button class="btn btn-primary" @click="updateValue()">Update</button>
         </form>
         <ul class="account-management">
-          <li v-for="(item) in currentSelectedAccount.history" :key="item.id">&pound;{{ item.value }} - {{ item.date }} <button @click="deleteRecord(item.id)">Delete</button></li>
+          <li v-for="item in currentSelectedAccount.history" :key="item.id">&pound;{{ item.value }} - {{ item.date }} <button @click="deleteRecord(item.id)">Delete</button></li>
         </ul>
         <button class="btn btn-primary" @click="deleteAccount()">Delete Account</button>
       </div>

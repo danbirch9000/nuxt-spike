@@ -124,10 +124,6 @@ export default {
 
 <style lang="scss" scoped>
 section {
-  background-color: #fff;
-  border: 1px #22cfef solid;
-  border-radius: 10px;
-  padding: 10px;
   margin-top: 10px;
 }
 </style>

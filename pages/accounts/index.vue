@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <h1>Accounts</h1>
-    <div class="goal-layout">
+    <div v-if="accounts.length > 0" class="goal-layout">
       <div class="panel">
         <accountList />
         <nuxt-link tag="button" to="/new-account" class="btn btn-primary btn-lg btn-block">Create new account</nuxt-link>

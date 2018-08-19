@@ -1,8 +1,10 @@
 <template>
   <section class="container">
-    <div class="grid-container">
-      <Login />
-      <div>
+    <div class="goal-layout">
+      <div class="panel">
+        <Login />
+      </div>
+      <div class="panel">
         <h1>Savings Calculator</h1>
         <P>Use our savings calculator to see how compound interest can boost your savings over time.</P>
         <Calculator/>

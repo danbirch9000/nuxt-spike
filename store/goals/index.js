@@ -169,12 +169,16 @@ export default {
         )
         .then(() => {
           vuexContext.commit("ADD_GOAL", goal);
+          vuexContext.commit("SET_CURRENT_GOAL_VIEW", goal);
         })
         .catch(e => console.log(e));
     }
   },
   getters: {
     GET_CHART_DATA_CURRENT_VIEW: state => {
+      if (state.goalView === undefined) {
+        return null;
+      }
       return {
         rate: state.goalView.rate,
         amount: state.goalView.amount,
@@ -184,6 +188,9 @@ export default {
       };
     },
     GET_VALUE_OF_GOAL: (state, getters, rootState) => {
+      if (state.goalView === undefined) {
+        return null;
+      }
       var userAccounts = rootState.accountModule.accounts;
       let value = 0;
       for (const key in state.goalView.accounts) {
@@ -192,6 +199,9 @@ export default {
       return value;
     },
     GET_GOAL_TARGET: state => {
+      if (state.goalView === undefined) {
+        return null;
+      }
       let target = utilities.getFinanceData(
         state.goalView.rate,
         state.goalView.amount,
@@ -204,6 +214,9 @@ export default {
       return goalTarget;
     },
     GET_CHART_DATA: state => {
+      if (state.goalView === undefined) {
+        return null;
+      }
       let data = utilities.getFinanceData(
         state.goalView.rate,
         state.goalView.amount,

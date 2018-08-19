@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-sm">
-          <table v-if="currentViewChartData.rate !== ''" class="table">
+          <table v-if="currentViewChartData && currentViewChartData.rate !== ''" class="table">
             <thead>
               <tr>
                 <th scope="col">&nbsp;</th>

@@ -4,7 +4,8 @@ import { urls } from "~/config/constants";
 export default {
   state: {
     accounts: [],
-    accountIdViewing: ""
+    accountIdViewing: "",
+    accountsLoaded: false
   },
   mutations: {
     ADD_ACCOUNT: (state, payload) => {
@@ -25,6 +26,9 @@ export default {
     },
     DELETE_ACCOUNT_VALUE: () => {
       console.log("mutation still needs doing");
+    },
+    SET_ACCOUNTS_LOADED: (state, payload) => {
+      state.accountsLoaded = payload;
     }
   },
   actions: {
@@ -93,6 +97,7 @@ export default {
           for (const key in data) {
             accountsArray.push({ ...data[key], id: key });
           }
+          vuexContext.commit("SET_ACCOUNTS_LOADED", true);
           vuexContext.commit("LOAD_ALL_ACCOUNTS", accountsArray);
         })
         .catch(e => console.log(e));
@@ -111,7 +116,7 @@ export default {
               date: moment(account.history[key].date).format("L LT")
             });
           }
-          account.history = historyArray;
+          account.history = historyArray.reverse();
           return account;
         }
       }

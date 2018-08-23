@@ -78,7 +78,14 @@ export default {
   },
   watch: {
     mainChartData() {
-      // console.log(JSON.stringify(this.mainChartData));
+      this.initChart();
+    }
+  },
+  mounted() {
+    this.initChart();
+  },
+  methods: {
+    initChart() {
       chartConfig.series = [];
       this.mainChartData.forEach(element => {
         chartConfig.series.push({

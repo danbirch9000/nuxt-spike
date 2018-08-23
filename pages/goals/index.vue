@@ -25,7 +25,7 @@
               </div>
 
             </div>
-            <ChartMain :main-chart-data="goalChartData" />
+            <ChartMain :main-chart-data="mainChartData" />
           </div>
           <div class="panel">
             <tableData />
@@ -87,6 +87,9 @@ export default {
     },
     userHasAccounts() {
       return this.accounts.length > 0;
+    },
+    mainChartData() {
+      return this.goalChartData;
     }
   },
   watch: {
@@ -108,13 +111,13 @@ export default {
     this.$store.commit("CLOSE_MENU");
   },
   created() {
-    this.$store.dispatch("GET_USER_GOALS");
-    this.$store.dispatch("GET_USER_ACCOUNTS");
+    this.$store.dispatch("GET_USER_ACCOUNTS").then(() => {
+      this.$store.dispatch("GET_USER_GOALS");
+    });
   },
   methods: {
     getAccountsForGoal() {
       let accounts = [];
-
       if (this.userHasAccounts) {
         let goalView = JSON.parse(JSON.stringify(this.goalView));
         let userAccounts = JSON.parse(JSON.stringify(this.accounts));
@@ -147,6 +150,7 @@ export default {
           ...this.getGoalChartData(),
           ...totalChart
         ];
+        console.log("here");
       } else {
         this.goalChartData = [...this.getGoalChartData()];
       }

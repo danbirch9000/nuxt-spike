@@ -82,7 +82,9 @@ export default {
     }
   },
   mounted() {
-    this.initChart();
+    if (this.mainChartData) {
+      this.initChart();
+    }
   },
   methods: {
     initChart() {

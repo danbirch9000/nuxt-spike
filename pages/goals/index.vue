@@ -1,37 +1,39 @@
 <template>
   <section class="container">
     <h1>Goals</h1>
-    <Message v-if="!userHasGoals" type="info">Lets get started, use the link below to create a goal</Message>
-    <div class="goal-layout">
-      <div class="toolbar panel">
-        <goalList />
-        <nuxt-link tag="button" to="/create-new" class="btn btn-primary btn-lg btn-block">Create new goal</nuxt-link>
-        <button v-if="accounts.length > 0" class="btn btn-primary btn-sm" @click="showAccountChooser =! showAccountChooser">Manage linked accounts</button>
-        <accountChooser v-if="showAccountChooser"/>
-        <button v-if="goalView" class="btn btn-primary btn-sm" @click="deleteGoal()">Delete goal</button>
-      </div>
+    <div v-if="pageReady">
+      <Message v-if="!userHasGoals" type="info">Lets get started, use the link below to create a goal</Message>
+      <div class="goal-layout">
+        <div class="toolbar panel">
+          <goalList />
+          <nuxt-link tag="button" to="/create-new" class="btn btn-primary btn-lg btn-block">Create new goal</nuxt-link>
+          <button v-if="accounts.length > 0" class="btn btn-primary btn-sm" @click="showAccountChooser =! showAccountChooser">Manage linked accounts</button>
+          <accountChooser v-if="showAccountChooser"/>
+          <button v-if="goalView" class="btn btn-primary btn-sm" @click="deleteGoal()">Delete goal</button>
+        </div>
 
-      <div v-if="userHasGoals">
-        <div class="panel">
-          <div class="goal-detail">
-            <h2>{{ goalView.description }}</h2>
-            <div><span class="standout-lg">{{ goalTarget.value | currency }}</span> by {{ goalTarget.date }}</div>
-            <div>Start <span class="standout">{{ goalView.startDate | monthAndYear }}</span> with <span class="standout">{{ goalView.amount | currency }}</span>, save <span class="standout">{{ goalView.monthly | currency }}</span> per month for
-            <span class="standout">{{ goalView.years | year }}</span> years at <span class="standout">{{ goalView.rate }}%</span></div>
-            <div v-if="userHasAccounts">
-              <div>Estimated value today after {{ getMonthsGoalActive() }} months: <span class="standout-lg">{{ getEstimatedSavingsForMonths(getMonthsGoalActive()).value | currency }}</span></div>
-              <div>Actual value: <span class="standout-lg">{{ getActualValue() | currency }}</span> {{ percentageDifference() | percentage }}</div>
+        <div v-if="userHasGoals">
+          <div class="panel">
+            <div class="goal-detail">
+              <h2>{{ goalView.description }}</h2>
+              <div><span class="standout-lg">{{ goalTarget.value | currency }}</span> by {{ goalTarget.date }}</div>
+              <div>Start <span class="standout">{{ goalView.startDate | monthAndYear }}</span> with <span class="standout">{{ goalView.amount | currency }}</span>, save <span class="standout">{{ goalView.monthly | currency }}</span> per month for
+              <span class="standout">{{ goalView.years | year }}</span> years at <span class="standout">{{ goalView.rate }}%</span></div>
+              <div v-if="userHasAccounts">
+                <div>Estimated value today after {{ getMonthsGoalActive() }} months: <span class="standout-lg">{{ getEstimatedSavingsForMonths(getMonthsGoalActive()).value | currency }}</span></div>
+                <div>Actual value: <span class="standout-lg">{{ getActualValue() | currency }}</span> {{ percentageDifference() | percentage }}</div>
+              </div>
+
             </div>
-
+            <ChartMain :main-chart-data="goalChartData" />
           </div>
-          <ChartMain :main-chart-data="goalChartData" />
-        </div>
-        <div class="panel">
-          <tableData />
+          <div class="panel">
+            <tableData />
+          </div>
         </div>
       </div>
-
     </div>
+
 
   </section>
 </template>
@@ -66,9 +68,10 @@ export default {
   },
   computed: {
     ...mapState({
+      goalsLoaded: state => state.goalModule.loaded,
       goalView: state => state.goalModule.goalView,
       accounts: state => state.accountModule.accounts,
-      accountsLoaded: state => state.accountModule.accountsLoaded
+      accountsLoaded: state => state.accountModule.loaded
     }),
     ...mapGetters({
       valueOfGoal: "GET_VALUE_OF_GOAL",
@@ -77,7 +80,7 @@ export default {
       currentViewChartData: "GET_CHART_DATA_CURRENT_VIEW"
     }),
     pageReady() {
-      return this.accountsLoaded;
+      return this.accountsLoaded && this.goalsLoaded;
     },
     userHasGoals() {
       return this.goalView && this.goalView.description !== "";

@@ -26,9 +26,13 @@ export default {
       monthly: "",
       years: "",
       startDate: ""
-    }
+    },
+    loaded: false
   },
   mutations: {
+    SET_LOADED: (state, payload) => {
+      state.loaded = payload;
+    },
     SET_USER_GOALS: (state, payload) => {
       state.goals = payload;
     },
@@ -80,12 +84,16 @@ export default {
           }.json?auth=` + vuexContext.rootState.userModule.token
         )
         .then(data => {
+          vuexContext.commit("SET_LOADED", true);
           const goalsArray = [];
           for (const key in data.data) {
             goalsArray.push({ ...data.data[key], id: key });
           }
           vuexContext.commit("SET_USER_GOALS", goalsArray);
           vuexContext.commit("SET_CURRENT_GOAL_VIEW", goalsArray[0]);
+        })
+        .catch(() => {
+          vuexContext.commit("SET_LOADED", true);
         });
     },
     DELETE_GOAL(vuexContext) {

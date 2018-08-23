@@ -5,9 +5,12 @@ export default {
   state: {
     accounts: [],
     accountIdViewing: "",
-    accountsLoaded: false
+    loaded: false
   },
   mutations: {
+    SET_LOADED: (state, payload) => {
+      state.loaded = payload;
+    },
     ADD_ACCOUNT: (state, payload) => {
       state.accounts.push(payload);
     },
@@ -26,9 +29,6 @@ export default {
     },
     DELETE_ACCOUNT_VALUE: () => {
       console.log("mutation still needs doing");
-    },
-    SET_ACCOUNTS_LOADED: (state, payload) => {
-      state.accountsLoaded = payload;
     }
   },
   actions: {
@@ -93,14 +93,16 @@ export default {
             vuexContext.rootState.userModule.token
         )
         .then(data => {
+          vuexContext.commit("SET_LOADED", true);
           const accountsArray = [];
           for (const key in data) {
             accountsArray.push({ ...data[key], id: key });
           }
-          vuexContext.commit("SET_ACCOUNTS_LOADED", true);
           vuexContext.commit("LOAD_ALL_ACCOUNTS", accountsArray);
         })
-        .catch(e => console.log(e));
+        .catch(() => {
+          vuexContext.commit("SET_LOADED", true);
+        });
     }
   },
   getters: {
@@ -116,7 +118,7 @@ export default {
               date: moment(account.history[key].date).format("L LT")
             });
           }
-          account.history = historyArray.reverse();
+          account.history = historyArray;
           return account;
         }
       }

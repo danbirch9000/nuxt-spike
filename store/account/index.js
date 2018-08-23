@@ -83,25 +83,25 @@ export default {
         })
         .catch(e => console.log(e));
     },
-    GET_USER_ACCOUNTS(vuexContext) {
+    GET_USER_ACCOUNTS({ commit, rootState }) {
       return this.$axios
         .$get(
           urls.apiBaseUrl +
             "/accounts/" +
-            vuexContext.rootState.userModule.userId +
+            rootState.userModule.userId +
             ".json?auth=" +
-            vuexContext.rootState.userModule.token
+            rootState.userModule.token
         )
         .then(data => {
-          vuexContext.commit("SET_LOADED", true);
+          commit("SET_LOADED", true);
           const accountsArray = [];
           for (const key in data) {
             accountsArray.push({ ...data[key], id: key });
           }
-          vuexContext.commit("LOAD_ALL_ACCOUNTS", accountsArray);
+          commit("LOAD_ALL_ACCOUNTS", accountsArray);
         })
         .catch(() => {
-          vuexContext.commit("SET_LOADED", true);
+          commit("SET_LOADED", true);
         });
     }
   },

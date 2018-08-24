@@ -30,25 +30,25 @@
       </div>
 
     </form>
-    <tableData />
-    <chart />
+    <TableData />
+    <Chart />
 
   </section>
 </template>
 
 <script>
 import moment from "moment";
-import goalList from "~/components/goal-list";
-import tableData from "~/components/table-data";
+import GoalList from "~/components/GoalList";
+import TableData from "~/components/TableData";
 import Message from "~/components/Message";
-import chart from "~/components/chart";
+import Chart from "~/components/Chart";
 import { mapGetters } from "vuex";
 
 export default {
   components: {
-    goalList,
+    GoalList,
     chart,
-    tableData,
+    TableData,
     Message
   },
   props: {

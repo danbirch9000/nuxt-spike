@@ -5,10 +5,10 @@
       <Message v-if="!userHasGoals" type="info">Lets get started, use the link below to create a goal</Message>
       <div class="goal-layout">
         <div class="toolbar panel">
-          <goalList />
+          <GoalList />
           <nuxt-link tag="button" to="/create-new" class="btn btn-primary btn-lg btn-block">Create new goal</nuxt-link>
           <button v-if="accounts.length > 0" class="btn btn-primary btn-sm" @click="showAccountChooser =! showAccountChooser">Manage linked accounts</button>
-          <accountChooser v-if="showAccountChooser"/>
+          <AccountChooser v-if="showAccountChooser"/>
           <button v-if="goalView" class="btn btn-primary btn-sm" @click="deleteGoal()">Delete goal</button>
         </div>
 
@@ -28,7 +28,7 @@
             <ChartMain :main-chart-data="mainChartData" />
           </div>
           <div class="panel">
-            <tableData />
+            <TableData />
           </div>
         </div>
       </div>
@@ -40,11 +40,11 @@
 
 <script>
 import utilities from "~/common/utilities.js";
-import goalList from "~/components/goal-list";
-import accountChooser from "~/components/account-chooser";
-import tweaker from "~/components/tweaker";
+import GoalList from "~/components/GoalList";
+import AccountChooser from "~/components/AccountChooser";
+import Tweaker from "~/components/Tweaker";
 import ChartCompact from "~/components/ChartCompact";
-import tableData from "~/components/table-data";
+import TableData from "~/components/TableData";
 import moment from "moment";
 import { mapGetters, mapState } from "vuex";
 import ChartMain from "~/components/ChartMain";
@@ -53,10 +53,10 @@ import pageMixin from "~/mixins/pageMixin";
 
 export default {
   components: {
-    goalList,
-    tableData,
-    tweaker,
-    accountChooser,
+    GoalList,
+    TableData,
+    Tweaker,
+    AccountChooser,
     ChartCompact,
     ChartMain,
     Message

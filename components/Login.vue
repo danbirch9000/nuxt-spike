@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import Loader from "~/components/loader";
+import Loader from "~/components/Loader";
 import { mapState } from "vuex";
 export default {
   components: {

@@ -3,7 +3,7 @@
     <h1>Accounts</h1>
     <div v-if="accounts.length > 0" class="goal-layout">
       <div class="panel">
-        <accountList />
+        <AccountList />
         <nuxt-link tag="button" to="/new-account" class="btn btn-primary btn-lg btn-block">Create new account</nuxt-link>
       </div>
       <div>
@@ -12,7 +12,7 @@
           <ChartMain :main-chart-data="accountChartData" />
         </div>
         <div class="panel">
-          <accountDetails />
+          <AccountDetails />
         </div>
       </div>
 
@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import accountList from "~/components/account-list";
-import accountDetails from "~/components/account-details";
+import AccountList from "~/components/AccountList";
+import AccountDetails from "~/components/AccountDetails";
 import ChartMain from "~/components/ChartMain";
 import { mapState, mapGetters } from "vuex";
 import moment from "moment";
@@ -31,8 +31,8 @@ import utilities from "~/common/utilities.js";
 export default {
   middleware: ["check-auth", "auth"],
   components: {
-    accountList,
-    accountDetails,
+    AccountList,
+    AccountDetails,
     ChartMain
   },
   data() {

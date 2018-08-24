@@ -178,11 +178,11 @@ export default {
       var base = this;
       this.$dialog
         .confirm("Delete this goal?")
-        .then(function() {
-          base.$store.dispatch("DELETE_GOAL");
-          base.$router.push({ name: "goals" });
+        .then(() => {
+          this.$store.dispatch("DELETE_GOAL");
+          this.$router.push({ name: "goals" });
         })
-        .catch(function(e) {
+        .catch(e => {
           console.log(e);
         });
     },

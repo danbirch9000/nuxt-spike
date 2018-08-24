@@ -32,73 +32,47 @@ export default {
     }
   },
   actions: {
-    CREATE_ACCOUNT(vuexContext, payload) {
+    CREATE_ACCOUNT({ rootState, commit }, payload) {
+      const url = `/accounts/${rootState.userModule.userId}.json`;
       return this.$axios
-        .$post(
-          urls.apiBaseUrl +
-            "/accounts/" +
-            vuexContext.rootState.userModule.userId +
-            ".json?auth=" +
-            vuexContext.rootState.userModule.token,
-          payload
-        )
-        .then(data => {
-          vuexContext.commit("ADD_ACCOUNT", { ...payload, id: data.name });
-          vuexContext.commit("SET_ACCOUNT_VIEWING", data.name);
+        .$post(url, payload)
+        .then(response => {
+          commit("ADD_ACCOUNT", { ...payload, id: data.name });
+          commit("SET_ACCOUNT_VIEWING", data.name);
+          return response;
         })
         .catch(e => console.log(e));
     },
-    UPDATE_ACCOUNT_VALUE(vuexContext, payload) {
+    UPDATE_ACCOUNT_VALUE({ rootState, state }, payload) {
+      const url = `/accounts/${rootState.userModule.userId}/${state.accountIdViewing}.json`;
       return this.$axios
-        .$post(
-          urls.apiBaseUrl +
-            "/accounts/" +
-            vuexContext.rootState.userModule.userId +
-            "/" +
-            vuexContext.state.accountIdViewing +
-            "/history.json?auth=" +
-            vuexContext.rootState.userModule.token,
-          payload
-        )
-        .then(data => {
-          console.log(data);
+        .$post(url, payload)
+        .then(response => {
+          return response;
         })
         .catch(e => console.log(e));
     },
-    DELETE_ACCOUNT_VALUE(vuexContext, payload) {
+    DELETE_ACCOUNT_VALUE({ rootState }, payload) {
+      const url = `/accounts/${rootState.userModule.userId}/${payload.accountId}/history/${payload.recordId}.json`;
       return this.$axios
-        .$delete(
-          urls.apiBaseUrl +
-            "/accounts/" +
-            vuexContext.rootState.userModule.userId +
-            "/" +
-            payload.accountId +
-            "/history/" +
-            payload.recordId +
-            ".json?auth=" +
-            vuexContext.rootState.userModule.token
-        )
-        .then(data => {
-          console.log(data);
+        .$delete(url)
+        .then(response => {
+          return response;
         })
         .catch(e => console.log(e));
     },
     GET_USER_ACCOUNTS({ commit, rootState }) {
+      const url = `/accounts/${rootState.userModule.userId}.json`;
       return this.$axios
-        .$get(
-          urls.apiBaseUrl +
-            "/accounts/" +
-            rootState.userModule.userId +
-            ".json?auth=" +
-            rootState.userModule.token
-        )
-        .then(data => {
+        .$get(url)
+        .then(response => {
           commit("SET_LOADED", true);
           const accountsArray = [];
           for (const key in data) {
             accountsArray.push({ ...data[key], id: key });
           }
           commit("LOAD_ALL_ACCOUNTS", accountsArray);
+          return response;
         })
         .catch(() => {
           commit("SET_LOADED", true);

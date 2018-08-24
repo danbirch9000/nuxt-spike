@@ -27,6 +27,7 @@ import ChartMain from "~/components/ChartMain";
 import { mapState, mapGetters } from "vuex";
 import moment from "moment";
 import utilities from "~/common/utilities.js";
+import pageMixin from "~/mixins/pageMixin";
 
 export default {
   middleware: ["check-auth", "auth"],
@@ -35,6 +36,7 @@ export default {
     AccountDetails,
     ChartMain
   },
+  mixins: [pageMixin],
   data() {
     return {
       accountChartData: null

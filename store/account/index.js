@@ -1,5 +1,5 @@
 import moment from "moment";
-import { urls } from "~/config/constants";
+import axios from "axios";
 
 export default {
   state: {
@@ -34,18 +34,20 @@ export default {
   actions: {
     CREATE_ACCOUNT({ rootState, commit }, payload) {
       const url = `/accounts/${rootState.userModule.userId}.json`;
-      return this.$axios
+      return axios
         .$post(url, payload)
         .then(response => {
-          commit("ADD_ACCOUNT", { ...payload, id: data.name });
-          commit("SET_ACCOUNT_VIEWING", data.name);
+          commit("ADD_ACCOUNT", { ...payload, id: response.name });
+          commit("SET_ACCOUNT_VIEWING", response.name);
           return response;
         })
         .catch(e => console.log(e));
     },
     UPDATE_ACCOUNT_VALUE({ rootState, state }, payload) {
-      const url = `/accounts/${rootState.userModule.userId}/${state.accountIdViewing}.json`;
-      return this.$axios
+      const url = `/accounts/${rootState.userModule.userId}/${
+        state.accountIdViewing
+      }.json`;
+      return axios
         .$post(url, payload)
         .then(response => {
           return response;
@@ -53,8 +55,10 @@ export default {
         .catch(e => console.log(e));
     },
     DELETE_ACCOUNT_VALUE({ rootState }, payload) {
-      const url = `/accounts/${rootState.userModule.userId}/${payload.accountId}/history/${payload.recordId}.json`;
-      return this.$axios
+      const url = `/accounts/${rootState.userModule.userId}/${
+        payload.accountId
+      }/history/${payload.recordId}.json`;
+      return axios
         .$delete(url)
         .then(response => {
           return response;
@@ -63,13 +67,13 @@ export default {
     },
     GET_USER_ACCOUNTS({ commit, rootState }) {
       const url = `/accounts/${rootState.userModule.userId}.json`;
-      return this.$axios
-        .$get(url)
+      return axios
+        .get(url)
         .then(response => {
           commit("SET_LOADED", true);
           const accountsArray = [];
-          for (const key in data) {
-            accountsArray.push({ ...data[key], id: key });
+          for (const key in response.data) {
+            accountsArray.push({ ...response.data[key], id: key });
           }
           commit("LOAD_ALL_ACCOUNTS", accountsArray);
           return response;

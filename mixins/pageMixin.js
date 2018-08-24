@@ -6,12 +6,12 @@ export default {
   computed: {
     ...mapState({
       user: state => state.userModule
-    }),
+    })
   },
-  beforeMount() {
+  created() {
     axios.defaults.baseURL = urls.apiBaseUrl;
     axios.defaults.params = {
-      auth: user.token
+      auth: this.user.token
     };
   }
 };

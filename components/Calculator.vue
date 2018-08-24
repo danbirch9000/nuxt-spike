@@ -47,7 +47,7 @@ import { mapGetters } from "vuex";
 export default {
   components: {
     GoalList,
-    chart,
+    Chart,
     TableData,
     Message
   },

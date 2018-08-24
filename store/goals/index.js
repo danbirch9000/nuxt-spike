@@ -1,7 +1,7 @@
 import axios from "axios";
 import utilities from "~/common/utilities.js";
 
-const getValueOfAccount = function (id, userAccounts) {
+const getValueOfAccount = function(id, userAccounts) {
   for (const key in userAccounts) {
     if (userAccounts[key].id === id) {
       const valueArray = [];
@@ -94,8 +94,10 @@ export default {
         });
     },
     DELETE_GOAL({ commit, rootState, state }) {
-      const url = `/goals/${rootState.userModule.userId}/${state.goalView.id}.json`;
-      return this.$axios
+      const url = `/goals/${rootState.userModule.userId}/${
+        state.goalView.id
+      }.json`;
+      return axios
         .$delete(url)
         .then(response => {
           commit("REMOVE_GOAL", state.goalView.id);
@@ -112,8 +114,10 @@ export default {
         .catch(e => console.log(e));
     },
     UPDATE_GOAL({ commit, rootState, state }) {
-      const url = `/goals/${rootState.userModule.userId}/${state.goalView.id}.json`;
-      return this.$axios
+      const url = `/goals/${rootState.userModule.userId}/${
+        state.goalView.id
+      }.json`;
+      return axios
         .$patch(url, state.goalView)
         .then(response => {
           commit("UPDATE_GOAL", state.goalView.id);
@@ -126,8 +130,10 @@ export default {
         ...state.goalView,
         accounts: payload
       };
-      const url = `/goals/${rootState.userModule.userId}/${state.goalView.id}.json`;
-      return this.$axios
+      const url = `/goals/${rootState.userModule.userId}/${
+        state.goalView.id
+      }.json`;
+      return axios
         .$patch(url, goalData)
         .then(response => {
           commit("SET_CURRENT_GOAL_VIEW", state.goalView);
@@ -138,7 +144,7 @@ export default {
     },
     SAVE_GOAL({ commit, rootState }, goal) {
       const url = `"/goals/"${rootState.userModule.userId}.json`;
-      return this.$axios
+      return axios
         .$post(url, goal)
         .then(response => {
           commit("ADD_GOAL", goal);

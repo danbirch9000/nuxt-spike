@@ -112,7 +112,7 @@ export default {
   beforeMount() {
     this.$store.commit("CLOSE_MENU");
   },
-  created() {
+  mounted() {
     this.$store.dispatch("GET_USER_ACCOUNTS").then(() => {
       this.$store.dispatch("GET_USER_GOALS");
     });
@@ -129,6 +129,7 @@ export default {
           });
           if (accountsForGoal) {
             accountsForGoal = accountsForGoal[0];
+
             let temp = [];
             for (const key in accountsForGoal.history) {
               let momentDate = moment(accountsForGoal.history[key].date);
@@ -152,7 +153,6 @@ export default {
           ...this.getGoalChartData(),
           ...totalChart
         ];
-        console.log("here");
       } else {
         this.goalChartData = [...this.getGoalChartData()];
       }
@@ -175,7 +175,6 @@ export default {
       ];
     },
     deleteGoal() {
-      var base = this;
       this.$dialog
         .confirm("Delete this goal?")
         .then(() => {

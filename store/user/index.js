@@ -1,4 +1,5 @@
 import Cookie from "js-cookie";
+import axios from "axios";
 
 export default {
   state: {
@@ -39,8 +40,8 @@ export default {
           process.env.fbAPIKey;
       }
       vuexContext.commit("SET_LOADING", true);
-      return this.$axios
-        .$post(authUrl, {
+      return axios
+        .post(authUrl, {
           email: authData.email,
           password: authData.password,
           returnSecureToken: true
@@ -106,7 +107,6 @@ export default {
       vuexContext.commit("SET_USER_ID", userDetails.user_id);
       vuexContext.commit("SET_TOKEN", token);
       // this.router.push("/goals");
-      console.log("redirect users to goals");
     },
     LOGOUT(vuexContext) {
       vuexContext.commit("CLEAR_TOKEN");

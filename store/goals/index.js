@@ -1,8 +1,7 @@
 import axios from "axios";
-import { urls } from "~/config/constants";
 import utilities from "~/common/utilities.js";
 
-const getValueOfAccount = function(id, userAccounts) {
+const getValueOfAccount = function (id, userAccounts) {
   for (const key in userAccounts) {
     if (userAccounts[key].id === id) {
       const valueArray = [];
@@ -76,40 +75,31 @@ export default {
     }
   },
   actions: {
-    GET_USER_GOALS(vuexContext) {
+    GET_USER_GOALS({ rootState, commit }) {
+      const url = `/goals/${rootState.userModule.userId}.json`;
       return axios
-        .get(
-          `${urls.apiBaseUrl}/goals/${
-            vuexContext.rootState.userModule.userId
-          }.json?auth=` + vuexContext.rootState.userModule.token
-        )
+        .get(url)
         .then(data => {
-          vuexContext.commit("SET_LOADED", true);
+          commit("SET_LOADED", true);
           const goalsArray = [];
           for (const key in data.data) {
             goalsArray.push({ ...data.data[key], id: key });
           }
-          vuexContext.commit("SET_USER_GOALS", goalsArray);
-          vuexContext.commit("SET_CURRENT_GOAL_VIEW", goalsArray[0]);
+          commit("SET_USER_GOALS", goalsArray);
+          commit("SET_CURRENT_GOAL_VIEW", goalsArray[0]);
+          return data;
         })
         .catch(() => {
-          vuexContext.commit("SET_LOADED", true);
+          commit("SET_LOADED", true);
         });
     },
-    DELETE_GOAL(vuexContext) {
+    DELETE_GOAL({ commit, rootState, state }) {
+      const url = `/goals/${rootState.userModule.userId}/${state.goalView.id}.json`;
       return this.$axios
-        .$delete(
-          urls.apiBaseUrl +
-            "/goals/" +
-            vuexContext.rootState.userModule.userId +
-            "/" +
-            vuexContext.state.goalView.id +
-            ".json?auth=" +
-            vuexContext.rootState.userModule.token
-        )
-        .then(() => {
-          vuexContext.commit("REMOVE_GOAL", vuexContext.state.goalView.id);
-          vuexContext.commit("SET_CURRENT_GOAL_VIEW", {
+        .$delete(url)
+        .then(response => {
+          commit("REMOVE_GOAL", state.goalView.id);
+          commit("SET_CURRENT_GOAL_VIEW", {
             description: "",
             rate: "",
             amount: "",
@@ -117,67 +107,43 @@ export default {
             years: "",
             startDate: ""
           });
+          return response;
         })
         .catch(e => console.log(e));
     },
-    UPDATE_GOAL(vuexContext) {
+    UPDATE_GOAL({ commit, rootState, state }) {
+      const url = `/goals/${rootState.userModule.userId}/${state.goalView.id}.json`;
       return this.$axios
-        .$patch(
-          urls.apiBaseUrl +
-            "/goals/" +
-            vuexContext.rootState.userModule.userId +
-            "/" +
-            vuexContext.state.goalView.id +
-            ".json?auth=" +
-            vuexContext.rootState.userModule.token,
-          vuexContext.state.goalView
-        )
-        .then(() => {
-          vuexContext.commit("UPDATE_GOAL", vuexContext.state.goalView.id);
+        .$patch(url, state.goalView)
+        .then(response => {
+          commit("UPDATE_GOAL", state.goalView.id);
+          return response;
         })
         .catch(e => console.log(e));
     },
-    LINK_GOAL_TO_ACCOUNT(vuexContext, payload) {
+    LINK_GOAL_TO_ACCOUNT({ commit, rootState, state }, payload) {
       var goalData = {
-        ...vuexContext.state.goalView,
+        ...state.goalView,
         accounts: payload
       };
+      const url = `/goals/${rootState.userModule.userId}/${state.goalView.id}.json`;
       return this.$axios
-        .$patch(
-          urls.apiBaseUrl +
-            "/goals/" +
-            vuexContext.rootState.userModule.userId +
-            "/" +
-            vuexContext.state.goalView.id +
-            ".json?auth=" +
-            vuexContext.rootState.userModule.token,
-          goalData
-        )
-        .then(() => {
-          vuexContext.commit(
-            "SET_CURRENT_GOAL_VIEW",
-            vuexContext.state.goalView
-          );
-          vuexContext.commit("UPDATE_GOAL_ACCOUNTS", payload);
+        .$patch(url, goalData)
+        .then(response => {
+          commit("SET_CURRENT_GOAL_VIEW", state.goalView);
+          commit("UPDATE_GOAL_ACCOUNTS", payload);
+          return response;
         })
         .catch(e => console.log(e));
     },
-    SAVE_GOAL(vuexContext, post) {
-      const goal = {
-        ...post
-      };
+    SAVE_GOAL({ commit, rootState }, goal) {
+      const url = `"/goals/"${rootState.userModule.userId}.json`;
       return this.$axios
-        .$post(
-          urls.apiBaseUrl +
-            "/goals/" +
-            vuexContext.rootState.userModule.userId +
-            ".json?auth=" +
-            vuexContext.rootState.userModule.token,
-          goal
-        )
-        .then(() => {
-          vuexContext.commit("ADD_GOAL", goal);
-          vuexContext.commit("SET_CURRENT_GOAL_VIEW", goal);
+        .$post(url, goal)
+        .then(response => {
+          commit("ADD_GOAL", goal);
+          commit("SET_CURRENT_GOAL_VIEW", goal);
+          return response;
         })
         .catch(e => console.log(e));
     }

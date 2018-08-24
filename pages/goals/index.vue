@@ -49,6 +49,7 @@ import moment from "moment";
 import { mapGetters, mapState } from "vuex";
 import ChartMain from "~/components/ChartMain";
 import Message from "~/components/Message";
+import pageMixin from "~/mixins/pageMixin";
 
 export default {
   components: {
@@ -60,6 +61,7 @@ export default {
     ChartMain,
     Message
   },
+  mixins: [pageMixin],
   data() {
     return {
       showAccountChooser: false,

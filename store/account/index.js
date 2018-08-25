@@ -35,10 +35,10 @@ export default {
     CREATE_ACCOUNT({ rootState, commit }, payload) {
       const url = `/accounts/${rootState.userModule.userId}.json`;
       return axios
-        .$post(url, payload)
+        .post(url, payload)
         .then(response => {
-          commit("ADD_ACCOUNT", { ...payload, id: response.name });
-          commit("SET_ACCOUNT_VIEWING", response.name);
+          commit("ADD_ACCOUNT", { ...payload, id: response.data.name });
+          commit("SET_ACCOUNT_VIEWING", response.data.name);
           return response;
         })
         .catch(e => console.log(e));
@@ -48,7 +48,7 @@ export default {
         state.accountIdViewing
       }.json`;
       return axios
-        .$post(url, payload)
+        .post(url, payload)
         .then(response => {
           return response;
         })
@@ -59,7 +59,7 @@ export default {
         payload.accountId
       }/history/${payload.recordId}.json`;
       return axios
-        .$delete(url)
+        .delete(url)
         .then(response => {
           return response;
         })

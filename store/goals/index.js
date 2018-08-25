@@ -98,7 +98,7 @@ export default {
         state.goalView.id
       }.json`;
       return axios
-        .$delete(url)
+        .delete(url)
         .then(response => {
           commit("REMOVE_GOAL", state.goalView.id);
           commit("SET_CURRENT_GOAL_VIEW", {
@@ -118,7 +118,7 @@ export default {
         state.goalView.id
       }.json`;
       return axios
-        .$patch(url, state.goalView)
+        .patch(url, state.goalView)
         .then(response => {
           commit("UPDATE_GOAL", state.goalView.id);
           return response;
@@ -134,7 +134,7 @@ export default {
         state.goalView.id
       }.json`;
       return axios
-        .$patch(url, goalData)
+        .patch(url, goalData)
         .then(response => {
           commit("SET_CURRENT_GOAL_VIEW", state.goalView);
           commit("UPDATE_GOAL_ACCOUNTS", payload);
@@ -143,9 +143,9 @@ export default {
         .catch(e => console.log(e));
     },
     SAVE_GOAL({ commit, rootState }, goal) {
-      const url = `"/goals/"${rootState.userModule.userId}.json`;
+      const url = `/goals/${rootState.userModule.userId}.json`;
       return axios
-        .$post(url, goal)
+        .post(url, goal)
         .then(response => {
           commit("ADD_GOAL", goal);
           commit("SET_CURRENT_GOAL_VIEW", goal);

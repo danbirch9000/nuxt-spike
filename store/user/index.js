@@ -46,7 +46,8 @@ export default {
           password: authData.password,
           returnSecureToken: true
         })
-        .then(result => {
+        .then(response => {
+          let result = response.data;
           vuexContext.commit("SET_LOADING", false);
           vuexContext.commit("SET_TOKEN", result.idToken);
           vuexContext.commit("REMOVE_ERROR");
@@ -95,6 +96,9 @@ export default {
 
       token = localStorage.getItem("token");
       expirationDate = localStorage.getItem("tokenExpiration");
+      console.log("expirationDate", expirationDate);
+      console.log("new Date().getTime()", new Date().getTime());
+      console.log("token", token);
 
       if (new Date().getTime() > +expirationDate || !token) {
         console.log("No token or invalid token");

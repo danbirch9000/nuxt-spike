@@ -13,7 +13,10 @@ module.exports = {
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { hid: "description", name: "description", content: pkg.description }
     ],
-    script: [{ src: "/assets/js/plugins/nouislider.min.js" }],
+    script: [
+      { src: "/assets/js/plugins/nouislider.min.js" },
+      { src: "https://www.gstatic.com/firebasejs/5.4.1/firebase.js" }
+    ],
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
       {

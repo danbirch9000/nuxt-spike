@@ -7,7 +7,6 @@ let _auth0 = new auth0.WebAuth({
   redirectUri: "http://localhost:3000/callback",
   audience: "http://localhost:1337/",
   responseType: "token id_token",
-<<<<<<< HEAD
   scope: "openid profile"
 });
 export const authorise = function() {
@@ -19,21 +18,6 @@ export const parseHash = function() {
     console.log("parseHash response", authResult);
 
     console.log("idTokenPayload", authResult.idTokenPayload);
-=======
-  scope: "openid"
-});
-export const authorise = function () {
-  _auth0.authorize();
-};
-
-export const parseHash = function () {
-  _auth0.parseHash((err, authResult) => {
-    console.log("parseHash response", authResult);
-
-    let userInfo = authResult.idToken.split(".");
-    let userDetails = JSON.parse(atob(userInfo[1]));
-    console.log("userDetails", userDetails);
->>>>>>> 2daee679f40d112b7267cdb02326924e68611cda
     console.log("isDev", process.env.isDev);
     axios({
       method: "get",
@@ -59,11 +43,7 @@ export const parseHash = function () {
           });
           */
         })
-<<<<<<< HEAD
         .catch(function(error) {
-=======
-        .catch(function (error) {
->>>>>>> 2daee679f40d112b7267cdb02326924e68611cda
           console.log(error);
         });
     });

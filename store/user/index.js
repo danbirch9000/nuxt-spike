@@ -10,7 +10,7 @@ export default {
     loading: false
   },
   mutations: {
-    SET_TOKEN(state, token) {
+    SET_FIREBASE_TOKEN(state, token) {
       state.token = token;
     },
     SET_USER_ID(state, id) {
@@ -22,10 +22,10 @@ export default {
     SET_ERROR(state) {
       state.error = true;
     },
-    REMOVE_ERROR(state) {
+    REMOVE_AUTH_ERROR(state) {
       state.error = false;
     },
-    SET_LOADING(state, payload) {
+    SET_AUTH_LOADING(state, payload) {
       state.loading = payload;
     }
   },
@@ -39,7 +39,7 @@ export default {
           "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" +
           process.env.fbAPIKey;
       }
-      commit("SET_LOADING", true);
+      commit("SET_AUTH_LOADING", true);
       return axios
         .post(authUrl, {
           email: authData.email,
@@ -48,9 +48,9 @@ export default {
         })
         .then(response => {
           let result = response.data;
-          commit("SET_LOADING", false);
-          commit("SET_TOKEN", result.idToken);
-          commit("REMOVE_ERROR");
+          commit("SET_AUTH_LOADING", false);
+          commit("SET_FIREBASE_TOKEN", result.idToken);
+          commit("REMOVE_AUTH_ERROR");
 
           let userInfo = result.idToken.split(".");
           let userDetails = JSON.parse(atob(userInfo[1]));
@@ -67,7 +67,7 @@ export default {
           );
         })
         .catch(() => {
-          commit("SET_LOADING", false);
+          commit("SET_AUTH_LOADING", false);
           commit("SET_ERROR");
         });
     },
@@ -109,7 +109,7 @@ export default {
       let userInfo = token.split(".");
       let userDetails = JSON.parse(atob(userInfo[1]));
       vuexContext.commit("SET_USER_ID", userDetails.user_id);
-      vuexContext.commit("SET_TOKEN", token);
+      vuexContext.commit("SET_FIREBASE_TOKEN", token);
       // this.router.push("/goals");
     },
     LOGOUT(vuexContext) {

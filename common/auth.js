@@ -9,15 +9,18 @@ let _auth0 = new auth0.WebAuth({
   responseType: "token id_token",
   scope: "openid"
 });
-export const loginUser = function() {
+export const authorise = function () {
   _auth0.authorize();
 };
 
-export const parseHash = function() {
+export const parseHash = function () {
   _auth0.parseHash((err, authResult) => {
-    console.log("err", err);
-    console.log("authResult", authResult);
+    console.log("parseHash response", authResult);
 
+    let userInfo = authResult.idToken.split(".");
+    let userDetails = JSON.parse(atob(userInfo[1]));
+    console.log("userDetails", userDetails);
+    console.log("isDev", process.env.isDev);
     axios({
       method: "get",
       baseURL: "http://localhost:1337",
@@ -26,14 +29,23 @@ export const parseHash = function() {
         Authorization: "Bearer " + authResult.accessToken
       }
     }).then(response => {
-      console.log("response", response);
+      console.log("response from firebase mint api", response);
       firebase
         .auth()
         .signInWithCustomToken(response.data.firebaseToken)
         .then(res => {
           console.log(res);
+          /*
+          var credential = firebase.auth.EmailAuthProvider.credential(email, password);
+          firebase.auth().currentUser.linkAndRetrieveDataWithCredential(credential).then(function(usercred) {
+            var user = usercred.user;
+            console.log("Account linking success", user);
+          }, function(error) {
+            console.log("Account linking error", error);
+          });
+          */
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     });

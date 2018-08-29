@@ -37,6 +37,10 @@ module.exports = {
   */
   css: ["@/assets/styles.scss"],
 
+  env: {
+    isDev: process.env.NODE_ENV !== "production"
+  },
+
   /*
   ** Plugins to load before mounting the App
   */

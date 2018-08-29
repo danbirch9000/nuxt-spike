@@ -30,7 +30,7 @@ export default {
     }
   },
   actions: {
-    AUTHENTICATE_USER(vuexContext, authData) {
+    AUTHENTICATE_USER({ commit }, authData) {
       let authUrl =
         "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" +
         process.env.fbAPIKey;
@@ -39,7 +39,7 @@ export default {
           "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" +
           process.env.fbAPIKey;
       }
-      vuexContext.commit("SET_LOADING", true);
+      commit("SET_LOADING", true);
       return axios
         .post(authUrl, {
           email: authData.email,
@@ -48,13 +48,13 @@ export default {
         })
         .then(response => {
           let result = response.data;
-          vuexContext.commit("SET_LOADING", false);
-          vuexContext.commit("SET_TOKEN", result.idToken);
-          vuexContext.commit("REMOVE_ERROR");
+          commit("SET_LOADING", false);
+          commit("SET_TOKEN", result.idToken);
+          commit("REMOVE_ERROR");
 
           let userInfo = result.idToken.split(".");
           let userDetails = JSON.parse(atob(userInfo[1]));
-          vuexContext.commit("SET_USER_ID", userDetails.user_id);
+          commit("SET_USER_ID", userDetails.user_id);
           localStorage.setItem("token", result.idToken);
           localStorage.setItem(
             "tokenExpiration",
@@ -67,8 +67,8 @@ export default {
           );
         })
         .catch(() => {
-          vuexContext.commit("SET_LOADING", false);
-          vuexContext.commit("SET_ERROR");
+          commit("SET_LOADING", false);
+          commit("SET_ERROR");
         });
     },
     INIT_AUTH(vuexContext, req) {

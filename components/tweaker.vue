@@ -16,7 +16,6 @@
       <span>{{ years }} yrs</span>
       <div id="tweaker-years" class="slider" />>
     </div>
-
   </section>
 </template>
 

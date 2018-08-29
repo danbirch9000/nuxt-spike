@@ -46,7 +46,7 @@ export default {
     UPDATE_ACCOUNT_VALUE({ rootState, state }, payload) {
       const url = `/accounts/${rootState.userModule.userId}/${
         state.accountIdViewing
-      }.json`;
+      }/history.json`;
       return axios
         .post(url, payload)
         .then(response => {

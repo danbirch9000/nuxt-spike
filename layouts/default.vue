@@ -1,7 +1,7 @@
 <template>
   <div :class="{'menu-active': menuState}" class="body-container">
     <nav>
-      <a :href="homepageUrl" class="navbar-brand">
+      <a class="navbar-brand" @click.prevent="navigateHome()" >
         <img src="/assets/images/saveswiftlogo.png">
       </a>
       <a v-if="isLoggedIn()" class="burger-menu" @click="toggleMenu()" />
@@ -42,6 +42,9 @@ export default {
     },
     isLoggedIn() {
       return this.$store.getters.IS_AUTHENTICATED;
+    },
+    navigateHome() {
+      this.$router.push(this.homepageUrl);
     }
   }
 };

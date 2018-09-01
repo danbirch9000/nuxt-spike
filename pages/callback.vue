@@ -1,7 +1,5 @@
 <template>
-  <section class="container">
-    <p>callback</p>
-  </section>
+  <section class="container" />
 </template>
 
 <script>
@@ -11,7 +9,7 @@ export default {
   components: {},
   // middleware: ["check-auth", "auth"],
   mounted() {
-    parseHash();
+    parseHash(this.$store);
   }
 };
 </script>

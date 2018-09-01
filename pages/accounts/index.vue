@@ -3,11 +3,11 @@
     <h1>Accounts</h1>
     <div class="goal-layout">
       <div class="panel">
-        <AccountList v-if="accounts.length > 0" />
+        <AccountList v-if="accountModule.accounts.length" />
         <nuxt-link tag="button" to="/new-account" class="btn btn-primary btn-lg btn-block">Create new account</nuxt-link>
       </div>
-      <div v-if="accounts.length > 0">
-        <div class="panel">
+      <div v-if="accountModule.accounts.length && currentSelectedAccount">
+        <div v-if="currentSelectedAccount.history.length > 1" class="panel">
           <h2 v-if="currentSelectedAccount">{{ currentSelectedAccount.name }}</h2>
           <ChartMain :main-chart-data="accountChartData" />
         </div>
@@ -24,11 +24,10 @@
 import AccountList from "~/components/AccountList";
 import AccountDetails from "~/components/AccountDetails";
 import ChartMain from "~/components/ChartMain";
-import { mapState, mapGetters } from "vuex";
 import moment from "moment";
 import utilities from "~/common/utilities.js";
 import pageMixin from "~/mixins/pageMixin";
-
+import { mapState } from "vuex";
 export default {
   middleware: ["check-auth", "auth"],
   components: {
@@ -44,12 +43,19 @@ export default {
   },
   computed: {
     ...mapState({
-      accounts: state => state.accountModule.accounts,
+      accountModule: state => state.accountModule,
       accountIdViewing: state => state.accountModule.accountIdViewing
     }),
-    ...mapGetters({
-      currentSelectedAccount: "GET_ACCOUNT_VIEWING"
-    })
+    currentSelectedAccount() {
+      if (this.accountModule === undefined) {
+        return null;
+      }
+
+      const account = this.accountModule.accounts.filter(
+        account => this.accountModule.accountIdViewing === account.id
+      );
+      return account[0];
+    }
   },
   watch: {
     accounts() {
@@ -62,15 +68,16 @@ export default {
   beforeMount() {
     this.$store.commit("CLOSE_MENU");
   },
-  mounted() {},
   created() {
-    this.$store.dispatch("GET_USER_ACCOUNTS");
+    if (this.accountModule.accounts.length === 0) {
+      this.$store.dispatch("GET_USER_ACCOUNTS");
+    }
   },
   methods: {
     getChartData() {
       let allAccounts = [];
 
-      this.accounts.forEach(element => {
+      this.accountModule.accounts.forEach(element => {
         let temp = {
           name: element.name,
           account: []

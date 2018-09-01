@@ -36,15 +36,22 @@ export default {
     createAccount: function() {
       this.$store
         .dispatch("CREATE_ACCOUNT", {
-          name: this.name
-        })
-        .then(() => {
-          this.$store.dispatch("UPDATE_ACCOUNT_VALUE", {
+          name: this.name,
+          amount: {
             value: this.amount,
             date: moment().format()
-          });
+          }
+        })
+        .then(() => {
+          this.$store
+            .dispatch("UPDATE_ACCOUNT_VALUE", {
+              value: this.amount,
+              date: moment().format()
+            })
+            .then(() => {
+              this.$router.push("/accounts");
+            });
         });
-      this.$router.push("/accounts");
     }
   }
 };

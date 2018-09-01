@@ -1,37 +1,45 @@
 <template>
   <section>
-    <div v-if="getAccounts.length > 0">
-      <select v-model="id">
-        <option v-for="(item) in getAccounts" :value="item.id" :key="item.id">{{ item.name }}</option>
+    <div v-if="accounts">
+      <select v-model="selectedAcccount">
+        <option v-for="(item) in accounts" :value="item.id" :key="item.id">{{ item.name }}</option>
       </select>
     </div>
   </section>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
       currentGoal: null,
-      id: null
+      selectedAcccount: null
     };
   },
   computed: {
-    getAccounts: function() {
-      return this.$store.state.accountModule.accounts;
-    }
+    ...mapState({
+      accounts: state => state.accountModule.accounts,
+      accountIdViewing: state => state.accountModule.accountIdViewing
+    })
   },
   watch: {
-    id() {
-      this.loadAccount();
-    },
-    getAccounts() {
-      this.id = this.getAccounts[0].id;
+    selectedAcccount(val) {
+      console.log("selectedAcccount", val);
+      this.loadAccount(val);
     }
   },
+  mounted() {
+    this.selectedAcccount =
+      this.accountIdViewing !== ""
+        ? this.accountIdViewing
+        : this.accounts[0].id;
+  },
   methods: {
-    loadAccount() {
-      this.$store.commit("SET_ACCOUNT_VIEWING", this.id);
+    loadAccount(id) {
+      console.log("loading", id);
+      this.$store.commit("SET_ACCOUNT_VIEWING", id);
     }
   }
 };

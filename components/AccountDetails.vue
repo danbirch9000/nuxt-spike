@@ -4,13 +4,14 @@
       <div v-if="currentSelectedAccount !== null">
         <form @submit.prevent>
           <div class="form-group">
-            <label for="name">new account value:</label>
+            <label for="value">new account value:</label>
             <input id="value" v-model="value" type="number" class="form-control large-input" aria-describedby="value" placeholder="e.g. £2000" autocomplete="off" step=".01">
           </div>
           <button class="btn btn-primary" @click="updateValue()">Update</button>
         </form>
+
         <ul class="account-management">
-          <li v-for="item in currentSelectedAccount.history" :key="item.id">&pound;{{ item.value }} - {{ item.date }} <button @click="deleteRecord(item.id)">Delete</button></li>
+          <li v-for="(item, index) in currentSelectedAccount.history" :key="index">&pound;{{ item.value }} - {{ item.date }}<button @click="deleteRecord(item.uid)">Delete</button></li>
         </ul>
         <button class="btn btn-primary" @click="deleteAccount()">Delete Account</button>
       </div>
@@ -19,7 +20,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 import moment from "moment";
 
 export default {
@@ -29,25 +30,35 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      currentSelectedAccount: "GET_ACCOUNT_VIEWING"
-    })
+    ...mapState({
+      accountModule: state => state.accountModule
+    }),
+    currentSelectedAccount() {
+      console.log("searching for", this.accountModule.accountIdViewing);
+      const account = this.accountModule.accounts.filter(account => {
+        if (this.accountModule.accountIdViewing === account.id) {
+          console.log("account", account);
+        }
+        return this.accountModule.accountIdViewing === account.id;
+      });
+      console.log("account[0]", account[0]);
+      return account[0];
+    }
   },
   methods: {
     deleteAccount() {},
-    deleteRecord(id) {
-      var base = this;
+    deleteRecord(uid) {
       this.$dialog
         .confirm("Delete this entry?")
-        .then(function() {
+        .then(() => {
           var payload = {
-            accountId: base.currentSelectedAccount.id,
-            recordId: id
+            accountId: this.currentSelectedAccount.id,
+            recordId: uid
           };
-
-          base.$store.dispatch("DELETE_ACCOUNT_VALUE", payload).then(() => {
-            base.$store.dispatch("GET_USER_ACCOUNTS");
-            base.value = "";
+          console.log(payload);
+          this.$store.dispatch("DELETE_ACCOUNT_VALUE", payload).then(() => {
+            this.$store.dispatch("GET_USER_ACCOUNTS");
+            this.value = "";
           });
         })
         .catch(function(e) {

@@ -123,29 +123,32 @@ export default {
       if (this.userHasAccounts) {
         let goalView = JSON.parse(JSON.stringify(this.goalView));
         let userAccounts = JSON.parse(JSON.stringify(this.accounts));
-        goalView.accounts.forEach(element => {
-          let accountsForGoal = userAccounts.filter(el => {
-            return el.id === element;
-          });
-          if (accountsForGoal) {
-            accountsForGoal = accountsForGoal[0];
-
-            let temp = [];
-            for (const key in accountsForGoal.history) {
-              let momentDate = moment(accountsForGoal.history[key].date);
-
-              temp.push([
-                momentDate.utc().valueOf(),
-                Number(accountsForGoal.history[key].value)
-              ]);
-            }
-
-            accounts.push({
-              name: accountsForGoal.name,
-              account: temp
+        if (goalView.accounts) {
+          goalView.accounts.forEach(element => {
+            let accountsForGoal = userAccounts.filter(el => {
+              return el.id === element;
             });
-          }
-        });
+            if (accountsForGoal) {
+              accountsForGoal = accountsForGoal[0];
+
+              let temp = [];
+              for (const key in accountsForGoal.history) {
+                let momentDate = moment(accountsForGoal.history[key].date);
+
+                temp.push([
+                  momentDate.utc().valueOf(),
+                  Number(accountsForGoal.history[key].value)
+                ]);
+              }
+
+              accounts.push({
+                name: accountsForGoal.name,
+                account: temp
+              });
+            }
+          });
+        }
+
         const total = utilities.addAccounts(accounts);
         let totalChart = [{ name: total.name, account: total.chart }];
         this.goalChartData = [

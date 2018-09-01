@@ -72,7 +72,6 @@ export default {
         });
     },
     INIT_AUTH(vuexContext, req) {
-      console.log("Running init auth");
       let token;
       let expirationDate;
       if (req) {
@@ -97,12 +96,8 @@ export default {
 
       token = localStorage.getItem("token");
       expirationDate = localStorage.getItem("tokenExpiration");
-      console.log("expirationDate", expirationDate);
-      console.log("new Date().getTime()", new Date().getTime());
-      console.log("token", token);
 
       if (new Date().getTime() > +expirationDate || !token) {
-        console.log("No token or invalid token");
         vuexContext.dispatch("LOGOUT");
         return;
       }
@@ -111,10 +106,8 @@ export default {
       let userDetails = JSON.parse(atob(userInfo[1]));
       vuexContext.commit("SET_USER_ID", userDetails.user_id);
       vuexContext.commit("SET_FIREBASE_TOKEN", token);
-      console.log("END Running init auth");
     },
     LOGOUT(vuexContext) {
-      console.log("loggint out");
       vuexContext.commit("CLEAR_TOKEN");
       Cookie.remove("jwt");
       Cookie.remove("expirationDate");
@@ -127,7 +120,6 @@ export default {
   },
   getters: {
     IS_AUTHENTICATED(state) {
-      console.log("state.token", state.token);
       return state.token != null;
     }
   }

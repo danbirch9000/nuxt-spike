@@ -35,21 +35,29 @@ export default {
     CREATE_ACCOUNT({ rootState, commit }, payload) {
       const url = `/accounts/${rootState.userModule.userId}.json`;
       return axios
-        .post(url, payload)
+        .post(url, { name: payload.name })
         .then(response => {
+          const newAccountId = response.data.name;
+          console.log("created new account: ", newAccountId);
           commit("ADD_ACCOUNT", { ...payload, id: response.data.name });
           commit("SET_ACCOUNT_VIEWING", response.data.name);
           return response;
         })
         .catch(e => console.log(e));
     },
-    UPDATE_ACCOUNT_VALUE({ rootState, state }, payload) {
+    UPDATE_ACCOUNT_VALUE({ rootState, state, commit }, payload) {
       const url = `/accounts/${rootState.userModule.userId}/${
         state.accountIdViewing
       }/history.json`;
       return axios
         .post(url, payload)
         .then(response => {
+          console.log("added value to account", response.data);
+          const storeValue = {
+            ...payload,
+            id: response.data.name
+          };
+          commit("UPDATE_ACCOUNT_VALUE", storeValue);
           return response;
         })
         .catch(e => console.log(e));
@@ -72,9 +80,23 @@ export default {
         .then(response => {
           commit("SET_LOADED", true);
           const accountsArray = [];
-          for (const key in response.data) {
-            accountsArray.push({ ...response.data[key], id: key });
+          const accounts = response.data;
+          for (const key in accounts) {
+            const historyArray = [];
+            for (const record in accounts[key].history) {
+              historyArray.push({
+                uid: record,
+                date: moment(accounts[key].history[record].date).format("L LT"),
+                value: accounts[key].history[record].value
+              });
+            }
+            accountsArray.push({
+              history: [...historyArray],
+              name: accounts[key].name,
+              id: key
+            });
           }
+
           commit("LOAD_ALL_ACCOUNTS", accountsArray);
           return response;
         })

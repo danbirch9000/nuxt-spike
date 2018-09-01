@@ -1,12 +1,12 @@
 <template>
   <section class="container">
     <h1>Accounts</h1>
-    <div v-if="accounts.length > 0" class="goal-layout">
+    <div class="goal-layout">
       <div class="panel">
-        <AccountList />
+        <AccountList v-if="accounts.length > 0" />
         <nuxt-link tag="button" to="/new-account" class="btn btn-primary btn-lg btn-block">Create new account</nuxt-link>
       </div>
-      <div>
+      <div v-if="accounts.length > 0">
         <div class="panel">
           <h2 v-if="currentSelectedAccount">{{ currentSelectedAccount.name }}</h2>
           <ChartMain :main-chart-data="accountChartData" />

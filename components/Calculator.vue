@@ -30,8 +30,8 @@
       </div>
 
     </form>
-    <TableData />
-    <Chart />
+    <TableData v-if="currentViewChartData" />
+    <Chart v-if="currentViewChartData" />
 
   </section>
 </template>

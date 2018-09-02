@@ -49,6 +49,7 @@ module.exports = {
     "~/plugins/dialog",
     "~/plugins/money.filter",
     "~/plugins/filters",
+    "~/plugins/toastr",
     { src: "~/plugins/ga.js", ssr: false }
   ],
 

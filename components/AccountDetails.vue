@@ -46,7 +46,16 @@ export default {
     }
   },
   methods: {
-    deleteAccount() {},
+    deleteAccount() {
+      this.$dialog.confirm("Delete this account?").then(() => {
+        var payload = {
+          accountId: this.currentSelectedAccount.id
+        };
+        this.$store.dispatch("DELETE_ACCOUNT", payload).then(() => {
+          this.value = "";
+        });
+      });
+    },
     deleteRecord(uid) {
       this.$dialog
         .confirm("Delete this entry?")

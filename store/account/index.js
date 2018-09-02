@@ -73,6 +73,17 @@ export default {
         })
         .catch(e => console.log(e));
     },
+    DELETE_ACCOUNT({ rootState }, payload) {
+      const url = `/accounts/${rootState.userModule.userId}/${
+        payload.accountId
+      }.json`;
+      return axios
+        .delete(url)
+        .then(response => {
+          return response;
+        })
+        .catch(e => console.log(e));
+    },
     GET_USER_ACCOUNTS({ commit, rootState }) {
       const url = `/accounts/${rootState.userModule.userId}.json`;
       return axios

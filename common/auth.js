@@ -8,7 +8,7 @@ let _auth0 = new auth0.WebAuth({
   domain: "code82.auth0.com",
   clientID: "rojWMbjsCsCP6pQneYwDyeRima4ylg8X",
   redirectUri: "http://localhost:3000/callback",
-  audience: "http://localhost:1337/",
+  audience: "https://us-central1-vuejs-83403.cloudfunctions.net/",
   responseType: "token id_token",
   scope: "openid profile"
 });
@@ -25,8 +25,8 @@ export const parseHash = function(store, router) {
       // console.log("isDev", process.env.isDev);
       axios({
         method: "get",
-        baseURL: "http://localhost:1337",
-        url: "/auth/firebase",
+        baseURL: "https://us-central1-vuejs-83403.cloudfunctions.net",
+        url: "/api1/auth",
         headers: {
           Authorization: "Bearer " + authResult.accessToken
         }

@@ -50,7 +50,7 @@ export default {
     DELETE_GOAL({ commit, rootState, state }) {
       const url = `/goals/${rootState.userModule.userId}/${
         state.goalView.id
-        }.json`;
+      }.json`;
       return axios
         .delete(url)
         .then(response => {
@@ -70,7 +70,7 @@ export default {
     UPDATE_GOAL({ commit, rootState, state }) {
       const url = `/goals/${rootState.userModule.userId}/${
         state.goalView.id
-        }.json`;
+      }.json`;
       return axios
         .patch(url, state.goalView)
         .then(response => {
@@ -86,7 +86,7 @@ export default {
       };
       const url = `/goals/${rootState.userModule.userId}/${
         state.goalView.id
-        }.json`;
+      }.json`;
       return axios
         .patch(url, goalData)
         .then(response => {

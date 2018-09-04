@@ -88,7 +88,7 @@ export default {
       return this.goalView && this.goalView.description !== "";
     },
     userHasAccounts() {
-      return this.accounts.length > 0;
+      return this.goalView.accounts;
     },
     mainChartData() {
       return this.goalChartData;

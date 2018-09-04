@@ -9,7 +9,7 @@ export default {
   components: {},
   // middleware: ["check-auth", "auth"],
   mounted() {
-    parseHash(this.$store);
+    parseHash(this.$store, this.$router);
   }
 };
 </script>

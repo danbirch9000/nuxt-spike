@@ -28,6 +28,86 @@ export default {
     },
     loaded: false
   },
+  actions: {
+    GET_USER_GOALS({ rootState, commit }) {
+      const url = `/goals/${rootState.userModule.userId}.json`;
+      return axios
+        .get(url)
+        .then(data => {
+          commit("SET_LOADED", true);
+          const goalsArray = [];
+          for (const key in data.data) {
+            goalsArray.push({ ...data.data[key], id: key });
+          }
+          commit("SET_USER_GOALS", goalsArray);
+          commit("SET_CURRENT_GOAL_VIEW", goalsArray[0]);
+          return data;
+        })
+        .catch(() => {
+          commit("SET_LOADED", true);
+        });
+    },
+    DELETE_GOAL({ commit, rootState, state }) {
+      const url = `/goals/${rootState.userModule.userId}/${
+        state.goalView.id
+        }.json`;
+      return axios
+        .delete(url)
+        .then(response => {
+          commit("REMOVE_GOAL", state.goalView.id);
+          commit("SET_CURRENT_GOAL_VIEW", {
+            description: "",
+            rate: "",
+            amount: "",
+            monthly: "",
+            years: "",
+            startDate: ""
+          });
+          return response;
+        })
+        .catch(e => console.log(e));
+    },
+    UPDATE_GOAL({ commit, rootState, state }) {
+      const url = `/goals/${rootState.userModule.userId}/${
+        state.goalView.id
+        }.json`;
+      return axios
+        .patch(url, state.goalView)
+        .then(response => {
+          commit("UPDATE_GOAL", state.goalView.id);
+          return response;
+        })
+        .catch(e => console.log(e));
+    },
+    LINK_GOAL_TO_ACCOUNT({ commit, rootState, state }, payload) {
+      var goalData = {
+        ...state.goalView,
+        accounts: payload
+      };
+      const url = `/goals/${rootState.userModule.userId}/${
+        state.goalView.id
+        }.json`;
+      return axios
+        .patch(url, goalData)
+        .then(response => {
+          commit("SET_CURRENT_GOAL_VIEW", state.goalView);
+          commit("UPDATE_GOAL_ACCOUNTS", payload);
+          return response;
+        })
+        .catch(e => console.log(e));
+    },
+    SAVE_GOAL({ commit, rootState }, goal) {
+      const url = `/goals/${rootState.userModule.userId}.json`;
+      return axios
+        .post(url, goal)
+        .then(response => {
+          commit("ADD_GOAL", goal);
+          commit("SET_CURRENT_GOAL_VIEW", goal);
+          return response;
+        })
+        .catch(e => console.log(e));
+    }
+  },
   mutations: {
     SET_LOADED: (state, payload) => {
       state.loaded = payload;
@@ -74,86 +154,7 @@ export default {
       }
     }
   },
-  actions: {
-    GET_USER_GOALS({ rootState, commit }) {
-      const url = `/goals/${rootState.userModule.userId}.json`;
-      return axios
-        .get(url)
-        .then(data => {
-          commit("SET_LOADED", true);
-          const goalsArray = [];
-          for (const key in data.data) {
-            goalsArray.push({ ...data.data[key], id: key });
-          }
-          commit("SET_USER_GOALS", goalsArray);
-          commit("SET_CURRENT_GOAL_VIEW", goalsArray[0]);
-          return data;
-        })
-        .catch(() => {
-          commit("SET_LOADED", true);
-        });
-    },
-    DELETE_GOAL({ commit, rootState, state }) {
-      const url = `/goals/${rootState.userModule.userId}/${
-        state.goalView.id
-      }.json`;
-      return axios
-        .delete(url)
-        .then(response => {
-          commit("REMOVE_GOAL", state.goalView.id);
-          commit("SET_CURRENT_GOAL_VIEW", {
-            description: "",
-            rate: "",
-            amount: "",
-            monthly: "",
-            years: "",
-            startDate: ""
-          });
-          return response;
-        })
-        .catch(e => console.log(e));
-    },
-    UPDATE_GOAL({ commit, rootState, state }) {
-      const url = `/goals/${rootState.userModule.userId}/${
-        state.goalView.id
-      }.json`;
-      return axios
-        .patch(url, state.goalView)
-        .then(response => {
-          commit("UPDATE_GOAL", state.goalView.id);
-          return response;
-        })
-        .catch(e => console.log(e));
-    },
-    LINK_GOAL_TO_ACCOUNT({ commit, rootState, state }, payload) {
-      var goalData = {
-        ...state.goalView,
-        accounts: payload
-      };
-      const url = `/goals/${rootState.userModule.userId}/${
-        state.goalView.id
-      }.json`;
-      return axios
-        .patch(url, goalData)
-        .then(response => {
-          commit("SET_CURRENT_GOAL_VIEW", state.goalView);
-          commit("UPDATE_GOAL_ACCOUNTS", payload);
-          return response;
-        })
-        .catch(e => console.log(e));
-    },
-    SAVE_GOAL({ commit, rootState }, goal) {
-      const url = `/goals/${rootState.userModule.userId}.json`;
-      return axios
-        .post(url, goal)
-        .then(response => {
-          commit("ADD_GOAL", goal);
-          commit("SET_CURRENT_GOAL_VIEW", goal);
-          return response;
-        })
-        .catch(e => console.log(e));
-    }
-  },
+
   getters: {
     GET_CHART_DATA_CURRENT_VIEW: state => {
       if (state.goalView === undefined) {

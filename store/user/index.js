@@ -1,5 +1,6 @@
 import Cookie from "js-cookie";
 import axios from "axios";
+import moment from "moment";
 
 export default {
   state: {
@@ -96,8 +97,12 @@ export default {
 
       token = localStorage.getItem("token");
       expirationDate = localStorage.getItem("tokenExpiration");
-
-      if (new Date().getTime() > +expirationDate || !token) {
+      if (moment().format() > moment(expirationDate) || !token) {
+        this.$toastr(
+          "error",
+          "Logout user, firebase token has expired",
+          "Auth"
+        );
         vuexContext.dispatch("LOGOUT");
         return;
       }

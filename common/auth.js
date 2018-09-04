@@ -2,6 +2,7 @@ import auth0 from "auth0-js";
 import axios from "axios";
 import firebase from "firebase";
 import Cookie from "js-cookie";
+import moment from "moment";
 
 let _auth0 = new auth0.WebAuth({
   domain: "code82.auth0.com",
@@ -15,7 +16,7 @@ export const authorise = function() {
   _auth0.authorize();
 };
 
-export const parseHash = function(store) {
+export const parseHash = function(store, router) {
   _auth0.parseHash((err, authResult) => {
     if (authResult) {
       // console.log("parseHash response", authResult);
@@ -30,7 +31,6 @@ export const parseHash = function(store) {
           Authorization: "Bearer " + authResult.accessToken
         }
       }).then(response => {
-        // console.log("response from firebase mint api", response);
         firebase
           .auth()
           .signInWithCustomToken(response.data.firebaseToken)
@@ -43,33 +43,17 @@ export const parseHash = function(store) {
                   store.commit("REMOVE_AUTH_ERROR");
                   let userInfo = idToken.split(".");
                   let userDetails = JSON.parse(atob(userInfo[1]));
-                  console.log("userDetails", userDetails);
                   store.commit("SET_USER_ID", userDetails.user_id);
+                  const expiry = userDetails.exp;
+                  const firebaseTokenExpiry = moment.unix(expiry).format();
                   localStorage.setItem("token", idToken);
-                  localStorage.setItem(
-                    "tokenExpiration",
-                    new Date().getTime() +
-                      Number.parseInt(userDetails.exp) * 1000
-                  );
+                  localStorage.setItem("tokenExpiration", firebaseTokenExpiry);
                   Cookie.set("jwt", response.data.firebaseToken);
-                  Cookie.set(
-                    "expirationDate",
-                    new Date().getTime() +
-                      Number.parseInt(userDetails.exp) * 1000
-                  );
+                  Cookie.set("expirationDate", firebaseTokenExpiry);
                 });
+                router.push("/goals");
               }
             });
-
-            /*
-            var credential = firebase.auth.EmailAuthProvider.credential(email, password);
-            firebase.auth().currentUser.linkAndRetrieveDataWithCredential(credential).then(function(usercred) {
-              var user = usercred.user;
-              console.log("Account linking success", user);
-            }, function(error) {
-              console.log("Account linking error", error);
-            });
-            */
           })
           .catch(function(error) {
             console.log(error);

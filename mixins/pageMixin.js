@@ -13,5 +13,17 @@ export default {
     axios.defaults.params = {
       auth: this.user.token
     };
+
+    axios.interceptors.response.use(
+      response => response,
+      error => {
+        const { status } = error.response;
+        if (status === 401) {
+          setTimeout(() => {
+            this.$store.dispatch("LOGOUT");
+          }, 1);
+        }
+      }
+    );
   }
 };

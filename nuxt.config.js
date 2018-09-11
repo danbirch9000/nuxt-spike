@@ -49,8 +49,7 @@ module.exports = {
     "~/plugins/dialog",
     "~/plugins/money.filter",
     "~/plugins/filters",
-    "~/plugins/toastr",
-    { src: "~/plugins/ga.js", ssr: false }
+    "~/plugins/toastr"
   ],
 
   /*
@@ -58,7 +57,13 @@ module.exports = {
   */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
-    "@nuxtjs/axios"
+    "@nuxtjs/axios",
+    [
+      "@nuxtjs/google-analytics",
+      {
+        id: "UA-120630273-1"
+      }
+    ]
   ],
 
   /*
@@ -89,8 +94,5 @@ module.exports = {
         });
       }
     }
-  },
-  env: {
-    fbAPIKey: "AIzaSyD_sLyw1k_eOwnZ48UjPjgLzUpzN7sz5R8"
   }
 };

@@ -121,6 +121,17 @@ export default {
     SET_CURRENT_GOAL_VIEW: (state, payload) => {
       state.goalView = payload;
     },
+    RESET_CURRENT_GOAL_VIEW: state => {
+      state.goalView = {
+        accounts: [],
+        description: "",
+        rate: "",
+        amount: "",
+        monthly: "",
+        years: "",
+        startDate: ""
+      };
+    },
     SET_CURRENT_GOAL_VIEW_RATE(state, payload) {
       state.goalView.rate = payload;
     },

@@ -98,11 +98,6 @@ export default {
       token = localStorage.getItem("token");
       expirationDate = localStorage.getItem("tokenExpiration");
       if (moment().format() > moment(expirationDate) || !token) {
-        this.$toastr(
-          "error",
-          "Logout user, firebase token has expired",
-          "Auth"
-        );
         vuexContext.dispatch("LOGOUT");
         return;
       }
@@ -114,6 +109,7 @@ export default {
     },
     LOGOUT(vuexContext) {
       vuexContext.commit("CLEAR_TOKEN");
+      vuexContext.commit("RESET_CURRENT_GOAL_VIEW");
       Cookie.remove("jwt");
       Cookie.remove("expirationDate");
       if (process.client) {

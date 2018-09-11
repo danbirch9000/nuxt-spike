@@ -10,10 +10,15 @@
           <button class="btn btn-primary" @click="updateValue()">Update</button>
         </form>
 
+        <h3>Amend previous entries</h3>
         <ul class="account-management">
-          <li v-for="(item, index) in currentSelectedAccount.history" :key="index">&pound;{{ item.value }} - {{ item.date }}<button @click="deleteRecord(item.uid)">Delete</button></li>
+          <li v-for="(item, index) in currentSelectedAccountHistory" :key="index">
+            <div>&pound;{{ item.value }}</div>
+            <div>{{ item.date }}</div>
+            <div><button @click="deleteRecord(item.uid)">Delete</button></div>
+          </li>
         </ul>
-        <button class="btn btn-primary" @click="deleteAccount()">Delete Account</button>
+
       </div>
     </div>
   </section>
@@ -34,28 +39,21 @@ export default {
       accountModule: state => state.accountModule
     }),
     currentSelectedAccount() {
-      console.log("searching for", this.accountModule.accountIdViewing);
-      const account = this.accountModule.accounts.filter(account => {
-        if (this.accountModule.accountIdViewing === account.id) {
-          console.log("account", account);
-        }
-        return this.accountModule.accountIdViewing === account.id;
-      });
-      console.log("account[0]", account[0]);
+      const account = this.accountModule.accounts.filter(
+        account => this.accountModule.accountIdViewing === account.id
+      );
       return account[0];
+    },
+    currentSelectedAccountHistory() {
+      const account = this.accountModule.accounts.filter(
+        account => this.accountModule.accountIdViewing === account.id
+      );
+      let historicRecords = account[0].history.reverse();
+      let last10 = historicRecords.slice(0, 10);
+      return last10;
     }
   },
   methods: {
-    deleteAccount() {
-      this.$dialog.confirm("Delete this account?").then(() => {
-        var payload = {
-          accountId: this.currentSelectedAccount.id
-        };
-        this.$store.dispatch("DELETE_ACCOUNT", payload).then(() => {
-          this.value = "";
-        });
-      });
-    },
     deleteRecord(uid) {
       this.$dialog
         .confirm("Delete this entry?")
@@ -64,7 +62,6 @@ export default {
             accountId: this.currentSelectedAccount.id,
             recordId: uid
           };
-          console.log(payload);
           this.$store.dispatch("DELETE_ACCOUNT_VALUE", payload).then(() => {
             this.$store.dispatch("GET_USER_ACCOUNTS");
             this.value = "";
@@ -100,5 +97,10 @@ export default {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  li {
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: 1fr 3fr 1fr;
+  }
 }
 </style>

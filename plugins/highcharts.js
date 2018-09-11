@@ -4,12 +4,12 @@ import firebase from "firebase";
 
 // Initialize Firebase
 var config = {
-  apiKey: "AIzaSyD_sLyw1k_eOwnZ48UjPjgLzUpzN7sz5R8",
-  authDomain: "vuejs-83403.firebaseapp.com",
-  databaseURL: "https://vuejs-83403.firebaseio.com",
-  projectId: "vuejs-83403",
-  storageBucket: "vuejs-83403.appspot.com",
-  messagingSenderId: "360438485027"
+  apiKey: "AIzaSyAPH_yMg5UZWsdC0EivWGgZH1RgH-YBivA",
+  authDomain: "saveswift-2b8ff.firebaseapp.com",
+  databaseURL: "https://saveswift-2b8ff.firebaseio.com",
+  projectId: "saveswift-2b8ff",
+  storageBucket: "saveswift-2b8ff.appspot.com",
+  messagingSenderId: "617398087422"
 };
 firebase.initializeApp(config); //eslint-disable-line
 

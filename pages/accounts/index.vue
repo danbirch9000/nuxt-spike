@@ -4,7 +4,8 @@
     <div class="goal-layout">
       <div class="panel">
         <AccountList v-if="accountModule.accounts.length" />
-        <nuxt-link tag="button" to="/new-account" class="btn btn-primary btn-lg btn-block">Create new account</nuxt-link>
+        <nuxt-link tag="button" to="/accounts/create/" class="btn btn-primary btn-lg btn-block">Create new account</nuxt-link>
+        <button class="btn btn-primary" @click="deleteAccount()">Delete Account</button>
       </div>
       <div v-if="accountModule.accounts.length && currentSelectedAccount">
         <div v-if="currentSelectedAccount.history.length > 1" class="panel">
@@ -74,6 +75,16 @@ export default {
     }
   },
   methods: {
+    deleteAccount() {
+      this.$dialog.confirm("Delete this account?").then(() => {
+        var payload = {
+          accountId: this.currentSelectedAccount.id
+        };
+        this.$store.dispatch("DELETE_ACCOUNT", payload).then(() => {
+          this.value = "";
+        });
+      });
+    },
     getChartData() {
       let allAccounts = [];
 

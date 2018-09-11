@@ -6,7 +6,7 @@
       <div class="goal-layout">
         <div class="toolbar panel">
           <GoalList />
-          <nuxt-link tag="button" to="/create-new" class="btn btn-primary btn-lg btn-block">Create new goal</nuxt-link>
+          <nuxt-link tag="button" to="/goals/create" class="btn btn-primary btn-lg btn-block">Create new goal</nuxt-link>
           <button v-if="accounts.length > 0" class="btn btn-primary btn-sm" @click="showAccountChooser =! showAccountChooser">Manage linked accounts</button>
           <AccountChooser v-if="showAccountChooser"/>
           <button v-if="goalView" class="btn btn-primary btn-sm" @click="deleteGoal()">Delete goal</button>
@@ -88,7 +88,7 @@ export default {
       return this.goalView && this.goalView.description !== "";
     },
     userHasAccounts() {
-      return this.goalView.accounts;
+      return this.goalView === undefined ? false : this.goalView.accounts;
     },
     mainChartData() {
       return this.goalChartData;

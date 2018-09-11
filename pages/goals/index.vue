@@ -21,7 +21,7 @@
               <span class="standout">{{ goalView.years | year }}</span> years at <span class="standout">{{ goalView.rate }}%</span></div>
               <div v-if="userHasAccounts">
                 <div>Estimated value today after {{ getMonthsGoalActive() }} months: <span class="standout-lg">{{ getEstimatedSavingsForMonths(getMonthsGoalActive()).value | currency }}</span></div>
-                <div>Actual value: <span class="standout-lg">{{ getActualValue() | currency }}</span> {{ percentageDifference() | percentage }}</div>
+                <div>Actual value: <span class="standout-lg">{{ valueOfGoal | currency }}</span> {{ percentageDifference() | percentage }}</div>
               </div>
 
             </div>
@@ -76,11 +76,21 @@ export default {
       accountsLoaded: state => state.accountModule.loaded
     }),
     ...mapGetters({
-      valueOfGoal: "GET_VALUE_OF_GOAL",
       goalTarget: "GET_GOAL_TARGET",
       masterChartData: "GET_CHART_DATA",
       currentViewChartData: "GET_CHART_DATA_CURRENT_VIEW"
     }),
+    valueOfGoal() {
+      if (this.goalView === undefined) {
+        return null;
+      }
+      var userAccounts = this.accounts;
+      let value = 0;
+      for (const key in this.accounts) {
+        value += this.getValueOfAccount(this.accounts[key], userAccounts);
+      }
+      return value;
+    },
     pageReady() {
       return this.accountsLoaded && this.goalsLoaded;
     },
@@ -118,6 +128,18 @@ export default {
     });
   },
   methods: {
+    getValueOfAccount(id, userAccounts) {
+      for (const key in userAccounts) {
+        if (userAccounts[key].id === id) {
+          const valueArray = [];
+          for (const x in userAccounts[key].history) {
+            valueArray.push({ ...userAccounts[key].history[x] });
+          }
+          return parseFloat(valueArray[valueArray.length - 1].value);
+        }
+      }
+      return 0;
+    },
     getAccountsForGoal() {
       let accounts = [];
       if (this.userHasAccounts) {
@@ -207,14 +229,11 @@ export default {
       );
       return Math.floor(months);
     },
-    getActualValue() {
-      return this.valueOfGoal;
-    },
     percentageDifference() {
       var estimatedValue = this.getEstimatedSavingsForMonths(
         this.getMonthsGoalActive()
       ).value;
-      var increase = this.getActualValue() - estimatedValue;
+      var increase = this.valueOfGoal - estimatedValue;
       var x = increase / estimatedValue;
       return x * 100;
     }

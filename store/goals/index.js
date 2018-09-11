@@ -1,19 +1,5 @@
 import axios from "axios";
 import utilities from "~/common/utilities.js";
-
-const getValueOfAccount = function(id, userAccounts) {
-  for (const key in userAccounts) {
-    if (userAccounts[key].id === id) {
-      const valueArray = [];
-      for (const x in userAccounts[key].history) {
-        valueArray.push({ ...userAccounts[key].history[x] });
-      }
-      return parseFloat(valueArray[valueArray.length - 1].value);
-    }
-  }
-  return 0;
-};
-
 export default {
   state: {
     goals: [],
@@ -178,17 +164,6 @@ export default {
         years: state.goalView.years,
         startDate: state.goalView.startDate
       };
-    },
-    GET_VALUE_OF_GOAL: (state, getters, rootState) => {
-      if (state.goalView === undefined) {
-        return null;
-      }
-      var userAccounts = rootState.accountModule.accounts;
-      let value = 0;
-      for (const key in state.goalView.accounts) {
-        value += getValueOfAccount(state.goalView.accounts[key], userAccounts);
-      }
-      return value;
     },
     GET_GOAL_TARGET: state => {
       if (state.goalView === undefined) {

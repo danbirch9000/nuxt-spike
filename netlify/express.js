@@ -31,7 +31,7 @@ const port = process.env.PORT || "1337";
 app.set("port", port);
 app.use(cors({ origin: "http://localhost:3000" }));
 // GET object containing Firebase custom token
-app.get("/auth", jwtCheck, (req, res) => {
+app.get("/", jwtCheck, (req, res) => {
   console.log(req);
   // Create UID from authenticated Auth0 user
   const uid = req.user.sub;

@@ -13,6 +13,18 @@ var UtilitiesModule = (function() {
     return this.calculateSavings(amount, years, monthly, rate, startDate);
   };
 
+  var getFinancialData = function(payload) { //eslint-disable-line
+    let { rate, amount, monthly, years, startDate } = payload;
+    if (rate === "" || amount === "" || monthly === "" || years === "") {
+      return [];
+    }
+    rate = parseFloat(rate);
+    amount = parseFloat(amount);
+    monthly = parseFloat(monthly);
+    years = parseFloat(years);
+    return this.calculateSavings(amount, years, monthly, rate, startDate);
+  };
+
   var calculateSavings = function(initialAmount, years, monthly, rate, date) {
     var time = moment(date);
     var amount = initialAmount;

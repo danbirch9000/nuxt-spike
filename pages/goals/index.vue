@@ -84,10 +84,12 @@ export default {
       if (this.goalView === undefined) {
         return null;
       }
-      var userAccounts = this.accounts;
       let value = 0;
-      for (const key in this.accounts) {
-        value += this.getValueOfAccount(this.accounts[key], userAccounts);
+      for (const key in this.goalView.accounts) {
+        value += this.getValueOfAccount(
+          this.goalView.accounts[key],
+          this.accounts
+        );
       }
       return value;
     },
@@ -129,16 +131,8 @@ export default {
   },
   methods: {
     getValueOfAccount(id, userAccounts) {
-      for (const key in userAccounts) {
-        if (userAccounts[key].id === id) {
-          const valueArray = [];
-          for (const x in userAccounts[key].history) {
-            valueArray.push({ ...userAccounts[key].history[x] });
-          }
-          return parseFloat(valueArray[valueArray.length - 1].value);
-        }
-      }
-      return 0;
+      const match = userAccounts.filter(item => item.id === id);
+      return match ? match[0].history[match[0].history.length - 1].value : 0;
     },
     getAccountsForGoal() {
       let accounts = [];

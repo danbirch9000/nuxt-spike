@@ -169,16 +169,8 @@ export default {
       if (state.goalView === undefined) {
         return null;
       }
-      let target = utilities.getFinanceData(
-        state.goalView.rate,
-        state.goalView.amount,
-        state.goalView.monthly,
-        state.goalView.years,
-        state.goalView.startDate
-      );
-
-      let goalTarget = target[target.length - 1];
-      return goalTarget;
+      let target = utilities.getFinancialData(state.goalView);
+      return target[target.length - 1];
     },
     GET_CHART_DATA: state => {
       if (state.goalView === undefined) {

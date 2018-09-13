@@ -29,7 +29,7 @@ export const parseHash = function(store, router) {
         // baseURL: "https://us-central1-vuejs-83403.cloudfunctions.net",
         baseURL: "https://www.saveswift.com/.netlify/functions/auth",
         // url: "/api1/auth",
-        url: "/auth",
+        url: "/",
         headers: {
           Authorization: "Bearer " + authResult.accessToken
         }

@@ -29,7 +29,7 @@ firebaseAdmin.initializeApp({
 const app = express();
 const port = process.env.PORT || "1337";
 app.set("port", port);
-app.use(cors({ origin: true }));
+app.use(cors({ origin: "http://localhost:3000" }));
 // GET object containing Firebase custom token
 app.get("/auth", jwtCheck, (req, res) => {
   console.log(req);

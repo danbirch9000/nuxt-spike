@@ -9,7 +9,7 @@ let _auth0 = new auth0.WebAuth({
   clientID: "rojWMbjsCsCP6pQneYwDyeRima4ylg8X",
   redirectUri: "http://localhost:3000/callback",
   // audience: "https://us-central1-vuejs-83403.cloudfunctions.net/",
-  audience: "http://localhost:9000/",
+  audience: "https://www.saveswift.com/.netlify/functions/express",
   responseType: "token id_token",
   scope: "openid profile"
 });
@@ -27,7 +27,7 @@ export const parseHash = function(store, router) {
       axios({
         method: "get",
         // baseURL: "https://us-central1-vuejs-83403.cloudfunctions.net",
-        baseURL: "http://localhost:9000",
+        baseURL: "https://www.saveswift.com/.netlify/functions/express",
         // url: "/api1/auth",
         url: "/auth",
         headers: {

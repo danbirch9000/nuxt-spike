@@ -161,6 +161,7 @@ var UtilitiesModule = (function() {
 
   return {
     getFinanceData: getFinanceData,
+    getFinancialData: getFinancialData,
     calculateSavings: calculateSavings,
     getCiforYear: getCiforYear,
     roundToTwo: roundToTwo,

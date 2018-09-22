@@ -9,7 +9,6 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "netbuild": "netlify-lambda build netlify",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint-autofix": "eslint --ext .js,.vue src test --fix",
     "precommit": "npm run lint",

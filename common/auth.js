@@ -4,12 +4,24 @@ import firebase from "firebase";
 import Cookie from "js-cookie";
 import moment from "moment";
 
+let config = {
+  isProd: true,
+  firebaseMintAPIDev: "http://localhost:1337/",
+  firebaseCloudFunctions:
+    "https://us-central1-saveswift-2b8ff.cloudfunctions.net/",
+  devUrl: "http://localhost:3000/",
+  prodUrl: "https://www.saveswift.com/"
+};
+
 let _auth0 = new auth0.WebAuth({
   domain: "code82.auth0.com",
   clientID: "rojWMbjsCsCP6pQneYwDyeRima4ylg8X",
-  redirectUri: "http://localhost:3000/callback",
-  // audience: "https://us-central1-vuejs-83403.cloudfunctions.net/",
-  audience: "https://www.saveswift.com/.netlify/functions/auth",
+  redirectUri: config.isProd
+    ? config.prodUrl + "callback"
+    : config.devUrl + "callback",
+  audience: config.isProd
+    ? config.firebaseCloudFunctions
+    : config.firebaseMintAPIDev,
   responseType: "token id_token",
   scope: "openid profile"
 });
@@ -20,16 +32,12 @@ export const authorise = function() {
 export const parseHash = function(store, router) {
   _auth0.parseHash((err, authResult) => {
     if (authResult) {
-      // console.log("parseHash response", authResult);
-
-      // console.log("idTokenPayload", authResult.idTokenPayload);
-      // console.log("isDev", process.env.isDev);
       axios({
         method: "get",
-        // baseURL: "https://us-central1-vuejs-83403.cloudfunctions.net",
-        baseURL: "https://www.saveswift.com/.netlify/functions/auth",
-        // url: "/api1/auth",
-        url: "/",
+        baseURL: config.isProd
+          ? config.firebaseCloudFunctions + "api"
+          : config.firebaseMintAPIDev,
+        url: "/auth",
         headers: {
           Authorization: "Bearer " + authResult.accessToken
         }

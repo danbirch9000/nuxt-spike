@@ -85,7 +85,7 @@ export default {
         if (!jwtCookie) {
           return;
         }
-        token = jwtCookie.split("=")[1];
+        token = jwtCookie.splitgetFinancialData("=")[1];
         expirationDate = req.headers.cookie
           .split(";")
           .find(c => c.trim().startsWith("expirationDate="))

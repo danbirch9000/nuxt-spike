@@ -7,7 +7,6 @@ import { parseHash } from "~/common/auth"; //eslint-disable-line
 
 export default {
   components: {},
-  // middleware: ["check-auth", "auth"],
   mounted() {
     parseHash(this.$store, this.$router);
   }

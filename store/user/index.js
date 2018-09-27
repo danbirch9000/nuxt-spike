@@ -1,5 +1,3 @@
-import Cookie from "js-cookie";
-import axios from "axios";
 import moment from "moment";
 
 export default {
@@ -8,7 +6,8 @@ export default {
     token: null,
     userId: null,
     error: false,
-    loading: false
+    loading: false,
+    authenticated: false
   },
   mutations: {
     SET_FIREBASE_TOKEN(state, token) {
@@ -28,76 +27,31 @@ export default {
     },
     SET_AUTH_LOADING(state, payload) {
       state.loading = payload;
+    },
+    SET_AUTHENTICATED(state, authenticated) {
+      state.authenticated = authenticated;
     }
   },
   actions: {
-    AUTHENTICATE_USER({ commit }, authData) {
-      let authUrl =
-        "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" +
-        process.env.fbAPIKey;
-      if (!authData.isLogin) {
-        authUrl =
-          "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" +
-          process.env.fbAPIKey;
+    IS_AUTHENTICATED({ commit }) {
+      const idToken = sessionStorage.getItem("id_token");
+      let authenticated = false;
+      if (idToken !== null) {
+        const now = Math.floor(new Date().getTime() / 1000);
+        const idTokenUserDetails = idToken.split(".")[1];
+        const userDetails = atob(
+          idTokenUserDetails.replace(/_/g, "/").replace(/-/g, "+")
+        );
+        authenticated = now < JSON.parse(userDetails).exp;
       }
-      commit("SET_AUTH_LOADING", true);
-      return axios
-        .post(authUrl, {
-          email: authData.email,
-          password: authData.password,
-          returnSecureToken: true
-        })
-        .then(response => {
-          let result = response.data;
-          commit("SET_AUTH_LOADING", false);
-          commit("SET_FIREBASE_TOKEN", result.idToken);
-          commit("REMOVE_AUTH_ERROR");
-
-          let userInfo = result.idToken.split(".");
-          let userDetails = JSON.parse(atob(userInfo[1]));
-          commit("SET_USER_ID", userDetails.user_id);
-          localStorage.setItem("token", result.idToken);
-          localStorage.setItem(
-            "tokenExpiration",
-            new Date().getTime() + Number.parseInt(result.expiresIn) * 1000
-          );
-          Cookie.set("jwt", result.idToken);
-          Cookie.set(
-            "expirationDate",
-            new Date().getTime() + Number.parseInt(result.expiresIn) * 1000
-          );
-        })
-        .catch(() => {
-          commit("SET_AUTH_LOADING", false);
-          commit("SET_ERROR");
-        });
+      commit("SET_AUTHENTICATED", authenticated);
     },
-    INIT_AUTH(vuexContext, req) {
+    INIT_AUTH(vuexContext, req) { //eslint-disable-line
       let token;
       let expirationDate;
-      if (req) {
-        if (!req.headers.cookie) {
-          return;
-        }
-        const jwtCookie = req.headers.cookie
-          .split(";")
-          .find(c => c.trim().startsWith("jwt="));
-        if (!jwtCookie) {
-          return;
-        }
-        token = jwtCookie.splitgetFinancialData("=")[1];
-        expirationDate = req.headers.cookie
-          .split(";")
-          .find(c => c.trim().startsWith("expirationDate="))
-          .split("=")[1];
-      } else {
-        token = localStorage.getItem("token");
-        expirationDate = localStorage.getItem("tokenExpiration");
-      }
-
-      token = localStorage.getItem("token");
-      expirationDate = localStorage.getItem("tokenExpiration");
-      if (moment().format() > moment(expirationDate) || !token) {
+      token = sessionStorage.getItem("token");
+      expirationDate = sessionStorage.getItem("firebaseTokenExpiry");
+      if (moment().isAfter() > moment(expirationDate) || !token) {
         vuexContext.dispatch("LOGOUT");
         return;
       }
@@ -110,12 +64,11 @@ export default {
     LOGOUT(vuexContext) {
       vuexContext.commit("CLEAR_TOKEN");
       vuexContext.commit("RESET_CURRENT_GOAL_VIEW");
-      Cookie.remove("jwt");
-      Cookie.remove("expirationDate");
-      if (process.client) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("tokenExpiration");
-      }
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("firebaseTokenExpiry");
+      sessionStorage.removeItem("access_token");
+      sessionStorage.removeItem("id_token");
+      sessionStorage.removeItem("auth0TokenExpiry");
       this.$router.push("/");
     }
   },

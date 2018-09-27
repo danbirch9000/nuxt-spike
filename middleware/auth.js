@@ -1,6 +1,13 @@
-export default function(context) {
-  if (!context.store.getters.IS_AUTHENTICATED) {
-    console.log("redirecting from auth middleware");
-    context.redirect("/");
+export default context => {
+  context.store.dispatch("IS_AUTHENTICATED");
+  if (!context.store.state.userModule.authenticated) {
+    context.store.dispatch("LOGOUT");
   }
-}
+
+  if (
+    context.store.state.userModule.authenticated &&
+    context.route.fullPath === "/"
+  ) {
+    context.redirect("/goals");
+  }
+};

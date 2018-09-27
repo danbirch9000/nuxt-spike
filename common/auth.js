@@ -1,11 +1,11 @@
 import auth0 from "auth0-js";
 import axios from "axios";
 import firebase from "firebase";
-import Cookie from "js-cookie";
 import moment from "moment";
+import { clearAuth0LocalStorage } from "~/common/common";
 
 let config = {
-  isProd: true,
+  isProd: process.env.isDev ? false : true,
   firebaseMintAPIDev: "http://localhost:1337/",
   firebaseCloudFunctions:
     "https://us-central1-saveswift-2b8ff.cloudfunctions.net/",
@@ -31,6 +31,19 @@ export const authorise = function() {
 
 export const parseHash = function(store, router) {
   _auth0.parseHash((err, authResult) => {
+    sessionStorage.setItem("id_token", authResult.idToken);
+    sessionStorage.setItem("access_token", authResult.accessToken);
+    const auth0IdToken = authResult.idToken
+      .replace(/_/g, "/")
+      .replace(/-/g, "+");
+    const auth0IdTokenDetails = auth0IdToken.split(".");
+    const auth0TokenInfo = JSON.parse(atob(auth0IdTokenDetails[1]));
+    sessionStorage.setItem(
+      "auth0TokenExpiry",
+      moment.unix(auth0TokenInfo.exp).format()
+    );
+
+    clearAuth0LocalStorage();
     if (authResult) {
       axios({
         method: "get",
@@ -57,11 +70,10 @@ export const parseHash = function(store, router) {
                   store.commit("SET_USER_ID", userDetails.user_id);
                   const expiry = userDetails.exp;
                   const firebaseTokenExpiry = moment.unix(expiry).format();
-                  localStorage.setItem("token", idToken);
-                  localStorage.setItem("tokenExpiration", firebaseTokenExpiry);
-                  Cookie.set("jwt", response.data.firebaseToken);
-                  Cookie.set("expirationDate", firebaseTokenExpiry);
+                  sessionStorage.setItem("token", idToken);
+                  sessionStorage.setItem("firebaseTokenExpiry", firebaseTokenExpiry); //eslint-disable-line
                 });
+
                 router.push("/goals");
               }
             });
@@ -72,6 +84,4 @@ export const parseHash = function(store, router) {
       });
     }
   });
-  // var result = test.parseHash(window.location.hash);
-  // console.log(result);
 };

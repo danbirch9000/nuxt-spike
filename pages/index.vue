@@ -16,6 +16,7 @@ import Calculator from "~/components/Calculator";
 
 export default {
   components: { Login, Calculator },
+  middleware: ["auth"],
   beforeMount() {
     this.$store.commit("CLOSE_MENU");
   }

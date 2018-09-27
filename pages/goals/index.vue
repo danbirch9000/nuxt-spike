@@ -62,6 +62,7 @@ export default {
     Message
   },
   mixins: [pageMixin],
+  middleware: ["check-auth", "auth"], // check-auth calls INIT_AUTH to make sure the user is authenticated
   data() {
     return {
       showAccountChooser: false,
@@ -231,8 +232,7 @@ export default {
       var x = increase / estimatedValue;
       return x * 100;
     }
-  },
-  middleware: ["check-auth", "auth"]
+  }
 };
 </script>
 <style style lang="scss" scoped>

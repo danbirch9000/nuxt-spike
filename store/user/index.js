@@ -7,7 +7,8 @@ export default {
     userId: null,
     error: false,
     loading: false,
-    authenticated: false
+    authenticated: false,
+    tokens: null
   },
   mutations: {
     SET_FIREBASE_TOKEN(state, token) {
@@ -30,10 +31,14 @@ export default {
     },
     SET_AUTHENTICATED(state, authenticated) {
       state.authenticated = authenticated;
+    },
+    SET_TOKENS(state, payload) {
+      state.tokens = payload;
     }
   },
   actions: {
     IS_AUTHENTICATED({ commit }) {
+      console.log("IS_AUTHENTICATED called");
       const idToken = sessionStorage.getItem("id_token");
       let authenticated = false;
       if (idToken !== null) {
@@ -45,21 +50,32 @@ export default {
         authenticated = now < JSON.parse(userDetails).exp;
       }
       commit("SET_AUTHENTICATED", authenticated);
+      console.log("IS_AUTHENTICATED end");
     },
     INIT_AUTH(vuexContext, req) { //eslint-disable-line
-      let token;
-      let expirationDate;
-      token = sessionStorage.getItem("token");
-      expirationDate = sessionStorage.getItem("firebaseTokenExpiry");
-      if (moment().isAfter() > moment(expirationDate) || !token) {
+      console.log("INIT_AUTH called");
+      const tokens = {
+        firebaseTokenExpiry: sessionStorage.getItem("firebaseTokenExpiry"),
+        auth0TokenExpiry: sessionStorage.getItem("auth0TokenExpiry"),
+        token: sessionStorage.getItem("token"),
+        access_token: sessionStorage.getItem("access_token"),
+        id_token: sessionStorage.getItem("id_token")
+      };
+
+      if (
+        moment().isAfter() > moment(tokens.firebaseTokenExpiry) ||
+        !tokens.token
+      ) {
         vuexContext.dispatch("LOGOUT");
         return;
       }
 
-      let userInfo = token.split(".");
+      let userInfo = tokens.token.split(".");
       let userDetails = JSON.parse(atob(userInfo[1]));
       vuexContext.commit("SET_USER_ID", userDetails.user_id);
-      vuexContext.commit("SET_FIREBASE_TOKEN", token);
+      vuexContext.commit("SET_FIREBASE_TOKEN", tokens.token);
+      vuexContext.commit("SET_TOKENS", tokens.token);
+      console.log("INIT_AUTH end");
     },
     LOGOUT(vuexContext) {
       vuexContext.commit("CLEAR_TOKEN");

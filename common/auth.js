@@ -5,7 +5,7 @@ import moment from "moment";
 import { clearAuth0LocalStorage } from "~/common/common";
 
 let config = {
-  isProd: process.env.isDev ? false : true,
+  isProd: process.env.isDev ? true : true,
   firebaseMintAPIDev: "http://localhost:1337/",
   firebaseCloudFunctions:
     "https://us-central1-saveswift-2b8ff.cloudfunctions.net/",

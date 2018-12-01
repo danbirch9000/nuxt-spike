@@ -1,15 +1,16 @@
 <template>
   <section class="container">
     <h1>Accounts</h1>
-    <div class="goal-layout">
+    <div v-if="hasAccounts" class="goal-layout">
       <div class="panel">
-        <AccountList v-if="accountModule.accounts.length" />
+        <AccountList />
         <nuxt-link tag="button" to="/accounts/create/" class="btn btn-primary btn-lg btn-block">Create new account</nuxt-link>
         <button class="btn btn-primary" @click="deleteAccount()">Delete Account</button>
       </div>
-      <div v-if="accountModule.accounts.length && currentSelectedAccount">
+
+      <div v-if="currentSelectedAccount">
         <div v-if="currentSelectedAccount.history.length > 1" class="panel">
-          <h2 v-if="currentSelectedAccount">{{ currentSelectedAccount.name }}</h2>
+          <h2>{{ currentSelectedAccount.name }}</h2>
           <ChartMain :main-chart-data="accountChartData" />
         </div>
         <div class="panel">
@@ -48,20 +49,19 @@ export default {
       accountIdViewing: state => state.accountModule.accountIdViewing
     }),
     currentSelectedAccount() {
-      if (this.accountModule === undefined) {
+      if (!this.accountModule) {
         return null;
       }
-
       const account = this.accountModule.accounts.filter(
         account => this.accountModule.accountIdViewing === account.id
       );
       return account[0];
+    },
+    hasAccounts() {
+      return this.accountModule.accounts.length;
     }
   },
   watch: {
-    accounts() {
-      this.getChartData();
-    },
     accountIdViewing() {
       this.getChartData();
     }
@@ -70,7 +70,7 @@ export default {
     this.$store.commit("CLOSE_MENU");
   },
   created() {
-    if (this.accountModule.accounts.length === 0) {
+    if (!this.hasAccounts) {
       this.$store.dispatch("GET_USER_ACCOUNTS");
     }
   },
@@ -115,7 +115,7 @@ export default {
   }
 };
 </script>
-<style style lang="scss" scoped>
+<style lang="scss" scoped>
 @import "../../assets/colors";
 @import "../../assets/mixins";
 .account-grid {

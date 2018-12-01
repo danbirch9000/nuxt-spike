@@ -9,6 +9,7 @@
         <ul>
           <nuxt-link to="/goals" tag="li" active-class="active"><a>Goals</a></nuxt-link>
           <nuxt-link to="/accounts" tag="li" active-class="active"><a>Accounts</a></nuxt-link>
+          <nuxt-link to="/goals/summary" tag="li" active-class="active"><a>Summary</a></nuxt-link>
           <li active-class="active" @click="logout"><a>Logout</a></li>
         </ul>
       </div>

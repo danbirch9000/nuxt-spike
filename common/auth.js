@@ -5,7 +5,7 @@ import moment from "moment";
 import { clearAuth0LocalStorage } from "~/common/common";
 
 let config = {
-  isProd: process.env.isDev ? true : true,
+  isProd: true,
   firebaseMintAPIDev: "http://localhost:1337/",
   firebaseCloudFunctions:
     "https://us-central1-saveswift-2b8ff.cloudfunctions.net/",
@@ -31,6 +31,7 @@ export const authorise = function() {
 
 export const parseHash = function(store, router) {
   _auth0.parseHash((err, authResult) => {
+    console.log("process.env", process.env);
     sessionStorage.setItem("id_token", authResult.idToken);
     sessionStorage.setItem("access_token", authResult.accessToken);
     const auth0IdToken = authResult.idToken

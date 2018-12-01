@@ -1,8 +1,8 @@
 <template>
   <section class="container">
     <h1>Account summaries</h1>
-    <div class="card">
-      <p>Quick value</p>
+    <div id="quick-value-card" class="card">
+      <span>Quick value</span>
       <span class="account-value">
         {{ quickValue | currency }}
       </span>
@@ -44,7 +44,7 @@ export default {
     this.$store.commit("CLOSE_MENU");
   },
   mounted() {
-    if (!this.accounts || !this.goals) {
+    if (this.accounts.length === 0 || this.goals.length === 0) {
       this.getPageData();
     }
   },
@@ -72,6 +72,9 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/colors";
 @import "../../assets/mixins";
+#quick-value-card {
+  margin-bottom: 10px;
+}
 .card {
   padding: 20px;
   background-color: #fff;
@@ -95,6 +98,9 @@ export default {
 #accounts-summary {
   display: grid;
   grid-gap: 15px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(1, 1fr);
+  @media (min-width: 700px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 </style>

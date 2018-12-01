@@ -19,4 +19,13 @@ $ yarn start
 $ yarn run generate
 ```
 
-For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+#
+To run locally amend common/auth.js to change isProd flag to false.
+
+This will point the auth service at localhost:1337
+
+Fire up firebase project /Users/dan/Workspace/firebase
+
+and run cd functions / node index
+
+

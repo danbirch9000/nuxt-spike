@@ -7,30 +7,6 @@ export default {
     accountIdViewing: "",
     loaded: false
   },
-  mutations: {
-    SET_LOADED: (state, payload) => {
-      state.loaded = payload;
-    },
-    ADD_ACCOUNT: (state, payload) => {
-      state.accounts.push(payload);
-    },
-    LOAD_ALL_ACCOUNTS: (state, payload) => {
-      state.accounts = payload;
-    },
-    SET_ACCOUNT_VIEWING: (state, payload) => {
-      state.accountIdViewing = payload;
-    },
-    UPDATE_ACCOUNT_VALUE: (state, payload) => {
-      for (const key in state.accounts) {
-        if (state.accounts[key].id === state.accountIdViewing) {
-          state.accounts[key].history.push(payload);
-        }
-      }
-    },
-    DELETE_ACCOUNT_VALUE: () => {
-      console.log("mutation still needs doing");
-    }
-  },
   actions: {
     CREATE_ACCOUNT({ rootState, commit }, payload) {
       const url = `/accounts/${rootState.userModule.userId}.json`;
@@ -114,6 +90,30 @@ export default {
         .catch(() => {
           commit("SET_LOADED", true);
         });
+    }
+  },
+  mutations: {
+    SET_LOADED: (state, payload) => {
+      state.loaded = payload;
+    },
+    ADD_ACCOUNT: (state, payload) => {
+      state.accounts.push(payload);
+    },
+    LOAD_ALL_ACCOUNTS: (state, payload) => {
+      state.accounts = payload;
+    },
+    SET_ACCOUNT_VIEWING: (state, payload) => {
+      state.accountIdViewing = payload;
+    },
+    UPDATE_ACCOUNT_VALUE: (state, payload) => {
+      for (const key in state.accounts) {
+        if (state.accounts[key].id === state.accountIdViewing) {
+          state.accounts[key].history.push(payload);
+        }
+      }
+    },
+    DELETE_ACCOUNT_VALUE: () => {
+      console.log("mutation still needs doing");
     }
   },
   getters: {

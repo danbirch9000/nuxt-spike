@@ -22,6 +22,10 @@ $ yarn run generate
 #
 To run locally amend common/auth.js to change isProd flag to false.
 
+Make sure node is set to 9.8.0
+
+Log into the site using Github account for test data
+
 This will point the auth service at localhost:1337
 
 Fire up firebase project /Users/dan/Workspace/firebase

@@ -24,12 +24,15 @@
     "dotenv": "^5.0.1",
     "firebase": "^5.4.1",
     "highcharts": "^6.1.4",
+    "jest-serializer-vue": "^2.0.2",
+    "mock-local-storage": "^1.1.7",
     "moment": "^2.21.0",
     "netlify-lambda": "^0.4.0",
     "node-sass": "^4.7.2",
     "nuxt": "^1.0.0",
     "sass-loader": "^6.0.7",
     "vue-highcharts": "0.0.10",
+    "vue-jest": "^3.0.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

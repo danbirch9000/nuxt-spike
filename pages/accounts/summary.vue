@@ -1,13 +1,20 @@
 <template>
   <section class="container">
-    <h1>Goal summaries</h1>
-    <div v-if="goals" id="goals-summary">
-      <div v-for="(goal, index) in goals" :key="index" class="card">
+    <h1>Account summaries</h1>
+    <div id="quick-value-card" class="card">
+      <span>Quick value</span>
+      <span class="account-value">
+        {{ quickValue | currency }}
+      </span>
+      <button class="btn btn-primary btn-sm" @click="resetQuickValue()">Reset</button>
+    </div>
+    <div v-if="accounts" id="accounts-summary">
+      <div v-for="(account, index) in accounts" :key="index" class="card">
         <ul>
-          <li>{{ goal.description }}</li>
-          <li>Save {{ goal.monthly | currency }} per month for {{ goal.years | year }} years starting {{ goal.startDate | monthAndYear }}</li>
-          <li>{{ getGoalSummary(goal).value | currency }} by {{ getGoalSummary(goal).date }}</li>
+          <li>{{ account.name }}</li>
+          <li><span class="account-value">{{ getAccountValue(account.history) | currency }}</span></li>
         </ul>
+        <button class="btn btn-primary btn-sm" @click="addToQuickValue(getAccountValue(account.history))">Add</button>
       </div>
     </div>
   </section>
@@ -16,12 +23,16 @@
 <script>
 import { mapState } from "vuex";
 import pageMixin from "~/mixins/pageMixin";
-import utilities from "~/common/utilities.js";
 
 export default {
   components: {},
   mixins: [pageMixin],
   middleware: ["check-auth", "auth"], // check-auth calls INIT_AUTH to make sure the user is authenticated
+  data() {
+    return {
+      quickValue: 0
+    };
+  },
   computed: {
     ...mapState({
       accounts: state => state.accountModule.accounts,
@@ -45,9 +56,15 @@ export default {
         console.log("Data got!");
       });
     },
-    getGoalSummary(item) {
-      let target = utilities.getFinancialData(item);
-      return target[target.length - 1];
+    getAccountValue(history) {
+      return history[history.length - 1].value;
+    },
+    addToQuickValue(val) {
+      console.log(val);
+      this.quickValue += parseFloat(val);
+    },
+    resetQuickValue() {
+      this.quickValue = 0;
     }
   }
 };
@@ -73,12 +90,12 @@ export default {
     }
   }
 }
-.goal-value {
+.account-value {
   font-size: 1.6em;
   margin: 5px 0 10px;
   display: block;
 }
-#goals-summary {
+#accounts-summary {
   display: grid;
   grid-gap: 15px;
   grid-template-columns: repeat(1, 1fr);

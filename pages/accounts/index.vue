@@ -1,14 +1,14 @@
 <template>
   <section class="container">
     <h1>Accounts</h1>
-    <div v-if="hasAccounts" class="goal-layout">
+    <div class="goal-layout">
       <div class="panel">
-        <AccountList />
+        <AccountList v-if="hasAccounts"/>
         <nuxt-link tag="button" to="/accounts/create/" class="btn btn-primary btn-lg btn-block">Create new account</nuxt-link>
-        <button class="btn btn-primary" @click="deleteAccount()">Delete Account</button>
+        <button v-if="hasAccounts" class="btn btn-primary" @click="deleteAccount()">Delete Account</button>
       </div>
 
-      <div v-if="currentSelectedAccount">
+      <div v-if="currentSelectedAccount && hasAccounts">
         <div v-if="currentSelectedAccount.history.length > 1" class="panel">
           <h2>{{ currentSelectedAccount.name }}</h2>
           <ChartMain :main-chart-data="accountChartData" />
@@ -29,7 +29,7 @@ import ChartMain from "~/components/ChartMain";
 import moment from "moment";
 import utilities from "~/common/utilities.js";
 import pageMixin from "~/mixins/pageMixin";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 export default {
   middleware: ["check-auth", "auth"],
   components: {
@@ -48,6 +48,7 @@ export default {
       accountModule: state => state.accountModule,
       accountIdViewing: state => state.accountModule.accountIdViewing
     }),
+    ...mapGetters(["GET_ACCOUNT_VIEWING"]),
     currentSelectedAccount() {
       if (!this.accountModule) {
         return null;
@@ -64,6 +65,13 @@ export default {
   watch: {
     accountIdViewing() {
       this.getChartData();
+    },
+    handler: {
+      GET_ACCOUNT_VIEWING() {
+        console.log("get chart data again");
+        this.getChartData();
+      },
+      deep: true
     }
   },
   beforeMount() {

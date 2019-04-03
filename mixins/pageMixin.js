@@ -1,6 +1,6 @@
 import axios from "axios";
-import { urls } from "~/config/constants";
 import { mapState } from "vuex";
+import { MAIN_CONFIG } from "~/common/env-config";
 
 export default {
   computed: {
@@ -9,7 +9,11 @@ export default {
     })
   },
   created() {
-    axios.defaults.baseURL = urls.apiBaseUrl;
+    const config = process.env.isDev
+      ? { ...MAIN_CONFIG.dev.firebase }
+      : { ...MAIN_CONFIG.dev.firebase };
+
+    axios.defaults.baseURL = config.databaseURL;
     axios.defaults.params = {
       auth: this.user.token
     };

@@ -3,35 +3,27 @@ import axios from "axios";
 import firebase from "firebase";
 import moment from "moment";
 import { clearAuth0LocalStorage } from "~/common/common";
+import { MAIN_CONFIG } from "~/common/env-config";
 
-let config = {
-  isProd: false,
-  firebaseMintAPIDev: "http://localhost:1337/",
-  firebaseCloudFunctions:
-    "https://us-central1-saveswift-2b8ff.cloudfunctions.net/",
-  devUrl: "http://localhost:3000/",
-  prodUrl: "https://www.saveswift.com/"
-};
+let siteSettings = process.env.isDev
+  ? { ...MAIN_CONFIG.dev }
+  : { ...MAIN_CONFIG.prod };
 
 let _auth0 = new auth0.WebAuth({
-  domain: "code82.auth0.com",
-  clientID: "rojWMbjsCsCP6pQneYwDyeRima4ylg8X",
-  redirectUri: config.isProd
-    ? config.prodUrl + "callback"
-    : config.devUrl + "callback",
-  audience: config.isProd
-    ? config.firebaseCloudFunctions
-    : config.firebaseMintAPIDev,
+  domain: siteSettings.auth0Domain,
+  clientID: siteSettings.auth0ClientID,
+  redirectUri: siteSettings.siteURL + "callback",
+  audience: siteSettings.audience,
   responseType: "token id_token",
   scope: "openid profile"
 });
 export const authorise = function() {
+  console.log("process.env.isDev", process.env.isDev);
   _auth0.authorize();
 };
 
 export const parseHash = function(store, router) {
   _auth0.parseHash((err, authResult) => {
-    console.log("process.env", process.env);
     sessionStorage.setItem("id_token", authResult.idToken);
     sessionStorage.setItem("access_token", authResult.accessToken);
     const auth0IdToken = authResult.idToken
@@ -48,9 +40,7 @@ export const parseHash = function(store, router) {
     if (authResult) {
       axios({
         method: "get",
-        baseURL: config.isProd
-          ? config.firebaseCloudFunctions + "api"
-          : config.firebaseMintAPIDev,
+        baseURL: siteSettings.firebaseToken,
         url: "/auth",
         headers: {
           Authorization: "Bearer " + authResult.accessToken

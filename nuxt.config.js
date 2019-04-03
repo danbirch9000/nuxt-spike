@@ -49,6 +49,7 @@ module.exports = {
     "~/plugins/dialog",
     "~/plugins/money.filter",
     "~/plugins/filters",
+    "~/plugins/firebase",
     "~/plugins/toastr"
   ],
 

@@ -33,7 +33,6 @@ export default {
   },
   methods: {
     loadGoal(index) {
-      console.log(index);
       this.currentGoal = this.$store.state.goalModule.goals[index];
       this.$store.commit("SET_CURRENT_GOAL_VIEW", this.currentGoal);
     },

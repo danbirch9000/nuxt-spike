@@ -3,6 +3,7 @@
 @import "buttons";
 @import "forms";
 @import "type";
+@import "tables";
 
 .dg-container {
   .dg-btn--cancel {
@@ -59,4 +60,10 @@
   border-color: 1px $lightgrey solid;
   border-radius: 10px;
   padding-left: 5px;
+}
+
+.ss-panel {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 20px;
 }

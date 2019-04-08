@@ -1,10 +1,15 @@
 <template>
   <div class="account-summary--quick-update">
-    <input v-model="formItems.quickUpdate"
-           type="number">
+    <div class="standard-input">
+      <label :for="`update-${accountId}`">New value</label>
+      <input v-model="formItems.quickUpdate"
+             :id="`update-${accountId}`"
+             type="number">
+    </div>
+
     <InlineButton :loading="loading"
-                  text="Update"
-                  @click.native="updateAccountValue()"/>
+                  :action="() => updateAccountValue()"
+                  text="Update"/>
   </div>
 </template>
 
@@ -59,5 +64,20 @@ h3 {
   display: grid;
   grid-gap: 15px;
   grid-template-columns: 1fr auto;
+}
+.standard-input {
+  margin: 10px 0 10px;
+  label {
+    display: block;
+    color: #334856;
+    font-size: 0.8em;
+  }
+  input {
+    outline: 0;
+    display: block;
+    padding: 5px 2px;
+    font-size: 1em;
+    width: 100%;
+  }
 }
 </style>

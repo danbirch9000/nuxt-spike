@@ -1,11 +1,11 @@
 <template>
   <div class="account-summary ss-panel">
-    <h3>{{ accountData.name }}</h3>
-    <div>{{ value | sterling }}</div>
-    <div class="">{{ lastUpdated | dateTime }}</div>
+    <h3 class="link-text" @click="loadDetail(accountData.id)">{{ accountData.name }}</h3>
+    <div class="ss-value">{{ value | sterling }}</div>
+    <div class="date">Last updated: {{ lastUpdated | dateTime }}</div>
     <AccountValueUpdate :account-id="accountData.id"/>
-    <span @click="loadDetail(accountData.id)">Details</span>
-    <ApexChart :chart-data="accountData.history"
+    <ApexChart v-if="accountData.history.length > 1"
+               :chart-data="accountData.history"
                :account-id="accountData.id"
                type="spark"/>
     <AccountDelete :account-id="accountData.id"/>
@@ -55,5 +55,17 @@ export default {
 @import "../../assets/mixins";
 h3 {
   margin: 0;
+}
+.link-text {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.date {
+  font-size: 0.8em;
+  color: #334856;
+}
+.ss-value {
+  font-size: 1.5em;
+  margin: 5px 0 10px;
 }
 </style>

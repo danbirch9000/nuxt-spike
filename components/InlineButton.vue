@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span :class="classes" class="ss-btn-inline">{{ text }}</span>
+    <span :class="classes" class="ss-btn-inline" @click="action">{{ text }}</span>
     <span v-if="loading">Loading</span>
   </div>
 </template>
@@ -19,6 +19,10 @@ export default {
     classes: {
       type: String,
       default: ""
+    },
+    action: {
+      type: Function,
+      default: () => {}
     }
   }
 };

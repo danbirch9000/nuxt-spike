@@ -1,12 +1,12 @@
 <template>
-  <div class="account-summary--create">
+  <div class="account-summary--create ss-panel">
     <input v-model="formItems.accountName"
            type="text">
     <input v-model="formItems.accountValue"
            type="number">
     <InlineButton :loading="loading"
-                  text="Create"
-                  @click.native="createAccount()"/>
+                  :action="() => createAccount()"
+                  text="Create"/>
   </div>
 </template>
 

@@ -7,7 +7,7 @@
         <div class="toolbar panel">
           <GoalList />
           <nuxt-link tag="button" to="/goals/create" class="btn btn-primary btn-lg btn-block">Create new goal</nuxt-link>
-          <button v-if="accounts.length > 0" class="btn btn-primary btn-sm" @click="showAccountChooser =! showAccountChooser">Manage linked accounts</button>
+          <button v-if="account && accounts.length > 0" class="btn btn-primary btn-sm" @click="showAccountChooser =! showAccountChooser">Manage linked accounts</button>
           <AccountChooser v-if="showAccountChooser"/>
           <button v-if="goalView" class="btn btn-primary btn-sm" @click="deleteGoal()">Delete goal</button>
         </div>
@@ -73,7 +73,7 @@ export default {
     ...mapState({
       goalsLoaded: state => state.goalModule.loaded,
       goalView: state => state.goalModule.goalView,
-      accounts: state => state.accountModule.accounts,
+      accounts: state => state.accountModule.userAccounts.data,
       accountsLoaded: state => state.accountModule.loaded
     }),
     ...mapGetters({
@@ -95,7 +95,7 @@ export default {
       return value;
     },
     pageReady() {
-      return this.accountsLoaded && this.goalsLoaded;
+      return this.accounts && this.accounts.length && this.goalsLoaded;
     },
     userHasGoals() {
       return this.goalView && this.goalView.description !== "";

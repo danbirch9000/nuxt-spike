@@ -1,8 +1,8 @@
 <template>
   <div class="account-summary--delete">
     <InlineButton :loading="loading"
-                  text="Delete"
-                  @click.native="deleteAccount()"/>
+                  :action="() => deleteAccount()"
+                  text="Delete account"/>
   </div>
 </template>
 

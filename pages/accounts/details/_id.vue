@@ -1,6 +1,5 @@
 <template>
   <section class="container">
-    <h1>Accounts</h1>
     <AccountDetails v-if="account" :key="account.id" :account-data="account" />
   </section>
 </template>
@@ -25,7 +24,9 @@ export default {
     }
   },
   beforeMount() {
-    this.$store.dispatch("GET_USER_ACCOUNTS");
+    if (!this.userAccounts.data) {
+      this.$store.dispatch("GET_USER_ACCOUNTS");
+    }
   }
 };
 </script>

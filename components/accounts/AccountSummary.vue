@@ -1,8 +1,7 @@
 <template>
   <div class="account-summary ss-panel">
     <h3 class="link-text" @click="loadDetail(accountData.id)">{{ accountData.name }}</h3>
-    <div class="ss-value">{{ value | sterling }}</div>
-    <div class="date">Last updated: {{ lastUpdated | dateTime }}</div>
+    <AccountHeaderInfo :value="value" :last-updated="lastUpdated"/>
     <AccountValueUpdate :account-id="accountData.id"/>
     <ApexChart v-if="accountData.history.length > 1"
                :chart-data="accountData.history"
@@ -15,12 +14,14 @@
 <script>
 import AccountValueUpdate from "./AccountValueUpdate";
 import AccountDelete from "~/components/accounts/AccountDelete";
+import AccountHeaderInfo from "~/components/accounts/AccountHeaderInfo";
 import ApexChart from "~/components/ApexChart";
 export default {
   components: {
     AccountValueUpdate,
     ApexChart,
-    AccountDelete
+    AccountDelete,
+    AccountHeaderInfo
   },
   props: {
     accountData: {
@@ -59,13 +60,5 @@ h3 {
 .link-text {
   text-decoration: underline;
   cursor: pointer;
-}
-.date {
-  font-size: 0.8em;
-  color: #334856;
-}
-.ss-value {
-  font-size: 1.5em;
-  margin: 5px 0 10px;
 }
 </style>

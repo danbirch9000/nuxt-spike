@@ -48,6 +48,8 @@ export default {
             name: this.formItems.accountName
           })
           .then(response => {
+            this.formItems.accountName = "";
+            this.formItems.accountValue = "";
             const payload = {
               id: response.data.name,
               value: this.formItems.accountValue,

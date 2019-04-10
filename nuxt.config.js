@@ -78,7 +78,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    vendor: ["axios"],
+    vendor: ["axios", "vue-svgicon"],
     /*
     ** You can extend webpack config here
     */

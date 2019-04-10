@@ -1,17 +1,20 @@
 <template>
   <div class="account-summary ss-panel">
     <h3>{{ accountData.name }}</h3>
-    <div>{{ value | sterling }}</div>
-    <div class="">{{ lastUpdated | dateTime }}</div>
+    <AccountHeaderInfo :value="value" :last-updated="lastUpdated"/>
     <AccountValueUpdate :account-id="accountData.id"/>
     <ApexChart :chart-data="accountData.history"
                :account-id="accountData.id"
                type="line"/>
     <ul class="table-list">
-      <li v-for="record in accountData.history" :key="record.id">
+      <li v-for="record in accountHistory" :key="record.id">
         <span>{{ record.value | sterling }}</span>
         <span>{{ record.date | dateTime }}</span>
-        <span><InlineButton text="Delete record" classes="compact" /></span>
+        <span>
+          <InlineButton text="Delete record"
+                        classes="compact"
+                        @click.native="deleteRecord(record)"/>
+        </span>
       </li>
     </ul>
   </div>
@@ -20,12 +23,14 @@
 <script>
 import InlineButton from "~/components/InlineButton.vue";
 import AccountValueUpdate from "./AccountValueUpdate";
+import AccountHeaderInfo from "~/components/accounts/AccountHeaderInfo";
 import ApexChart from "~/components/ApexChart";
 export default {
   components: {
     InlineButton,
     AccountValueUpdate,
-    ApexChart
+    ApexChart,
+    AccountHeaderInfo
   },
   props: {
     accountData: {
@@ -46,9 +51,21 @@ export default {
         return null;
       }
       return this.accountData.history[this.accountData.history.length - 1].date;
+    },
+    accountHistory() {
+      const history = [...this.accountData.history];
+      return history.length ? history.reverse() : [];
     }
   },
-  methods: {}
+  methods: {
+    deleteRecord(record) {
+      let payload = {
+        accountId: this.accountData.id,
+        recordId: record.id
+      };
+      this.$store.dispatch("DELETE_USER_ACCOUNT_VALUE", payload);
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

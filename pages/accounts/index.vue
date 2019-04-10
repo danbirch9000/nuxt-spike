@@ -25,7 +25,9 @@ export default {
     })
   },
   beforeMount() {
-    this.$store.dispatch("GET_USER_ACCOUNTS");
+    if (!this.userAccounts.data) {
+      this.$store.dispatch("GET_USER_ACCOUNTS");
+    }
   }
 };
 </script>

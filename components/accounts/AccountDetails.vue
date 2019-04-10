@@ -3,8 +3,8 @@
     <h3>{{ accountData.name }}</h3>
     <AccountHeaderInfo :value="value" :last-updated="lastUpdated"/>
     <AccountValueUpdate :account-id="accountData.id"/>
-    <ApexChart :chart-data="accountData.history"
-               :account-id="accountData.id"
+    <ApexChart :chart-data="chartFormatData"
+               :unique-id="accountData.id"
                type="line"/>
     <ul class="table-list">
       <li v-for="record in accountHistory" :key="record.id">
@@ -25,6 +25,7 @@ import InlineButton from "~/components/InlineButton.vue";
 import AccountValueUpdate from "./AccountValueUpdate";
 import AccountHeaderInfo from "~/components/accounts/AccountHeaderInfo";
 import ApexChart from "~/components/ApexChart";
+import moment from "moment";
 export default {
   components: {
     InlineButton,
@@ -55,6 +56,17 @@ export default {
     accountHistory() {
       const history = [...this.accountData.history];
       return history.length ? history.reverse() : [];
+    },
+    chartFormatData() {
+      return [
+        {
+          name: "Account",
+          data: this.accountData.history.map(o => {
+            let value = parseInt(o.value) ? parseInt(o.value) : 0;
+            return [moment(o.date).unix() * 1000, value];
+          })
+        }
+      ];
     }
   },
   methods: {

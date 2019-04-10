@@ -1,0 +1,113 @@
+<template>
+  <div class="goal-summary ss-panel">
+    <h3 class="link-text" @click="loadDetail(goalData.id)">{{ goalData.description }}</h3>
+    <GoalHeaderInfo :goal-data="goalData"/>
+    <ApexChart v-if="chartFormatData.length"
+               :chart-data="chartSeriesData"
+               :unique-id="goalData.id"
+               type="line"/>
+  </div>
+</template>
+
+<script>
+import { getFinanceData, addAccounts } from "~/common/utilities.js";
+import ApexChart from "~/components/ApexChart";
+import GoalHeaderInfo from "~/components/accounts/GoalHeaderInfo";
+import moment from "moment";
+
+export default {
+  components: {
+    ApexChart,
+    GoalHeaderInfo
+  },
+  props: {
+    goalData: {
+      type: Object,
+      required: true
+    },
+    accountData: {
+      type: Object,
+      required: true
+    }
+  },
+  computed: {
+    goalBreakdown() {
+      if (!this.goalData) {
+        return null;
+      }
+      return getFinanceData(
+        this.goalData.rate,
+        this.goalData.amount,
+        this.goalData.monthly,
+        this.goalData.years,
+        this.goalData.startDate
+      );
+    },
+    chartFormatData() {
+      return this.goalBreakdown.map(o => {
+        let value = parseInt(o.value) ? parseInt(o.value) : 0;
+        return [o.utc, value];
+      });
+    },
+    accountsForGoal() {
+      if (this.accountData.data && this.accountData.data.length) {
+        let accounts = [];
+        let localGoalData = { ...this.goalData };
+        let userAccounts = [...this.accountData.data];
+        if (localGoalData.accounts && localGoalData.accounts.length) {
+          localGoalData.accounts.forEach(account => {
+            let accountsForGoal = userAccounts.filter(el => {
+              return el.id === account;
+            });
+            if (accountsForGoal) {
+              accountsForGoal = accountsForGoal[0];
+              let accountRecords = [];
+              for (const key in accountsForGoal.history) {
+                let momentDate = moment(accountsForGoal.history[key].date);
+                accountRecords.push([
+                  momentDate.utc().valueOf(),
+                  Number(accountsForGoal.history[key].value)
+                ]);
+              }
+              accounts.push({
+                name: accountsForGoal.name,
+                account: accountRecords
+              });
+            }
+          });
+        }
+        return addAccounts(accounts);
+      }
+      return [];
+    },
+    chartSeriesData() {
+      return [
+        {
+          name: "Goal",
+          data: this.chartFormatData
+        },
+        {
+          name: "Current value",
+          data: this.accountsForGoal.chart
+        }
+      ];
+    }
+  },
+  methods: {
+    loadDetail(id) {
+      console.log(id);
+    }
+  }
+};
+</script>
+<style lang="scss" scoped>
+@import "../../assets/colors";
+@import "../../assets/mixins";
+h3 {
+  margin: 0;
+}
+.link-text {
+  text-decoration: underline;
+  cursor: pointer;
+}
+</style>

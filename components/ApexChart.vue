@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div :ref="accountId" />
+    <div :ref="uniqueId" />
   </div>
 </template>
 
 <script>
 import ApexCharts from "apexcharts";
-import moment from "moment";
+
 import { chartSparkLineOptions, chartLineOptions } from "~/common/chart-config";
 export default {
   props: {
@@ -14,7 +14,7 @@ export default {
       type: Array,
       required: true
     },
-    accountId: {
+    uniqueId: {
       type: String,
       required: true
     },
@@ -27,14 +27,6 @@ export default {
     return {
       domChart: null
     };
-  },
-  computed: {
-    chartFormatData() {
-      return this.chartData.map(o => {
-        let value = parseInt(o.value) ? parseInt(o.value) : 0;
-        return [moment(o.date).unix() * 1000, value];
-      });
-    }
   },
   watch: {
     chartData: {
@@ -57,8 +49,8 @@ export default {
         this.type === "line"
           ? { ...chartLineOptions }
           : { ...chartSparkLineOptions };
-      options.series[0].data = this.chartFormatData;
-      this.domChart = new ApexCharts(this.$refs[this.accountId], options);
+      options.series = this.chartData;
+      this.domChart = new ApexCharts(this.$refs[this.uniqueId], options);
       this.domChart.render();
     }
   }

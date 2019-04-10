@@ -1,37 +1,23 @@
 import axios from "axios";
-import utilities from "~/common/utilities.js";
+
+import { axiosGetRequest } from "~/common/axios-utils";
 export default {
   state: {
-    goals: [],
-    goalView: {
-      accounts: [],
-      description: "",
-      rate: "",
-      amount: "",
-      monthly: "",
-      years: "",
-      startDate: ""
-    },
-    loaded: false
+    userGoals: {
+      data: null,
+      errorMessage: null,
+      loading: false
+    }
   },
   actions: {
     GET_USER_GOALS({ rootState, commit }) {
       const url = `/goals/${rootState.userModule.userId}.json`;
-      return axios
-        .get(url)
-        .then(data => {
-          commit("SET_LOADED", true);
-          const goalsArray = [];
-          for (const key in data.data) {
-            goalsArray.push({ ...data.data[key], id: key });
-          }
-          commit("SET_USER_GOALS", goalsArray);
-          commit("SET_CURRENT_GOAL_VIEW", goalsArray[0]);
-          return data;
-        })
-        .catch(() => {
-          commit("SET_LOADED", true);
-        });
+      return axiosGetRequest({
+        commit,
+        mutation: "SET_USER_GOALS",
+        url,
+        errorMessage: "Error getting user goals"
+      });
     },
     DELETE_GOAL({ commit, rootState, state }) {
       const url = `/goals/${rootState.userModule.userId}/${
@@ -99,7 +85,22 @@ export default {
       state.loaded = payload;
     },
     SET_USER_GOALS: (state, payload) => {
-      state.goals = payload;
+      if (payload.data) {
+        let goal = { ...payload.data };
+        let userGoals = [];
+        Object.keys(goal).forEach(key => {
+          userGoals.push({
+            ...goal[key],
+            id: key
+          });
+        });
+        payload.data = userGoals;
+      }
+
+      state.userGoals = {
+        ...state.userGoals,
+        ...payload
+      };
     },
     ADD_GOAL: (state, payload) => {
       state.goals.push(payload);
@@ -149,44 +150,6 @@ export default {
           state.goalView = state.goals[key];
         }
       }
-    }
-  },
-
-  getters: {
-    GET_CHART_DATA_CURRENT_VIEW: state => {
-      if (state.goalView === undefined) {
-        return null;
-      }
-      return {
-        rate: state.goalView.rate,
-        amount: state.goalView.amount,
-        monthly: state.goalView.monthly,
-        years: state.goalView.years,
-        startDate: state.goalView.startDate
-      };
-    },
-    GET_GOAL_TARGET: state => {
-      if (state.goalView === undefined) {
-        return null;
-      }
-      let target = utilities.getFinancialData(state.goalView);
-      return target[target.length - 1];
-    },
-    GET_CHART_DATA: state => {
-      if (state.goalView === undefined) {
-        return null;
-      }
-      let data = utilities.getFinanceData(
-        state.goalView.rate,
-        state.goalView.amount,
-        state.goalView.monthly,
-        state.goalView.years,
-        state.goalView.startDate
-      );
-
-      let chartData = utilities.buildChartData(data);
-
-      return chartData;
     }
   }
 };

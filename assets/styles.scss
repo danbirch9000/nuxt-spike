@@ -110,3 +110,8 @@
   grid-template-columns: repeat(2, 1fr);
   justify-items: stretch;
 }
+
+.link-text {
+  text-decoration: underline;
+  cursor: pointer;
+}

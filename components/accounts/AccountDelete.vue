@@ -2,6 +2,7 @@
   <div class="account-summary--delete">
     <InlineButton :loading="loading"
                   :action="() => deleteAccount()"
+                  :use-confirmation="true"
                   text="Delete account"/>
   </div>
 </template>

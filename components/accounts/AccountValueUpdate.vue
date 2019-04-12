@@ -8,6 +8,8 @@
     </div>
 
     <InlineButton :loading="loading"
+                  :use-confirmation="true"
+                  :valid="isFormValid"
                   :action="() => updateAccountValue()"
                   text="Update"/>
   </div>
@@ -36,6 +38,11 @@ export default {
       },
       loading: false
     };
+  },
+  computed: {
+    isFormValid() {
+      return this.formItems.quickUpdate !== "";
+    }
   },
   methods: {
     updateAccountValue() {

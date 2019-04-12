@@ -1,7 +1,8 @@
 <template>
   <div>
-    <span :class="classes" class="ss-btn-inline" @click="action">
-      <span>{{ text }}</span>
+    <span :class="classes" class="ss-btn-inline" @click="confirm()">
+      <span v-if="!confirmation">{{ text }}</span>
+      <span v-else>Are you sure?</span>
       <svgicon v-if="loading" name="circle-loader" width="18" height="18" color="currentColor" />
     </span>
 
@@ -21,6 +22,10 @@ export default {
       type: Boolean,
       default: false
     },
+    valid: {
+      type: Boolean,
+      default: true
+    },
     classes: {
       type: String,
       default: ""
@@ -28,6 +33,38 @@ export default {
     action: {
       type: Function,
       default: () => {}
+    },
+    useConfirmation: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      confirmation: false
+    };
+  },
+  methods: {
+    confirm() {
+      if (!this.valid) {
+        return;
+      }
+      setTimeout(() => {
+        this.reset();
+      }, 3000);
+      if (!this.useConfirmation) {
+        this.action();
+        return;
+      }
+      if (this.confirmation) {
+        this.action();
+        this.confirmation = false;
+      } else {
+        this.confirmation = true;
+      }
+    },
+    reset() {
+      this.confirmation = false;
     }
   }
 };

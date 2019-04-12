@@ -48,6 +48,33 @@ export const axiosPostRequest = ({
     });
 };
 
+export const axiosPatchRequest = ({
+  commit,
+  mutation,
+  payload,
+  url,
+  errorMessage
+}) => {
+  commit(mutation, { data: null, loading: true, errorMessage: null });
+  return axios
+    .patch(url, payload)
+    .then(result => {
+      commit(mutation, {
+        data: result.data || { success: true },
+        loading: false,
+        payload
+      });
+      return result;
+    })
+    .catch(error => {
+      commit(mutation, {
+        loading: false,
+        errorMessage
+      });
+      return Promise.reject(error);
+    });
+};
+
 export const axiosDeleteRequest = ({
   commit,
   mutation,

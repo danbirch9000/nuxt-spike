@@ -2,23 +2,34 @@
   <div class="goal-summary ss-panel">
     <h3 class="link-text" @click="loadDetail(goalData.id)">{{ goalData.description }}</h3>
     <GoalHeaderInfo :goal-data="goalData"/>
+
+    <Pill classes="grey click" @click.native="updateChart('')">All</Pill>
+    <Pill classes="grey click" @click.native="updateChart('toDate')">To date</Pill>
+
     <ApexChart v-if="chartFormatData.length"
                :chart-data="chartSeriesData"
                :unique-id="goalData.id"
+               :filter="chartFilter"
                type="line"/>
+
+    <AccountsOnAGoal :account-data="accountData" :goal-data="goalData"/>
   </div>
 </template>
 
 <script>
 import { getFinanceData, addAccounts } from "~/common/utilities.js";
 import ApexChart from "~/components/ApexChart";
+import Pill from "~/components/Pill";
 import GoalHeaderInfo from "~/components/accounts/GoalHeaderInfo";
+import AccountsOnAGoal from "~/components/accounts/AccountsOnAGoal";
 import moment from "moment";
 
 export default {
   components: {
     ApexChart,
-    GoalHeaderInfo
+    GoalHeaderInfo,
+    Pill,
+    AccountsOnAGoal
   },
   props: {
     goalData: {
@@ -29,6 +40,11 @@ export default {
       type: Object,
       required: true
     }
+  },
+  data() {
+    return {
+      chartFilter: null
+    };
   },
   computed: {
     goalBreakdown() {
@@ -76,6 +92,8 @@ export default {
             }
           });
         }
+        console.log("accounts", accounts);
+        console.log(JSON.stringify(accounts));
         return addAccounts(accounts);
       }
       return [];
@@ -95,7 +113,10 @@ export default {
   },
   methods: {
     loadDetail(id) {
-      console.log(id);
+      this.$router.push(`/goals/details/${id}`);
+    },
+    updateChart(type) {
+      this.chartFilter = type;
     }
   }
 };

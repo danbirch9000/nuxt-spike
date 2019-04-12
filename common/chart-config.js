@@ -35,7 +35,13 @@ export const chartSparkLineOptions = {
 
 export const chartLineOptions = {
   chart: {
-    type: "area"
+    type: "area",
+    toolbar: {
+      show: false
+    }
+  },
+  stroke: {
+    curve: "straight"
   },
   dataLabels: {
     enabled: false
@@ -55,5 +61,9 @@ export const chartLineOptions = {
   },
   xaxis: {
     type: "datetime"
+  },
+  yaxis: {
+    min: 0,
+    forceNiceScale: true
   }
 };

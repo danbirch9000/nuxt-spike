@@ -15,16 +15,15 @@ export const getFinanceData = (rate, amount, monthly, years, startDate) => {
 };
 
 const calculateSavings = (initialAmount, years, monthly, rate, date) => {
-  var time = moment(date);
-  var amount = initialAmount;
-  var data = [];
-  for (var index = 0; index < years; index++) {
-    var savingsForYear = getCiforYear(
-      amount,
+  const time = moment(date);
+  let data = [];
+  for (let index = 0; index < years; index++) {
+    let savingsForYear = getCiforYear(
+      initialAmount,
       index,
       monthly,
       rate,
-      time.add("years", 1)
+      time.add(1, "years")
     );
 
     if (index === 0) {
@@ -33,14 +32,14 @@ const calculateSavings = (initialAmount, years, monthly, rate, date) => {
         savingsForYear.interest
       );
     } else {
-      var calcInterest =
+      let calcInterest =
         data[index - 1].totalInterest + savingsForYear.interest;
       savingsForYear.totalInterest = calcInterest;
       savingsForYear.formattedTotalInterest = numberWithCommas(calcInterest);
     }
 
     data.push(savingsForYear);
-    amount += savingsForYear.value - amount;
+    initialAmount += savingsForYear.value - initialAmount;
   }
   return data;
 };
@@ -59,21 +58,21 @@ export const getFinancialData = payload => {
 };
 
 const getCiforYear = (amount, year, monthly, rate, time) => {
-  var finance = new Finance();
-  var principal = amount + monthly;
-  var value = 0;
+  const finance = new Finance();
+  let principal = amount + monthly;
+  let value = 0;
   for (var index = 0; index < 12; index++) {
-    value = finance.CI(rate / 12, 1, principal, 1); // rate, compoundings per period, principal, number of periods
+    value = finance.CI(rate / 12, 1, principal, 1);
     principal = value + monthly;
   }
-  var interest = value - (amount + monthly * 12);
+  let interest = value - (amount + monthly * 12);
 
   return {
     value: value,
     formattedvalue: numberWithCommas(value),
     date: time.format("MMM YYYY"),
     utc: time.utc().valueOf(),
-    interest: interest,
+    interest: parseFloat(interest.toFixed(2)),
     formattedInterest: numberWithCommas(interest)
   };
 };
@@ -83,7 +82,7 @@ export const getCiForMonths = (amount, months, monthly, rate) => {
   var principal = amount + monthly;
   var value = 0;
   for (var index = 0; index < months; index++) {
-    value = finance.CI(rate / 12, 1, principal, 1); // rate, compoundings per period, principal, number of periods
+    value = finance.CI(rate / 12, 1, principal, 1);
     principal = value + monthly;
   }
   var interest = value - (amount + monthly * months);

@@ -7,7 +7,7 @@
 <script>
 import pageMixin from "~/mixins/pageMixin";
 import { mapState } from "vuex";
-import GoalDetails from "~/components/accounts/GoalDetails";
+import GoalDetails from "~/components/goals/GoalDetails";
 
 export default {
   middleware: ["check-auth", "auth"],

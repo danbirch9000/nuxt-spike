@@ -34,7 +34,7 @@ export default {
         errorMessage: "Error getting user goals"
       });
     },
-    DELETE_GOAL({ commit, rootState, state }, payload) {
+    DELETE_GOAL({ commit, rootState }, payload) {
       const url = `/goals/${rootState.userModule.userId}/${payload.id}.json`;
       return axiosDeleteRequest({
         commit,

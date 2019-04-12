@@ -18,7 +18,6 @@ let _auth0 = new auth0.WebAuth({
   scope: "openid profile"
 });
 export const authorise = function() {
-  console.log("process.env.isDev", process.env.isDev);
   _auth0.authorize();
 };
 

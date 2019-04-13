@@ -38,6 +38,9 @@ export default {
 .account-grid {
   display: grid;
   grid-gap: 15px;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 </style>

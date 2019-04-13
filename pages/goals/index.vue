@@ -52,7 +52,7 @@ export default {
   display: grid;
   grid-gap: 15px;
   grid-template-columns: 1fr;
-  @media only screen and (min-width: 600px) {
+  @include tablet {
     grid-template-columns: repeat(2, 1fr);
   }
 }

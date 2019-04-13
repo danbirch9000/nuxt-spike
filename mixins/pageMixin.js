@@ -11,7 +11,7 @@ export default {
   created() {
     const config = process.env.isDev
       ? { ...MAIN_CONFIG.dev.firebase }
-      : { ...MAIN_CONFIG.dev.firebase };
+      : { ...MAIN_CONFIG.prod.firebase };
 
     axios.defaults.baseURL = config.databaseURL;
     axios.defaults.params = {

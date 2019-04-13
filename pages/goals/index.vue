@@ -51,6 +51,9 @@ export default {
 .goals-grid {
   display: grid;
   grid-gap: 15px;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
+  @media only screen and (min-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 </style>

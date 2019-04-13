@@ -8,15 +8,18 @@
     <div>
       <span class="link-text"
             @click="editAccounts()">edit</span>
-      <ul v-if="showAllAccounts" class="account-list">
-        <li v-for="account in accountData.data"
-            :key="account.id">
-        <input :id="account.id" v-model="formItems.accounts" :value="account.id" type="checkbox">{{ account.name }}</li>
-      </ul>
-      <InlineButton :loading="loading"
-                    :use-confirmation="true"
-                    :action="() => updateAttachedAccounts()"
-                    text="Update"/>
+      <div v-if="showAllAccounts">
+        <ul class="account-list">
+          <li v-for="account in accountData.data"
+              :key="account.id">
+          <input :id="account.id" v-model="formItems.accounts" :value="account.id" type="checkbox">{{ account.name }}</li>
+        </ul>
+        <InlineButton :loading="loading"
+                      :use-confirmation="true"
+                      :action="() => updateAttachedAccounts()"
+                      text="Update"/>
+      </div>
+
     </div>
   </div>
 </template>
@@ -68,12 +71,21 @@ export default {
       return [];
     }
   },
-  mounted() {
-    this.formItems.accounts = this.accountsUsedForThisGoal.map(i => i.id);
+  watch: {
+    accountsUsedForThisGoal: {
+      handler() {
+        this.setAccounts();
+      },
+      deep: true
+    }
   },
   methods: {
+    setAccounts() {
+      console.log("set accounts", this.accountsUsedForThisGoal);
+      this.formItems.accounts = this.accountsUsedForThisGoal.map(i => i.id);
+    },
     editAccounts() {
-      this.showAllAccounts = true;
+      this.showAllAccounts = !this.showAllAccounts;
     },
     updateAttachedAccounts() {
       const payload = {

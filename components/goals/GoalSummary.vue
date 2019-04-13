@@ -92,8 +92,6 @@ export default {
             }
           });
         }
-        console.log("accounts", accounts);
-        console.log(JSON.stringify(accounts));
         return addAccounts(accounts);
       }
       return [];

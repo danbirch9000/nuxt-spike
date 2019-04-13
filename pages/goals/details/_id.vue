@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-    <GoalDetails v-if="goal" :key="goal.id" :goal-data="goal" />
+    <GoalSummary v-if="goal" :key="goal.id" :goal-data="goal" :account-data="userAccounts" />
   </section>
 </template>
 
@@ -8,14 +8,16 @@
 import pageMixin from "~/mixins/pageMixin";
 import { mapState } from "vuex";
 import GoalDetails from "~/components/goals/GoalDetails";
+import GoalSummary from "~/components/goals/GoalSummary";
 
 export default {
   middleware: ["check-auth", "auth"],
-  components: { GoalDetails },
+  components: { GoalDetails, GoalSummary },
   mixins: [pageMixin],
   computed: {
     ...mapState({
-      userGoals: state => state.goalModule.userGoals
+      userGoals: state => state.goalModule.userGoals,
+      userAccounts: state => state.accountModule.userAccounts
     }),
     goal() {
       if (!this.userGoals.data) {

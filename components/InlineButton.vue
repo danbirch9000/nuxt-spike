@@ -3,16 +3,18 @@
     <span :class="classes" class="ss-btn-inline" @click="confirm()">
       <span v-if="!confirmation">{{ text }}</span>
       <span v-else>Are you sure?</span>
-      <svgicon v-if="loading" name="circle-loader" width="18" height="18" color="currentColor" />
+      <InlineLoader v-if="loading"/>
     </span>
-
-
   </div>
 </template>
 
 <script>
 import "./icons/circle-loader";
+import InlineLoader from "~/components/InlineLoader";
 export default {
+  components: {
+    InlineLoader
+  },
   props: {
     text: {
       type: String,

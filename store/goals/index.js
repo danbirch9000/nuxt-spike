@@ -116,9 +116,10 @@ export default {
     },
     SET_LINK_GOAL_TO_ACCOUNT: (state, payload) => {
       if (payload.data) {
-        state.userGoals.data.forEach(o => {
+        console.log(payload.data);
+        state.userGoals.data.forEach((o, index) => {
           if (o.id === payload.data.id) {
-            o = payload.data;
+            state.userGoals.data[index].accounts = payload.data.accounts;
           }
         });
       }

@@ -15,9 +15,9 @@ export default {
   },
   computed: {
     goal() {
-      let { amount, years, rate, startDate } = this.goalData;
+      let { amount, monthly, years, rate, startDate } = this.goalData;
       startDate = moment(startDate).format("ll");
-      return `Save £${amount} per month for ${years} years at ${rate}% starting ${startDate}`;
+      return `Save £${monthly} per month starting with £${amount} for ${years} years at ${rate}% starting ${startDate}`;
     }
   }
 };

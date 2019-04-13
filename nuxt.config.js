@@ -45,10 +45,12 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: "~/plugins/vee-validate.js", ssr: true },
     "~/plugins/highcharts",
     "~/plugins/dialog",
     "~/plugins/money.filter",
     "~/plugins/filters",
+    "~/plugins/firebase",
     "~/plugins/toastr"
   ],
 
@@ -77,7 +79,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    vendor: ["axios"],
+    vendor: ["axios", "vue-svgicon"],
     /*
     ** You can extend webpack config here
     */

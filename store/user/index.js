@@ -38,7 +38,6 @@ export default {
   },
   actions: {
     IS_AUTHENTICATED({ commit }) {
-      console.log("IS_AUTHENTICATED called");
       const idToken = sessionStorage.getItem("id_token");
       let authenticated = false;
       if (idToken !== null) {
@@ -50,10 +49,8 @@ export default {
         authenticated = now < JSON.parse(userDetails).exp;
       }
       commit("SET_AUTHENTICATED", authenticated);
-      console.log("IS_AUTHENTICATED end");
     },
     INIT_AUTH(vuexContext, req) { //eslint-disable-line
-      console.log("INIT_AUTH called");
       const tokens = {
         firebaseTokenExpiry: sessionStorage.getItem("firebaseTokenExpiry"),
         auth0TokenExpiry: sessionStorage.getItem("auth0TokenExpiry"),
@@ -75,11 +72,11 @@ export default {
       vuexContext.commit("SET_USER_ID", userDetails.user_id);
       vuexContext.commit("SET_FIREBASE_TOKEN", tokens.token);
       vuexContext.commit("SET_TOKENS", tokens.token);
-      console.log("INIT_AUTH end");
     },
     LOGOUT(vuexContext) {
       vuexContext.commit("CLEAR_TOKEN");
       vuexContext.commit("RESET_CURRENT_GOAL_VIEW");
+      vuexContext.commit("SET_AUTHENTICATED", false);
       sessionStorage.removeItem("token");
       sessionStorage.removeItem("firebaseTokenExpiry");
       sessionStorage.removeItem("access_token");

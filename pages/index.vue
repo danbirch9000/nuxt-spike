@@ -4,7 +4,7 @@
       <Login />
       <h1>Savings Calculator</h1>
       <P>Use our savings calculator to see how compound interest can boost your savings over time.</P>
-      <Calculator/>
+
     </div>
   </section>
 </template>
@@ -12,11 +12,9 @@
 
 <script>
 import Login from "~/components/Login";
-import Calculator from "~/components/Calculator";
 
 export default {
-  components: { Login, Calculator },
-  middleware: ["auth"],
+  components: { Login },
   beforeMount() {
     this.$store.commit("CLOSE_MENU");
   }

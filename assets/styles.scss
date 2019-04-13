@@ -3,6 +3,7 @@
 @import "buttons";
 @import "forms";
 @import "type";
+@import "tables";
 
 .dg-container {
   .dg-btn--cancel {
@@ -59,4 +60,58 @@
   border-color: 1px $lightgrey solid;
   border-radius: 10px;
   padding-left: 5px;
+}
+
+.ss-panel {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+// SVG STYLES
+
+.svg-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  color: inherit;
+  vertical-align: middle;
+  fill: none;
+  stroke: currentColor;
+}
+
+.svg-fill {
+  fill: currentColor;
+  stroke: none;
+}
+
+.svg-up {
+  /*default*/
+  transform: rotate(0deg);
+}
+
+.svg-right {
+  transform: rotate(90deg);
+}
+
+.svg-down {
+  transform: rotate(180deg);
+}
+
+.svg-left {
+  transform: rotate(-90deg);
+}
+
+.smart-button-container {
+  width: 100%;
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: stretch;
+}
+
+.link-text {
+  text-decoration: underline;
+  cursor: pointer;
 }

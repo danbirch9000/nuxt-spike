@@ -60,7 +60,6 @@ export default {
       return history[history.length - 1].value;
     },
     addToQuickValue(val) {
-      console.log(val);
       this.quickValue += parseFloat(val);
     },
     resetQuickValue() {

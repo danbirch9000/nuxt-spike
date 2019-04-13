@@ -71,5 +71,8 @@ h3 {
   display: grid;
   grid-gap: 15px;
   grid-template-columns: 1fr auto;
+  > div:last-child {
+    align-self: end;
+  }
 }
 </style>

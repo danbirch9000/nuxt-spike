@@ -14,6 +14,10 @@ Vue.filter("dateTime", function(val) {
   return moment(val).format("L LT");
 });
 
+Vue.filter("noDecimal", function(val) {
+  return Math.round(val);
+});
+
 Vue.filter("reverse", function(value) {
   // slice to make a copy of array, then reverse the copy
   return value.slice().reverse();

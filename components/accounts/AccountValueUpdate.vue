@@ -72,19 +72,4 @@ h3 {
   grid-gap: 15px;
   grid-template-columns: 1fr auto;
 }
-.standard-input {
-  margin: 10px 0 10px;
-  label {
-    display: block;
-    color: #334856;
-    font-size: 0.8em;
-  }
-  input {
-    outline: 0;
-    display: block;
-    padding: 5px 2px;
-    font-size: 1em;
-    width: 100%;
-  }
-}
 </style>

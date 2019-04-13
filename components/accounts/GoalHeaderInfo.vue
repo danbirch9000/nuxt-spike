@@ -16,6 +16,7 @@ export default {
   computed: {
     goal() {
       let { amount, monthly, years, rate, startDate } = this.goalData;
+      years = this.$options.filters.noDecimal(years);
       startDate = moment(startDate).format("ll");
       return `Save £${monthly} per month starting with £${amount} for ${years} years at ${rate}% starting ${startDate}`;
     }

@@ -55,7 +55,7 @@ export const chartLineOptions = {
   tooltip: {
     y: {
       title: {
-        formatter: () => "Value: "
+        formatter: () => "Value"
       }
     }
   },

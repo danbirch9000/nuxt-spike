@@ -1,13 +1,15 @@
 <template>
-  <section class="container">
-    <h1>Accounts</h1>
-    <AccountCreate />
-    <div v-if="userAccounts.data && userAccounts.data.length" class="account-grid">
-      <template v-for="account in userAccounts.data" >
-        <AccountSummary :key="account.id" :account-data="account" />
-      </template>
-    </div>
-  </section>
+  <div>
+    <h1 class="page-header">Your accounts</h1>
+    <section class="container">
+      <AccountCreate />
+      <div v-if="userAccounts.data && userAccounts.data.length" class="account-grid">
+        <template v-for="account in userAccounts.data" >
+          <AccountSummary :key="account.id" :account-data="account" />
+        </template>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -40,6 +42,9 @@ export default {
   grid-gap: 15px;
   grid-template-columns: 1fr;
   @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include desktop {
     grid-template-columns: repeat(2, 1fr);
   }
 }

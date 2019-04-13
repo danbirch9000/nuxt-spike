@@ -12,7 +12,10 @@
         <ul class="account-list">
           <li v-for="account in accountData.data"
               :key="account.id">
-          <input :id="account.id" v-model="formItems.accounts" :value="account.id" type="checkbox">{{ account.name }}</li>
+            <input :id="account.id"
+                   v-model="formItems.accounts" 
+                   :value="account.id"
+                   type="checkbox"><label :for="account.id">{{ account.name }}</label></li>
         </ul>
         <InlineButton :loading="loading"
                       :use-confirmation="true"
@@ -104,5 +107,12 @@ export default {
   margin: 0;
   padding: 0;
   list-style-type: none;
+  li {
+    background-color: $lightgrey;
+    margin: 4px 0;
+  }
+}
+label {
+  font-size: 0.9em;
 }
 </style>

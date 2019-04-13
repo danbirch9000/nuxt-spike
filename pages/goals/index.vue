@@ -1,12 +1,16 @@
 <template>
-  <section class="container">
-    <h1>Goals</h1>
-    <div v-if="userGoals.data && userGoals.data.length" class="goals-grid">
-      <template v-for="goal in userGoals.data" >
-        <GoalSummary :key="goal.id" :goal-data="goal" :account-data="userAccounts" />
-      </template>
-    </div>
-  </section>
+  <div>
+    <h1 class="page-header">Your goals</h1>
+
+    <section class="container">
+      <div v-if="userGoals.data && userGoals.data.length" class="goals-grid">
+        <template v-for="goal in userGoals.data" >
+          <GoalSummary :key="goal.id" :goal-data="goal" :account-data="userAccounts" />
+        </template>
+      </div>
+    </section>
+  </div>
+
 </template>
 
 <script>
@@ -53,6 +57,9 @@ export default {
   grid-gap: 15px;
   grid-template-columns: 1fr;
   @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include desktop {
     grid-template-columns: repeat(2, 1fr);
   }
 }

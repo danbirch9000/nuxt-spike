@@ -35,8 +35,8 @@ export default {
   },
   computed: {
     ...mapState({
-      accounts: state => state.accountModule.accounts,
-      goals: state => state.goalModule.goals
+      accounts: state => state.accountModule.userAccounts,
+      goals: state => state.goalModule.userGoals
     })
   },
   watch: {},

@@ -1,20 +1,21 @@
 <template>
-  <section class="container">
-    <div class="panel">
-      <Login />
-      <h1>Savings Calculator</h1>
-      <P>Use our savings calculator to see how compound interest can boost your savings over time.</P>
-
-    </div>
+  <section>
+    <Login />
+    <h1 class="page-header">Quick savings calculator</h1>
+    <section class="container">
+      <p>Use our savings calculator to see how compound interest can boost your savings over time.</p>
+      <NewGoal />
+    </section>
   </section>
 </template>
 
 
 <script>
 import Login from "~/components/Login";
+import NewGoal from "~/components/goals/NewGoal";
 
 export default {
-  components: { Login },
+  components: { NewGoal, Login },
   beforeMount() {
     this.$store.commit("CLOSE_MENU");
   }

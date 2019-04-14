@@ -1,8 +1,9 @@
 <template>
   <div>
     <h1 class="page-header">Your goals</h1>
-
     <section class="container">
+      <InlineButton :action="() => createNew()"
+                    text="New goal"/>
       <div v-if="userGoals.data && userGoals.data.length" class="goals-grid">
         <template v-for="goal in userGoals.data" >
           <GoalSummary :key="goal.id" :goal-data="goal" :account-data="userAccounts" />
@@ -17,9 +18,10 @@
 import { mapGetters, mapState } from "vuex";
 import pageMixin from "~/mixins/pageMixin";
 import GoalSummary from "~/components/goals/GoalSummary";
+import InlineButton from "~/components/InlineButton";
 
 export default {
-  components: { GoalSummary },
+  components: { GoalSummary, InlineButton },
   mixins: [pageMixin],
   middleware: ["check-auth", "auth"], // check-auth calls INIT_AUTH to make sure the user is authenticated
   data() {
@@ -45,7 +47,11 @@ export default {
     }
   },
   mounted() {},
-  methods: {}
+  methods: {
+    createNew() {
+      this.$router.push("/goals/create");
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

@@ -43,6 +43,10 @@ select {
     width: 100%;
   }
 }
+.error-summary {
+  border: 1px $secondary solid;
+  padding: 10px;
+}
 .error-message {
   color: $secondary;
   font-size: 0.8em;

@@ -1,6 +1,14 @@
 <template>
   <div class="ss-panel">
+    <div v-if="hasErrors" class="error-summary">
+      <div class="error-message">{{ errors.first('description') }}</div>
+      <div class="error-message">{{ errors.first('amount') }}</div>
+      <div class="error-message">{{ errors.first('rate') }}</div>
+      <div class="error-message">{{ errors.first('years') }}</div>
+      <div class="error-message">{{ errors.first('monthly') }}</div>
+    </div>
     <div class="goal-create-form">
+
       <div class="standard-input">
         <label for="description">Title</label>
         <input v-validate="'required'"
@@ -8,7 +16,6 @@
                v-model="formItems.description"
                name="description"
                type="text">
-        <span class="error-message">{{ errors.first('description') }}</span>
       </div>
 
       <div class="standard-input">
@@ -18,7 +25,6 @@
                v-model="formItems.amount"
                name="amount"
                type="number">
-        <span class="error-message">{{ errors.first('amount') }}</span>
       </div>
 
       <div class="standard-input">
@@ -28,7 +34,6 @@
                v-model="formItems.rate"
                name="rate"
                type="number">
-        <span class="error-message">{{ errors.first('rate') }}</span>
       </div>
 
       <div class="standard-input">
@@ -38,7 +43,6 @@
                v-model="formItems.years"
                name="years"
                type="number">
-        <span class="error-message">{{ errors.first('years') }}</span>
       </div>
 
       <div class="standard-input">
@@ -48,7 +52,6 @@
                v-model="formItems.monthly"
                name="monthly"
                type="number">
-        <span class="error-message">{{ errors.first('monthly') }}</span>
       </div>
       <InlineButton :valid="true"
                     :action="() => calculateGoal()"
@@ -71,6 +74,12 @@
         </li>
       </ul>
     </div>
+
+    <InlineButton v-if="goal.length"
+                  :valid="true"
+                  :action="() => saveGoal()"
+                  text="Save this goal"/>
+
   </div>
 
 </template>
@@ -108,6 +117,9 @@ export default {
         }
       });
     },
+    saveGoal() {
+      console.log("save this goal");
+    },
     getGoalData() {
       this.goal = getFinanceData(
         this.formItems.rate,
@@ -128,13 +140,13 @@ export default {
   grid-gap: 15px;
   grid-template-columns: 1fr;
   @include tablet {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 2.5fr repeat(5, 1.3fr);
     > div:last-child {
       align-self: end;
     }
   }
   @include desktop {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 2.5fr repeat(5, 1.3fr);
     > div:last-child {
       align-self: end;
     }

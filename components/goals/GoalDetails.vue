@@ -1,16 +1,15 @@
 <template>
   <div class="ss-panel">
     <h3>{{ goalData.description }}</h3>
+
   </div>
 </template>
 
 <script>
-import InlineButton from "~/components/InlineButton.vue";
 import ApexChart from "~/components/ApexChart";
 
 export default {
   components: {
-    InlineButton,
     ApexChart
   },
   props: {
@@ -19,8 +18,7 @@ export default {
       required: true
     }
   },
-  computed: {},
-  methods: {}
+  computed: {}
 };
 </script>
 <style lang="scss" scoped>

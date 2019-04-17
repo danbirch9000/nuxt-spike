@@ -13,6 +13,7 @@
                type="line"/>
 
     <AccountsOnAGoal :account-data="accountData" :goal-data="goalData"/>
+
   </div>
 </template>
 

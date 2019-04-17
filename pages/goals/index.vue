@@ -59,6 +59,7 @@ export default {
 @import "../../assets/mixins";
 
 .goals-grid {
+  margin: 10px 0;
   display: grid;
   grid-gap: 15px;
   grid-template-columns: 1fr;

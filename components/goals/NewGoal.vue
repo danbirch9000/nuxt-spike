@@ -77,6 +77,7 @@
 
     <InlineButton v-if="goal.length"
                   :valid="true"
+                  :use-confirmation="true"
                   :action="() => saveGoal()"
                   text="Save this goal"/>
 
@@ -98,7 +99,7 @@ export default {
         description: "",
         monthly: "",
         rate: "",
-        startDate: moment(),
+        startDate: moment().format(),
         years: ""
       },
       goal: []
@@ -118,7 +119,14 @@ export default {
       });
     },
     saveGoal() {
-      console.log("save this goal");
+      this.$store
+        .dispatch("CREATE_GOAL", this.formItems)
+        .then(() => {
+          this.$router.push("/goals");
+        })
+        .catch(() => {
+          console.log("Error creating goal");
+        });
     },
     getGoalData() {
       this.goal = getFinanceData(

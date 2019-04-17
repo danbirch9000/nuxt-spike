@@ -22,6 +22,11 @@ export default {
       data: null,
       errorMessage: null,
       loading: false
+    },
+    createGoal: {
+      data: null,
+      errorMessage: null,
+      loading: false
     }
   },
   actions: {
@@ -98,16 +103,21 @@ export default {
     },
     SET_CREATE_GOAL: (state, payload) => {
       if (payload.data) {
-        state.userGoals.data.push(payload.data);
+        let tempState =
+          state.userGoals.data !== null ? [...state.userGoals.data] : [];
+        tempState.push({ ...payload.payload, id: payload.data.name });
+        state.userGoals.data = tempState;
       }
-      state.userGoals = {
-        ...state.userGoals,
+      state.createGoal = {
+        ...state.createGoal,
         ...payload
       };
     },
     SET_DELETE_GOAL: (state, payload) => {
       if (payload.data) {
-        console.log("delete goal");
+        state.userGoals.data = state.userGoals.data.filter(
+          o => o.id !== payload.payload.id
+        );
       }
       state.deleteGoal = {
         ...state.deleteGoal,

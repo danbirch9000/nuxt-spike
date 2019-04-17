@@ -61,10 +61,17 @@ export default {
       );
     },
     chartFormatData() {
-      return this.goalBreakdown.map(o => {
+      let data = this.goalBreakdown.map(o => {
         let value = parseInt(o.value) ? parseInt(o.value) : 0;
         return [o.utc, value];
       });
+      data.unshift([
+        moment(this.goalData.startDate)
+          .utc()
+          .valueOf(),
+        this.goalData.amount
+      ]);
+      return data;
     },
     accountsForGoal() {
       if (this.accountData.data && this.accountData.data.length) {

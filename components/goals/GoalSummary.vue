@@ -1,7 +1,7 @@
 <template>
   <div class="goal-summary ss-panel">
     <h3 class="link-text" @click="loadDetail(goalData.id)">{{ goalData.description }}</h3>
-    <GoalHeaderInfo :goal-data="goalData" :goal-target="goalTarget"/>
+    <GoalHeaderInfo :goal-data="goalData" :goal-target="goalTarget" :current-value="currentValuation"/>
 
     <Pill classes="grey click" @click.native="updateChart('')">All</Pill>
     <Pill classes="grey click" @click.native="updateChart('toDate')">To date</Pill>
@@ -111,6 +111,11 @@ export default {
     },
     goalTarget() {
       return this.goalBreakdown[this.goalBreakdown.length - 1];
+    },
+    currentValuation() {
+      return this.accountsForGoal.chart[
+        this.accountsForGoal.chart.length - 1
+      ][1];
     }
   },
   methods: {

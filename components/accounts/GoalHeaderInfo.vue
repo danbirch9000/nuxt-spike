@@ -4,6 +4,7 @@
     <div class="goal-definition">
       {{ goal }}
     </div>
+    <div v-if="currentValue">Current value: {{ currentValue | currency }}</div>
   </div>
 </template>
 
@@ -17,6 +18,10 @@ export default {
     },
     goalTarget: {
       type: Object,
+      default: null
+    },
+    currentValue: {
+      type: Number,
       default: null
     }
   },

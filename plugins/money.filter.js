@@ -1,8 +1,8 @@
 import Vue from "vue";
-import utilities from "~/common/utilities.js";
+import { numberWithCommas } from "~/common/utilities.js";
 
 Vue.filter("currency", function(value) {
-  value = utilities.numberWithCommas(value);
+  value = numberWithCommas(value);
   let digits = value.length - value.indexOf(".");
   if (digits === 2) {
     return `£${value}0`;

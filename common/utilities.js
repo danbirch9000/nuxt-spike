@@ -107,7 +107,7 @@ export const buildChartData = data => {
   return chartData;
 };
 
-const numberWithCommas = x => {
+export const numberWithCommas = x => {
   let value = roundToTwo(x);
   value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   return value;

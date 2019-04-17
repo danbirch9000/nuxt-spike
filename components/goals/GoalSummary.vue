@@ -113,6 +113,9 @@ export default {
       return this.goalBreakdown[this.goalBreakdown.length - 1];
     },
     currentValuation() {
+      if (!this.accountsForGoal || !this.accountsForGoal.chart) {
+        return null;
+      }
       return this.accountsForGoal.chart[
         this.accountsForGoal.chart.length - 1
       ][1];

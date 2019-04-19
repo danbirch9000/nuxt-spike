@@ -66,23 +66,7 @@
     </div>
 
     <div class="results">
-      <div v-if="goal.length" class="goal-table">
-        <ul class="table-list">
-          <li class="table-list-header">
-            <span>Date</span>
-            <span>Total interest</span>
-            <span>Year interest</span>
-            <span>Total value</span>
-          </li>
-          <li v-for="(record, index) in goal" :key="index" class="table-list-body">
-            <span>{{ record.date }}</span>
-            <span>{{ record.totalInterest | sterling }}</span>
-            <span>{{ record.interest | sterling }}</span>
-            <span>{{ record.value | sterling }}</span>
-          </li>
-        </ul>
-      </div>
-
+      <GoalTableView :goal-data="goal"/>
       <ApexChart v-if="chartFormatData.length"
                  :chart-data="chartSeriesData"
                  unique-id="chart-calc"
@@ -105,9 +89,10 @@ import moment from "moment";
 import InlineButton from "~/components/InlineButton.vue";
 import { getFinanceData } from "~/common/utilities.js";
 import ApexChart from "~/components/ApexChart";
+import GoalTableView from "~/components/goals/GoalTableView";
 
 export default {
-  components: { InlineButton, ApexChart },
+  components: { InlineButton, ApexChart, GoalTableView },
   props: {
     allowSave: {
       type: Boolean,
@@ -228,11 +213,6 @@ export default {
   }
 }
 
-.table-list li {
-  display: grid;
-  grid-gap: 15px;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-}
 .results {
   display: grid;
   grid-gap: 15px;

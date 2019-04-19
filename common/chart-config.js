@@ -41,7 +41,8 @@ export const chartLineOptions = {
     }
   },
   stroke: {
-    curve: "straight"
+    curve: "straight",
+    width: 2
   },
   dataLabels: {
     enabled: false
